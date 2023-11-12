@@ -5,6 +5,8 @@ import tutor1 from '../../Images/Main/tutor1.png'
 
 export const CardBox = styled.div`
 	border-radius: 8px;
+	box-shadow: 0 2px 15px #646464;
+	margin-bottom: 20px;
 
 	@media (min-width: 768px) {
 		display: flex;
@@ -80,6 +82,8 @@ export const TutorSubject = styled.p`
 `
 
 export const CardRight = styled.div`
+	/* margin-top: 20px; */
+	padding: 20px;
 	@media (min-width: 768px) {
 		flex-basis: 50%;
 	}
@@ -87,8 +91,35 @@ export const CardRight = styled.div`
 
 export const CardCalendar = styled.div``
 
-export const CardPriceAndBtn = styled.div``
+export const CardPriceAndBtn = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	margin-top: 20px;
+`
 
-export const CardPrice = styled.p``
+export const CardPrice = styled.p`
+	margin-bottom: 10px;
+	font-size: 1.8rem;
+	font-weight: bold;
+	color: ${theme.colors.secondary};
+`
 
-export const CardReserveBtn = styled.button``
+export const CardReserveBtn = styled.button`
+	border: none;
+	background-color: ${theme.colors.primary};
+	color: #fff;
+	padding: 5px 50px;
+	border-radius: 6px;
+	outline: none;
+	cursor: pointer;
+	font-size: 1.5rem;
+	text-transform: uppercase;
+	/* margin-bottom: 20px; */
+`
+
+export const CardRightTitle = styled.h3`
+	margin-bottom: 20px;
+	color: ${theme.colors.secondary};
+	text-align: center;
+`

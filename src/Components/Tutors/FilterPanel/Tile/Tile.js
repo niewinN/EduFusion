@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
+import { AvailabilityContext } from '../../../../Context/AvailabilityContext'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
 	TileBox,
@@ -11,15 +12,24 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 function Tile({ icon, type, options }) {
-	const [startDate, setStartDate] = useState(null)
+	// const [startDate, setStartDate] = useState(null)
+
+	const { selectedDate, setSelectedDate } = useContext(AvailabilityContext)
+
+	const handleDateChange = date => {
+		setSelectedDate(date)
+		// Możesz także pobrać i ustawić dostępne terminy po zmianie daty
+	}
 	return (
 		<TileBox>
 			<TileIcon icon={icon} />
 			{type === 'date' ? (
 				<SearchSelectDateTile>
 					<DatePicker
-						selected={startDate}
-						onChange={date => setStartDate(date)}
+						// selected={startDate}
+						selected={selectedDate}
+						// onChange={date => setStartDate(date)}
+						onChange={handleDateChange}
 						dateFormat='d MMMM yyyy'
 						placeholderText='- Dzień korepetycji -'
 						wrapperClassName='datePicker'

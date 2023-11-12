@@ -5,18 +5,21 @@ import AboutUs from './Pages/AboutUs'
 import Contact from './Pages/Contact'
 import Footer from './Layouts/Footer/Footer'
 import Main from './Pages/Main'
+import { AvailabilityProvider } from './Context/AvailabilityContext'
 
 function App() {
 	return (
 		<>
-			<Navigation />
-			<Routes>
-				<Route path='/tutors' element={<Tutors />} />
-				<Route path='/aboutus' element={<AboutUs />} />
-				<Route path='/contact' element={<Contact />} />
-				<Route path='/' element={<Main />} />
-			</Routes>
-			<Footer />
+			<AvailabilityProvider>
+				<Navigation />
+				<Routes>
+					<Route path='/tutors' element={<Tutors />} />
+					<Route path='/aboutus' element={<AboutUs />} />
+					<Route path='/contact' element={<Contact />} />
+					<Route path='/' element={<Main />} />
+				</Routes>
+				<Footer />
+			</AvailabilityProvider>
 		</>
 	)
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import {
 	CardBox,
-	CardCalendar,
+	// CardCalendar,
 	CardPhotoBox,
 	CardPrice,
 	CardPriceAndBtn,
@@ -13,7 +13,11 @@ import {
 	TutorName,
 	TutorSubject,
 	CardRight,
+	CardRightTitle,
 } from '../../../../Assets/Styles/Tutors/TutorReserveCard.styles'
+import ScheduleCalendar from './ScheduleCalendar'
+// import { ThemeProvider } from 'styled-components'
+// import theme from '../../../../Assets/Styles/GlobalStyles/theme'
 
 function TutorReserveCard({ name, desc, subject, price }) {
 	return (
@@ -27,7 +31,12 @@ function TutorReserveCard({ name, desc, subject, price }) {
 				</InfoText>
 			</CardPhotoBox>
 			<CardRight>
-				<CardCalendar>Kalendarz</CardCalendar>
+				<CardRightTitle>
+					Kliknij w wolny termin i zarezerwuj zajęcia!
+				</CardRightTitle>
+				{/* <ThemeProvider theme={theme}> */}
+				<ScheduleCalendar />
+				{/* </ThemeProvider> */}
 				<CardPriceAndBtn>
 					<CardPrice>{price} / 60 min</CardPrice>
 					<CardReserveBtn>Zarezerwuj</CardReserveBtn>
