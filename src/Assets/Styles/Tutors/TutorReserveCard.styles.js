@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import theme from '../GlobalStyles/theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import tutor1 from '../../Images/Main/tutor1.png'
 
 export const CardBox = styled.div`
 	border-radius: 8px;
@@ -15,18 +14,29 @@ export const CardBox = styled.div`
 
 export const CardPhotoBox = styled.div`
 	position: relative;
-	background-image: url(${tutor1});
+	background-image: url(${props => props.img});
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
 	/* height: 300px; */
 	width: 100%;
-	height: 380px;
+	min-height: 380px;
 	border-radius: 8px 8px 0 0;
 	overflow: hidden;
 
+	@media (min-width: 440px) {
+		background-position: initial;
+	}
+
 	@media (min-width: 768px) {
 		flex-basis: 50%;
+		border-radius: 8px 0 0 8px;
+		background-position: center;
+	}
+
+	@media (min-width: 1024px) {
+		/* min-height: 400px; */
+		background-position: initial;
 	}
 `
 
@@ -67,18 +77,32 @@ export const TutorName = styled.h3`
 	margin-bottom: 30px;
 	font-size: 2.5rem;
 	color: ${theme.colors.primary};
+
+	@media (min-width: 1024px) {
+		font-size: 3rem;
+		margin-bottom: 15px;
+	}
 `
 
 export const TutorDesc = styled.p`
 	font-size: 1.5rem;
 	color: #fff;
 	margin-bottom: 30px;
+
+	@media (min-width: 1024px) {
+		font-size: 2rem;
+		padding: 20px;
+	}
 `
 
 export const TutorSubject = styled.p`
 	font-size: 2rem;
 	text-transform: uppercase;
 	color: ${theme.colors.primary};
+
+	@media (min-width: 1024px) {
+		font-size: 2.5rem;
+	}
 `
 
 export const CardRight = styled.div`
@@ -88,8 +112,6 @@ export const CardRight = styled.div`
 		flex-basis: 50%;
 	}
 `
-
-export const CardCalendar = styled.div``
 
 export const CardPriceAndBtn = styled.div`
 	display: flex;
@@ -103,6 +125,10 @@ export const CardPrice = styled.p`
 	font-size: 1.8rem;
 	font-weight: bold;
 	color: ${theme.colors.secondary};
+
+	@media (min-width: 1024px) {
+		font-size: 2.2rem;
+	}
 `
 
 export const CardReserveBtn = styled.button`
@@ -116,10 +142,18 @@ export const CardReserveBtn = styled.button`
 	font-size: 1.5rem;
 	text-transform: uppercase;
 	/* margin-bottom: 20px; */
+
+	@media (min-width: 1024px) {
+		padding: 10px 70px;
+	}
 `
 
 export const CardRightTitle = styled.h3`
 	margin-bottom: 20px;
 	color: ${theme.colors.secondary};
 	text-align: center;
+
+	@media (min-width: 1024px) {
+		font-size: 1.7rem;
+	}
 `

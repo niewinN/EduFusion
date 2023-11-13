@@ -8,6 +8,7 @@ import {
 	CardName,
 	CardPrice,
 	CardSubjcet,
+	CardBottom,
 } from '../../../Assets/Styles/Main/TutorCard.styles'
 
 function TutorCard({ img, name, desc, price, subject }) {
@@ -19,8 +20,10 @@ function TutorCard({ img, name, desc, price, subject }) {
 			<CardInformation>
 				<CardName>{name}</CardName>
 				<CardDesc>{desc}</CardDesc>
-				<CardPrice>{price}</CardPrice>
-				<CardSubjcet>{subject}</CardSubjcet>
+				<CardBottom>
+					<CardPrice>{price} / 60 min</CardPrice>
+					<CardSubjcet>{subject}</CardSubjcet>
+				</CardBottom>
 			</CardInformation>
 		</Card>
 	)

@@ -11,7 +11,7 @@ import {
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-function Tile({ icon, type, options }) {
+function Tile({ icon, type, options, selectedValue }) {
 	// const [startDate, setStartDate] = useState(null)
 
 	const { selectedDate, setSelectedDate } = useContext(AvailabilityContext)
@@ -27,7 +27,8 @@ function Tile({ icon, type, options }) {
 				<SearchSelectDateTile>
 					<DatePicker
 						// selected={startDate}
-						selected={selectedDate}
+						// selected={selectedDate}
+						selected={selectedValue}
 						// onChange={date => setStartDate(date)}
 						onChange={handleDateChange}
 						dateFormat='d MMMM yyyy'
@@ -42,7 +43,10 @@ function Tile({ icon, type, options }) {
 			) : (
 				<Select>
 					{options.map((option, index) => (
-						<Option key={index} value={option.value}>
+						<Option
+							key={index}
+							value={option.value}
+							selected={option.value === selectedValue}>
 							{option.label}
 						</Option>
 					))}

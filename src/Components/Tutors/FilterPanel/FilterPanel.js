@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Tile from './Tile/Tile'
 import {
 	faBook,
@@ -9,12 +9,14 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Wrapper } from '../../../Assets/Styles/GlobalStyles/wrapper'
 import { TilesContainer } from '../../../Assets/Styles/Tutors/FilterPanel.styles'
+import { SelectedOptionsContext } from '../../../Context/SelectedOptionsContext'
 
 function FilterPanel() {
+	const { selectedOptions } = useContext(SelectedOptionsContext)
 	const tilesData = [
 		{
+			id: 'subject',
 			icon: faBook,
-			// text: 'Przedmiot',
 			options: [
 				{ value: 'przedmiot', label: '- Przedmiot -' },
 				{ value: 'matematyka', label: 'Matematyka' },
@@ -27,8 +29,8 @@ function FilterPanel() {
 			],
 		},
 		{
+			id: 'level',
 			icon: faStairs,
-			// text: '-',
 			options: [
 				{ value: 'poziom', label: '- Poziom nauki -' },
 				{ value: 'podstawowa', label: 'Szkoła podstawowa' },
@@ -36,8 +38,8 @@ function FilterPanel() {
 			],
 		},
 		{
+			id: 'mode',
 			icon: faHouse,
-			// text: 'Prz',
 			options: [
 				{ value: 'tryb', label: '- Tryb nauki -' },
 				{ value: 'zdalnie', label: 'Zdalnie' },
@@ -45,8 +47,8 @@ function FilterPanel() {
 			],
 		},
 		{
+			id: 'city',
 			icon: faCity,
-			// text: 'Przedmio',
 			options: [
 				{ value: 'miasto', label: ' - Miasto -' },
 				{ value: 'warszawa', label: 'Warszawa' },
@@ -70,9 +72,9 @@ function FilterPanel() {
 					<Tile
 						key={index}
 						icon={tile.icon}
-						// text={tile.text}
 						type={tile.type}
 						options={tile.options}
+						selectedValue={selectedOptions[tile.id]}
 					/>
 				))}
 			</TilesContainer>

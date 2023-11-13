@@ -16,13 +16,11 @@ import {
 	CardRightTitle,
 } from '../../../../Assets/Styles/Tutors/TutorReserveCard.styles'
 import ScheduleCalendar from './ScheduleCalendar'
-// import { ThemeProvider } from 'styled-components'
-// import theme from '../../../../Assets/Styles/GlobalStyles/theme'
 
-function TutorReserveCard({ name, desc, subject, price }) {
+function TutorReserveCard({ img, name, desc, subject, price }) {
 	return (
 		<CardBox>
-			<CardPhotoBox>
+			<CardPhotoBox img={img}>
 				<InfoBtn icon={faCircleQuestion}></InfoBtn>
 				<InfoText>
 					<TutorName>{name}</TutorName>
@@ -34,9 +32,7 @@ function TutorReserveCard({ name, desc, subject, price }) {
 				<CardRightTitle>
 					Kliknij w wolny termin i zarezerwuj zajęcia!
 				</CardRightTitle>
-				{/* <ThemeProvider theme={theme}> */}
 				<ScheduleCalendar />
-				{/* </ThemeProvider> */}
 				<CardPriceAndBtn>
 					<CardPrice>{price} / 60 min</CardPrice>
 					<CardReserveBtn>Zarezerwuj</CardReserveBtn>

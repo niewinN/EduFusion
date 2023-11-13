@@ -1,37 +1,64 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import TutorReserveCard from './TutorReserveCard/TutorReserveCard'
 import { Wrapper } from '../../../Assets/Styles/GlobalStyles/wrapper'
 import styled from 'styled-components'
+import axios from 'axios'
+import tutor1 from '../../../Assets/Images/Main/tutor1.png'
+import tutor2 from '../../../Assets/Images/Main/tutor2.png'
+import tutor3 from '../../../Assets/Images/Main/tutor3.png'
+import tutor4 from '../../../Assets/Images/Main/tutor4.png'
+import tutor5 from '../../../Assets/Images/Main/tutor5.png'
+import tutor6 from '../../../Assets/Images/Main/tutor6.png'
+import tutor7 from '../../../Assets/Images/Main/tutor7.png'
+import tutor8 from '../../../Assets/Images/Main/tutor8.png'
 
 const TutorCardsContainer = styled.div`
 	padding: 20px;
 `
 
 function TutorCards() {
-	const tutors = [
-		{
-			id: 1,
-			// img: tutor1,
-			name: 'Wiktor',
-			desc: 'Studiuję na Politechnice Warszawskiej na kierunku Informatyka. Nauczanie to moja pasja i z chęcią podzielę się swoją wiedzą. Zapraszam na wspólną przygodę o twoje lepsze wyniki w nauce',
-			price: '70zł',
-			subject: 'matematyka',
-		},
-		{
-			id: 2,
-			// img: tutor2,
-			name: 'Alina',
-			desc: 'Studiuję na Politechnice Warszawskiej na kierunku Informatyka. Nauczanie to moja pasja i z chęcią podzielę się swoją wiedzą. Zapraszam na wspólną przygodę o twoje lepsze wyniki w nauce',
-			price: '80zł',
-			subject: 'fizyka',
-		},
-	]
+	const [tutors, setTutors] = useState([])
+
+	useEffect(() => {
+		axios
+			.get('/tutors.json')
+			.then(response => {
+				const tutorsWithImages = response.data.map(tutor => {
+					switch (tutor.img) {
+						case 'tutor1.jpg':
+							return { ...tutor, img: tutor1 }
+						case 'tutor2.jpg':
+							return { ...tutor, img: tutor2 }
+						case 'tutor3.jpg':
+							return { ...tutor, img: tutor3 }
+						case 'tutor4.jpg':
+							return { ...tutor, img: tutor4 }
+						case 'tutor5.jpg':
+							return { ...tutor, img: tutor5 }
+						case 'tutor6.jpg':
+							return { ...tutor, img: tutor6 }
+						case 'tutor7.jpg':
+							return { ...tutor, img: tutor7 }
+						case 'tutor8.jpg':
+							return { ...tutor, img: tutor8 }
+
+						default:
+							return tutor
+					}
+				})
+
+				setTutors(tutorsWithImages)
+			})
+			.catch(error => {
+				console.error('Błąd podczas pobierania danych:', error)
+			})
+	}, [])
 
 	return (
 		<TutorCardsContainer>
 			<Wrapper>
 				{tutors.map(tutor => (
-					<TutorReserveCard key={tutor.id} {...tutor} />
+					<TutorReserveCard key={tutor.id} img={tutor.img} {...tutor} />
 				))}
 			</Wrapper>
 		</TutorCardsContainer>

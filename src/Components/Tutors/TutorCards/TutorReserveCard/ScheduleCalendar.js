@@ -12,14 +12,12 @@ import { pl } from 'date-fns/locale'
 // 	TimeSlot,
 // } from './StyledComponents'
 
-// StyledComponents.js
 import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export const CalendarWrapper = styled.div`
 	display: flex;
-	/* flex-direction:; */
 	justify-content: space-around;
 	max-width: 600px;
 	margin: auto;
@@ -30,11 +28,19 @@ export const DayWrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 	margin-bottom: 20px;
+
+	@media (min-width: 740px) {
+		font-size: 1.4rem;
+	}
+
+	@media (min-width: 1024px) {
+		font-size: 1.7rem;
+	}
 `
 
 export const DateLabel = styled.div`
 	font-weight: bold;
-	margin-bottom: 5px; // zmniejszona wartość, aby etykiety były bliżej siebie
+	margin-bottom: 5px;
 `
 
 export const FullDateLabel = styled.div`
@@ -50,21 +56,9 @@ export const TimeSlotsWrapper = styled.div`
 
 export const TimeSlot = styled.div`
 	padding: 5px 10px;
-	background-color: #e0e0e0;
+	background-color: ${props => (props.isSelected ? '#78ADDB' : 'e0e0e0')};
 	border-radius: 5px;
-	/* background-color: ${theme.colors.primary}; */
-	/* color: #fff; */
 	cursor: pointer;
-	&:hover {
-		/* background-color: #c8c8c8; */
-		background-color: ${theme.colors.primary};
-		color: #fff;
-	}
-
-	&:focus {
-		background-color: ${theme.colors.primary};
-		color: #fff;
-	}
 `
 const ShowMoreButton = styled.button`
 	padding: 5px 10px;
@@ -74,9 +68,7 @@ const ShowMoreButton = styled.button`
 	cursor: pointer;
 	background: none;
 	width: 100%;
-	/* color: ${theme.colors.primary}; */
 	color: #000;
-	/* font-weight: bold; */
 	font-size: 1.2rem;
 	outline: none;
 `
@@ -98,10 +90,18 @@ const dayLabels = [
 const ScheduleCalendar = () => {
 	const { selectedDate, defaultAvailability } = useContext(AvailabilityContext)
 	const [isExpanded, setIsExpanded] = useState(false) // Dodanie stanu do przechowywania rozwiniętych dni
+	const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
 
 	const daysOfWeek = Array.from({ length: 7 }, (_, i) =>
 		addDays(selectedDate, i)
 	)
+
+	const handleTimeSlotClick = (day, time) => {
+		const newSelection = [day, time]
+		setSelectedTimeSlot(prev =>
+			prev && prev[0] === day && prev[1] === time ? null : newSelection
+		)
+	}
 
 	return (
 		<>
@@ -110,6 +110,7 @@ const ScheduleCalendar = () => {
 					const dayLabel = dayLabels[index] // 'monday', 'tuesday', etc.
 					const times = defaultAvailability[dayLabel] || []
 					const timesToShow = isExpanded ? times : times.slice(0, 5)
+					const formattedDay = format(day, 'yyyy-MM-dd')
 
 					return (
 						<DayWrapper key={day}>
@@ -119,7 +120,16 @@ const ScheduleCalendar = () => {
 							</FullDateLabel>
 							<TimeSlotsWrapper>
 								{timesToShow.map(time => (
-									<TimeSlot key={time}>{time}</TimeSlot>
+									<TimeSlot
+										key={time}
+										isSelected={
+											selectedTimeSlot &&
+											selectedTimeSlot[0] === formattedDay &&
+											selectedTimeSlot[1] === time
+										}
+										onClick={() => handleTimeSlotClick(formattedDay, time)}>
+										{time}
+									</TimeSlot>
 								))}
 							</TimeSlotsWrapper>
 						</DayWrapper>
@@ -137,30 +147,3 @@ const ScheduleCalendar = () => {
 }
 
 export default ScheduleCalendar
-
-// 	return (
-// 		<CalendarWrapper>
-// 			{daysOfWeek.map((day, index) => {
-// 				const dayLabel = dayLabels[index] // 'monday', 'tuesday', etc.
-// 				return (
-// 					<DayWrapper key={day}>
-// 						<DateLabel>
-// 							{format(day, 'EEE', { locale: pl })}{' '}
-// 							{/* Skrócona forma dnia tygodnia */}
-// 						</DateLabel>
-// 						<FullDateLabel>
-// 							{format(day, 'dd MMM', { locale: pl })} {/* Pełna data */}
-// 						</FullDateLabel>
-// 						<TimeSlotsWrapper>
-// 							{defaultAvailability[dayLabel]?.map(time => (
-// 								<TimeSlot key={time}>{time}</TimeSlot>
-// 							))}
-// 						</TimeSlotsWrapper>
-// 					</DayWrapper>
-// 				)
-// 			})}
-// 		</CalendarWrapper>
-// 	)
-// }
-
-// export default ScheduleCalendar

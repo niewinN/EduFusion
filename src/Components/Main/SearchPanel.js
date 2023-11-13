@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
 import {
 	SearchBox,
@@ -17,12 +17,84 @@ import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import pl from 'date-fns/locale/pl'
 import searchPanelImg from '../../Assets/Images/Main/searchPanelImg.png'
+import { SelectedOptionsContext } from '../../Context/SelectedOptionsContext'
+import { useNavigate } from 'react-router-dom'
 
 registerLocale('pl', pl)
 setDefaultLocale('pl')
 
+const selectOptions = [
+	{
+		id: 'subject',
+		options: [
+			'- Wybierz przedmiot -',
+			'matematyka',
+			'Fizyka',
+			'Chemia',
+			'Geografia',
+			'Język angielski',
+			'Język niemiecki',
+			'Biologia',
+		],
+	},
+	{
+		id: 'level',
+		options: [
+			'- Wybierz poziom nauki -',
+			'Szkoła podstawowa',
+			'Szkoła ponadpodstawowa',
+		],
+	},
+	{
+		id: 'mode',
+		options: ['- Wybierz tryb nauki -', 'Zdalnie', 'Stacjonarnie'],
+	},
+	{
+		id: 'city',
+		options: [
+			'- Wybierz miasto(* nauka stacjonarna) -',
+			'Warszawa',
+			'Kraków',
+			'Gdańsk',
+			'Wrocław',
+			'Poznań',
+			'Katowice',
+		],
+	},
+]
+
 function SearchPanel() {
 	const [startDate, setStartDate] = useState(null)
+	const { setSelectedOptions } = useContext(SelectedOptionsContext)
+	const [formData, setFormData] = useState({
+		subject: '',
+		level: '',
+		mode: '',
+		city: '',
+		date: null,
+	})
+	const navigate = useNavigate()
+
+	const handleChange = e => {
+		const { name, value } = e.target
+		setFormData(prevState => ({
+			...prevState,
+			[name]: value,
+		}))
+	}
+
+	const handleDateChange = date => {
+		setFormData(prevState => ({
+			...prevState,
+			date: date,
+		}))
+	}
+
+	const handleSearch = () => {
+		setSelectedOptions(formData)
+		// Nawigacja do FilterPanel, jeśli to konieczne
+		navigate('/tutors')
+	}
 
 	return (
 		<SearchPanelContainer>
@@ -34,41 +106,24 @@ function SearchPanel() {
 					</SearchPanelTitle>
 					<SearchSecondContainer>
 						<SearchBox>
-							<SearchSelect>
-								<SearchOption>- Wybierz przedmiot -</SearchOption>
-								<SearchOption>Matematyka</SearchOption>
-								<SearchOption>Fizyka</SearchOption>
-								<SearchOption>Chemia</SearchOption>
-								<SearchOption>Geografia</SearchOption>
-								<SearchOption>Język angielski</SearchOption>
-								<SearchOption>Język niemiecki</SearchOption>
-								<SearchOption>Biologia</SearchOption>
-							</SearchSelect>
-							<SearchSelect>
-								<SearchOption>- Wybierz poziom nauki -</SearchOption>
-								<SearchOption>Szkoła podstawowa</SearchOption>
-								<SearchOption>Szkoła ponadpodstawowa</SearchOption>
-							</SearchSelect>
-							<SearchSelect>
-								<SearchOption>- Wybierz tryb nauki -</SearchOption>
-								<SearchOption>Zdalnie</SearchOption>
-								<SearchOption>Stacjonarnie</SearchOption>
-							</SearchSelect>
-							<SearchSelect>
-								<SearchOption>
-									- Wybierz miasto(* nauka stacjonarna) -
-								</SearchOption>
-								<SearchOption>Warszawa</SearchOption>
-								<SearchOption>Kraków</SearchOption>
-								<SearchOption>Gdańsk</SearchOption>
-								<SearchOption>Wrocław</SearchOption>
-								<SearchOption>Poznań</SearchOption>
-								<SearchOption>Katowice</SearchOption>
-							</SearchSelect>
+							{selectOptions.map(select => (
+								<SearchSelect
+									name={select.id}
+									onChange={handleChange}
+									key={select.id}>
+									{select.options.map(option => (
+										<SearchOption key={option} value={option}>
+											{option}
+										</SearchOption>
+									))}
+								</SearchSelect>
+							))}
 							<SearchSelectDate>
 								<DatePicker
-									selected={startDate}
-									onChange={date => setStartDate(date)}
+									// selected={startDate}
+									// onChange={date => setStartDate(date)}
+									selected={formData.date}
+									onChange={handleDateChange}
 									dateFormat='d MMMM yyyy'
 									placeholderText='- Wybierz dzień korepetycji -'
 									wrapperClassName='datePicker'
@@ -79,7 +134,9 @@ function SearchPanel() {
 								/>
 							</SearchSelectDate>
 
-							<SearchBtn>Wyszukaj korepetytora</SearchBtn>
+							<SearchBtn onClick={handleSearch}>
+								Wyszukaj korepetytora
+							</SearchBtn>
 						</SearchBox>
 						<SearchPhotoBox>
 							<SearchPhoto src={searchPanelImg}></SearchPhoto>

@@ -16,7 +16,23 @@ export const CardImg = styled.img`
 	border-radius: 8px;
 `
 
-export const CardInformation = styled.div``
+export const CardInformation = styled.div`
+	display: flex;
+	flex-direction: column;
+	min-height: 250px;
+
+	@media (min-width: 768px) {
+		min-height: 300px;
+	}
+
+	@media (min-width: 800px) {
+		min-height: 250px;
+	}
+
+	@media (min-width: 1024px) {
+		min-height: 220px;
+	}
+`
 
 export const CardName = styled.p`
 	padding: 10px 0;
@@ -35,6 +51,7 @@ export const CardPrice = styled.p`
 	font-weight: 500;
 	color: ${theme.colors.secondary};
 	padding: 10px 0;
+	margin-top: auto;
 `
 
 export const CardSubjcet = styled.div`
@@ -45,4 +62,9 @@ export const CardSubjcet = styled.div`
 	text-align: center;
 	color: #fff;
 	font-size: 1.5rem;
+	/* margin-top: auto; */
+`
+
+export const CardBottom = styled.div`
+	margin-top: auto;
 `
