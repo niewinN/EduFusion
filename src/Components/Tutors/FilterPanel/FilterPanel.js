@@ -9,57 +9,34 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { Wrapper } from '../../../Assets/Styles/GlobalStyles/wrapper'
 import { TilesContainer } from '../../../Assets/Styles/Tutors/FilterPanel.styles'
-import { SelectedOptionsContext } from '../../../Context/SelectedOptionsContext'
+import { baseSelectOptions } from '../../../Assets/Files/optionsData'
+import { useSelectedOptions } from '../../../Context/SelectedOptionsContext'
 
 function FilterPanel() {
-	const { selectedOptions } = useContext(SelectedOptionsContext)
+	const { selectedOptions } = useSelectedOptions()
 	const tilesData = [
 		{
 			id: 'subject',
 			icon: faBook,
-			options: [
-				{ value: 'przedmiot', label: '- Przedmiot -' },
-				{ value: 'matematyka', label: 'Matematyka' },
-				{ value: 'fizyka', label: 'Fizyka' },
-				{ value: 'chemia', label: 'Chemia' },
-				{ value: 'geografia', label: 'Geografia' },
-				{ value: 'angielski', label: 'Język angielski' },
-				{ value: 'niemiecki', label: 'Język niemiecki' },
-				{ value: 'biologia', label: 'Biologia' },
-			],
+			options: baseSelectOptions.subject,
 		},
 		{
 			id: 'level',
 			icon: faStairs,
-			options: [
-				{ value: 'poziom', label: '- Poziom nauki -' },
-				{ value: 'podstawowa', label: 'Szkoła podstawowa' },
-				{ value: 'ponadpodstawowa', label: 'Szkoła ponadpodstawowa' },
-			],
+			options: baseSelectOptions.level,
 		},
 		{
 			id: 'mode',
 			icon: faHouse,
-			options: [
-				{ value: 'tryb', label: '- Tryb nauki -' },
-				{ value: 'zdalnie', label: 'Zdalnie' },
-				{ value: 'stacjonarnie', label: 'Stacjonarnie' },
-			],
+			options: baseSelectOptions.mode,
 		},
 		{
 			id: 'city',
 			icon: faCity,
-			options: [
-				{ value: 'miasto', label: ' - Miasto -' },
-				{ value: 'warszawa', label: 'Warszawa' },
-				{ value: 'krakow', label: 'Kraków' },
-				{ value: 'gdansk', label: 'Gdańsk' },
-				{ value: 'wroclaw', label: 'Wrocław' },
-				{ value: 'poznan', label: 'Poznań' },
-				{ value: 'katowice', label: 'Katowice' },
-			],
+			options: baseSelectOptions.city,
 		},
 		{
+			id: 'date',
 			icon: faCalendarDays,
 			type: 'date',
 		},
@@ -74,7 +51,12 @@ function FilterPanel() {
 						icon={tile.icon}
 						type={tile.type}
 						options={tile.options}
-						selectedValue={selectedOptions[tile.id]}
+						id={tile.id}
+						selectedValue={
+							tile.id === 'date'
+								? selectedOptions.date
+								: selectedOptions[tile.id]
+						}
 					/>
 				))}
 			</TilesContainer>

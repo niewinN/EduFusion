@@ -1,7 +1,8 @@
-// SelectedOptionsContext.js
-import React, { createContext, useState } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 
 export const SelectedOptionsContext = createContext()
+
+export const useSelectedOptions = () => useContext(SelectedOptionsContext)
 
 export const SelectedOptionsProvider = ({ children }) => {
 	const [selectedOptions, setSelectedOptions] = useState({
@@ -9,7 +10,7 @@ export const SelectedOptionsProvider = ({ children }) => {
 		level: '',
 		mode: '',
 		city: '',
-		date: null,
+		date: new Date(),
 	})
 
 	return (

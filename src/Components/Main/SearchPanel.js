@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
+import { useSelectedOptions } from '../../Context/SelectedOptionsContext'
 import {
 	SearchBox,
 	SearchBtn,
@@ -17,83 +18,43 @@ import DatePicker, { registerLocale, setDefaultLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import pl from 'date-fns/locale/pl'
 import searchPanelImg from '../../Assets/Images/Main/searchPanelImg.png'
-import { SelectedOptionsContext } from '../../Context/SelectedOptionsContext'
+import SelectComponent from './SelectComponent'
+import { baseSelectOptions } from '../../Assets/Files/optionsData'
+import DatePickerComponent from './DatePickerComponent'
 import { useNavigate } from 'react-router-dom'
 
 registerLocale('pl', pl)
 setDefaultLocale('pl')
 
-const selectOptions = [
-	{
-		id: 'subject',
-		options: [
-			'- Wybierz przedmiot -',
-			'matematyka',
-			'Fizyka',
-			'Chemia',
-			'Geografia',
-			'Język angielski',
-			'Język niemiecki',
-			'Biologia',
-		],
-	},
-	{
-		id: 'level',
-		options: [
-			'- Wybierz poziom nauki -',
-			'Szkoła podstawowa',
-			'Szkoła ponadpodstawowa',
-		],
-	},
-	{
-		id: 'mode',
-		options: ['- Wybierz tryb nauki -', 'Zdalnie', 'Stacjonarnie'],
-	},
-	{
-		id: 'city',
-		options: [
-			'- Wybierz miasto(* nauka stacjonarna) -',
-			'Warszawa',
-			'Kraków',
-			'Gdańsk',
-			'Wrocław',
-			'Poznań',
-			'Katowice',
-		],
-	},
-]
-
 function SearchPanel() {
 	const [startDate, setStartDate] = useState(null)
-	const { setSelectedOptions } = useContext(SelectedOptionsContext)
-	const [formData, setFormData] = useState({
-		subject: '',
-		level: '',
-		mode: '',
-		city: '',
-		date: null,
-	})
+	const { selectedOptions, setSelectedOptions } = useSelectedOptions()
 	const navigate = useNavigate()
-
-	const handleChange = e => {
-		const { name, value } = e.target
-		setFormData(prevState => ({
-			...prevState,
-			[name]: value,
+	const handleChange = (name, value) => {
+		const newValue = value instanceof Date ? value : value.target.value
+		setSelectedOptions(prevOptions => ({
+			...prevOptions,
+			[name]: newValue,
 		}))
 	}
 
 	const handleDateChange = date => {
-		setFormData(prevState => ({
-			...prevState,
-			date: date,
-		}))
+		setStartDate(date) // Aktualizacja lokalnego stanu
+		handleChange('date', date) // Aktualizacja stanu w kontekście
+	}
+
+	const isFormValid = () => {
+		// Sprawdź, czy wymagane pola są wypełnione
+		const { subject, level, mode, city, date } = selectedOptions
+		return subject && level && mode && date && (mode !== 'stacjonarnie' || city)
 	}
 
 	const handleSearch = () => {
-		setSelectedOptions(formData)
-		// Nawigacja do FilterPanel, jeśli to konieczne
-		navigate('/tutors')
+		if (isFormValid()) {
+			navigate('/tutors')
+		} else {
+			alert('Proszę wypełnić wszystkie wymagane pola.')
+		}
 	}
 
 	return (
@@ -106,31 +67,49 @@ function SearchPanel() {
 					</SearchPanelTitle>
 					<SearchSecondContainer>
 						<SearchBox>
-							{selectOptions.map(select => (
-								<SearchSelect
-									name={select.id}
-									onChange={handleChange}
-									key={select.id}>
-									{select.options.map(option => (
-										<SearchOption key={option} value={option}>
-											{option}
-										</SearchOption>
-									))}
-								</SearchSelect>
-							))}
+							<SelectComponent
+								// label='- Wybierz przedmiot -'
+								options={[
+									{ value: '', label: '- Wybierz przedmiot -' },
+									...baseSelectOptions.subject,
+								]}
+								// options={baseSelectOptions.subject}
+								styleType='search'
+								onChange={event => handleChange('subject', event)}
+							/>
+							<SelectComponent
+								options={[
+									{ value: '', label: '- Wybierz poziom nauki -' },
+									...baseSelectOptions.level,
+								]}
+								styleType='search'
+								onChange={event => handleChange('level', event)}
+							/>
+							<SelectComponent
+								options={[
+									{ value: '', label: '- Wybierz tryb nauki -' },
+									...baseSelectOptions.mode,
+								]}
+								styleType='search'
+								onChange={event => handleChange('mode', event)}
+							/>
+							<SelectComponent
+								options={[
+									{
+										value: '',
+										label: '- Wybierz miasto *(nauka stacjonarna) -',
+									},
+									...baseSelectOptions.city,
+								]}
+								styleType='search'
+								onChange={event => handleChange('city', event)}
+							/>
 							<SearchSelectDate>
-								<DatePicker
-									// selected={startDate}
-									// onChange={date => setStartDate(date)}
-									selected={formData.date}
-									onChange={handleDateChange}
-									dateFormat='d MMMM yyyy'
-									placeholderText='- Wybierz dzień korepetycji -'
-									wrapperClassName='datePicker'
-									locale='pl'
-									minDate={new Date()}
-									customInput={<input inputMode='none' />}
-									withPortal
+								<DatePickerComponent
+									startDate={startDate}
+									// setStartDate={setStartDate}
+									setStartDate={handleDateChange}
+									dateName='- Wybierz dzień korepetycji -'
 								/>
 							</SearchSelectDate>
 

@@ -16,7 +16,7 @@ const TutorCardsContainer = styled.div`
 	padding: 20px;
 `
 
-function TutorCards() {
+function TutorCards({ filteredTutors }) {
 	const [tutors, setTutors] = useState([])
 
 	useEffect(() => {
@@ -57,8 +57,17 @@ function TutorCards() {
 	return (
 		<TutorCardsContainer>
 			<Wrapper>
-				{tutors.map(tutor => (
-					<TutorReserveCard key={tutor.id} img={tutor.img} {...tutor} />
+				{filteredTutors.map(tutor => (
+					// <TutorReserveCard key={tutor.id} img={tutor.img} {...tutor} />
+					<TutorReserveCard
+						key={tutor.id}
+						img={tutor.img}
+						name={tutor.name}
+						desc={tutor.desc}
+						subject={tutor.subject}
+						price={tutor.price}
+						selectedTutorId={tutor.id} // Assuming `id` is the tutor ID
+					/>
 				))}
 			</Wrapper>
 		</TutorCardsContainer>

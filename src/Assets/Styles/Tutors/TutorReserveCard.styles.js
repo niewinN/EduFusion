@@ -6,9 +6,11 @@ export const CardBox = styled.div`
 	border-radius: 8px;
 	box-shadow: 0 2px 15px #646464;
 	margin-bottom: 20px;
+	/* min-height: 380px; */
 
 	@media (min-width: 768px) {
 		display: flex;
+		/* flex-direction: column; */
 	}
 `
 
@@ -106,6 +108,9 @@ export const TutorSubject = styled.p`
 `
 
 export const CardRight = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 	/* margin-top: 20px; */
 	padding: 20px;
 	@media (min-width: 768px) {
@@ -117,7 +122,8 @@ export const CardPriceAndBtn = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
-	margin-top: 20px;
+	/* margin-top: 20px; */
+	margin-top: auto;
 `
 
 export const CardPrice = styled.p`

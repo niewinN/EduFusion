@@ -20,7 +20,7 @@ export const TileIcon = styled(FontAwesomeIcon)`
 	color: ${theme.colors.secondary};
 `
 
-export const Select = styled.select`
+export const FilterSelect = styled.select`
 	width: 100%;
 	font-size: 1.7rem;
 	border: none;
