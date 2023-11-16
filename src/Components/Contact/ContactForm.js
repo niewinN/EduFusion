@@ -27,15 +27,15 @@ function ContactForm() {
 							<FormInput></FormInput>
 						</FormBox>
 						<FormBox>
-							<FormLabel>Imię</FormLabel>
+							<FormLabel>Nazwisko</FormLabel>
 							<FormInput></FormInput>
 						</FormBox>
 						<FormBox>
-							<FormLabel>Imię</FormLabel>
+							<FormLabel>E-mail</FormLabel>
 							<FormInput></FormInput>
 						</FormBox>
 						<FormBox>
-							<FormLabel>Imię</FormLabel>
+							<FormLabel>Wiadomość</FormLabel>
 							<FormTextarea></FormTextarea>
 						</FormBox>
 						<FormBtn>Wyślij</FormBtn>

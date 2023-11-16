@@ -5,23 +5,27 @@ import AboutUs from './Pages/AboutUs'
 import Contact from './Pages/Contact'
 import Footer from './Layouts/Footer/Footer'
 import Main from './Pages/Main'
-import { AvailabilityProvider } from './Context/AvailabilityContext'
+// import { AvailabilityProvider } from './Context/AvailabilityContext'
 import { SelectedOptionsProvider } from './Context/SelectedOptionsContext'
+import Register from './Pages/Register'
+import Login from './Pages/Login'
 
 function App() {
 	return (
 		<>
 			<SelectedOptionsProvider>
-				<AvailabilityProvider>
-					<Navigation />
-					<Routes>
-						<Route path='/tutors' element={<Tutors />} />
-						<Route path='/aboutus' element={<AboutUs />} />
-						<Route path='/contact' element={<Contact />} />
-						<Route path='/' element={<Main />} />
-					</Routes>
-					<Footer />
-				</AvailabilityProvider>
+				{/* <AvailabilityProvider> */}
+				<Navigation />
+				<Routes>
+					<Route path='/tutors' element={<Tutors />} />
+					<Route path='/aboutus' element={<AboutUs />} />
+					<Route path='/contact' element={<Contact />} />
+					<Route path='/' element={<Main />} />
+					<Route path='/register' element={<Register />} />
+					<Route path='/login' element={<Login />} />
+				</Routes>
+				<Footer />
+				{/* </AvailabilityProvider> */}
 			</SelectedOptionsProvider>
 		</>
 	)

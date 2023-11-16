@@ -6,8 +6,8 @@ export const baseSelectOptions = {
 		{ value: 'fizyka', label: 'Fizyka' },
 		{ value: 'chemia', label: 'Chemia' },
 		{ value: 'geografia', label: 'Geografia' },
-		{ value: 'angielski', label: 'Język angielski' },
-		{ value: 'niemiecki', label: 'Język niemiecki' },
+		{ value: 'język angielski', label: 'Język angielski' },
+		{ value: 'język niemiecki', label: 'Język niemiecki' },
 		{ value: 'biologia', label: 'Biologia' },
 	],
 	level: [

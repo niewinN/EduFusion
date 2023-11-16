@@ -39,7 +39,7 @@ export const FormTitle = styled.p`
 export const FormBox = styled.div`
 	display: flex;
 	flex-direction: column;
-	margin: 10px 0px;
+	margin: 15px 0px;
 	font-size: 1.6rem;
 
 	@media (min-width: 1024px) {
@@ -49,7 +49,7 @@ export const FormBox = styled.div`
 
 export const FormLabel = styled.label`
 	/* font-size: 1.6rem; */
-	margin-bottom: 5px;
+	margin-bottom: 10px;
 `
 
 export const FormInput = styled.input`

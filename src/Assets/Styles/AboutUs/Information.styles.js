@@ -12,6 +12,7 @@ export const InformationContainer = styled.div`
 		/* margin-top: 120px; */
 		flex-direction: row;
 		justify-content: space-around;
+		align-items: center;
 	}
 `
 
