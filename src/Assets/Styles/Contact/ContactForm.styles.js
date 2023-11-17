@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import theme from '../GlobalStyles/theme'
+import { ToastContainer } from 'react-toastify'
 
 export const ContactContainer = styled.div`
 	padding: 60px 20px;
@@ -88,6 +89,7 @@ export const FormBtn = styled.button`
 	padding: 8px;
 	color: #fff;
 	margin-top: 10px;
+	cursor: pointer;
 
 	@media (min-width: 1024px) {
 		font-size: 2rem;
@@ -104,11 +106,11 @@ export const ContactImgBox = styled.div`
 
 	@media (min-width: 768px) {
 		flex-basis: 50%;
-		height: 440px;
+		height: 480px;
 	}
 
 	@media (min-width: 1024px) {
-		height: 520px;
+		height: 540px;
 	}
 
 	&::before {
@@ -132,4 +134,39 @@ export const ContactImg = styled.img`
 	@media (min-width: 1024px) {
 		width: 350px;
 	}
+`
+
+export const ErrorMessage = styled.div`
+	margin-bottom: 10px;
+	/* Tutaj możesz dodać więcej stylów, np. kolor tekstu, font itp. */
+`
+
+export const StyledToastContainer = styled(ToastContainer)`
+	.Toastify__toast {
+		border-radius: 4px;
+		font-size: 1.2rem;
+	}
+
+	// Style dla szerokości i wyśrodkowania toastów na urządzeniach mobilnych
+	@media only screen and (max-width: 480px) {
+		width: 80% !important; // Szerokość toastów na urządzeniach mobilnych
+		top: 8vh !important;
+		left: auto !important; // Wyśrodkowanie toastów (50% - 1/2 szerokości)
+		right: 0 !important;
+	}
+	/* &.Toastify__toast-container--bottom-center {
+		@media (max-width: 480px) {
+			width: 80% !important;
+			margin-left: auto !important;
+			margin-right: auto !important;
+		}
+	}
+	.Toastify__toast--error {
+		background-color: white !important;
+		color: ${theme.colors.secondary} !important;
+	}
+	.Toastify__toast--success {
+		background-color: blue !important;
+		color: red !important;
+	} */
 `

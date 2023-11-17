@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "firstName": "sfdsd",
+      "lastName": "dfsdfs",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "432234342324",
+      "password": "qwerty",
+      "confirmPassword": "qwerty",
+      "id": 1
+    },
+    {
+      "firstName": "sfdsd",
+      "lastName": "dfsdfs",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "432234342324",
+      "password": "qwerty",
+      "confirmPassword": "qwerty",
+      "id": 2
+    },
+    {
+      "firstName": "sfdsd",
+      "lastName": "dfsdfs",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "432234342324",
+      "password": "qwerty",
+      "confirmPassword": "qwerty",
+      "id": 3
+    },
+    {
+      "firstName": "sfdsd",
+      "lastName": "dfsdfs",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "432234342324",
+      "password": "qwerty",
+      "confirmPassword": "qwerty",
+      "id": 4
+    },
+    {
+      "firstName": "eeeee",
+      "lastName": "eeeeeeeee",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "321123321312",
+      "password": "eeeeee",
+      "confirmPassword": "eeeeee",
+      "id": 5
+    },
+    {
+      "firstName": "eeeee",
+      "lastName": "eeeeeeeee",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "321123321312",
+      "password": "eeeeee",
+      "confirmPassword": "eeeeee",
+      "id": 6
+    },
+    {
+      "firstName": "eeeee",
+      "lastName": "eeeeeeeee",
+      "email": "piotrek.niew@vp.pl",
+      "phoneNumber": "321123321312",
+      "password": "eeeeee",
+      "confirmPassword": "eeeeee",
+      "id": 7
+    },
+    {
+      "firstName": "Piotr",
+      "lastName": "Niewiński",
+      "email": "ddddddd@mail.com",
+      "phoneNumber": "+48790292052",
+      "password": "qwerty",
+      "confirmPassword": "qwerty",
+      "id": 8
+    }
+  ]
+}

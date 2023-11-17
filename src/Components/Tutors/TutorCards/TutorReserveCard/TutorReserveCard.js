@@ -35,7 +35,7 @@ function TutorReserveCard({
 		console.log('selectedTutorId:', selectedTutorId)
 		const fetchTutorData = async () => {
 			try {
-				const response = await axios.get(`http://localhost:3000/tutors.json`)
+				const response = await axios.get(`./tutors.json`)
 				// setSelectedTutor(response.data)
 				setSelectedTutor(
 					response.data.find(tutor => tutor.id === selectedTutorId)

@@ -64,7 +64,7 @@ export const NavList = styled.ul`
 	align-items: center;
 	transform: ${props =>
 		props.$showNav ? 'translateX(0)' : 'translateX(100%)'};
-	backdrop-filter: blur(15px);
+	backdrop-filter: blur(20px);
 	background-color: rgba(120, 173, 219, 0.6);
 	z-index: 99999;
 	transition: 0.3s;
@@ -91,48 +91,27 @@ export const NavLink = styled(Link)`
 	font-size: 1.8rem;
 	color: white;
 	text-decoration: none;
-	font-weight: normal;
-	font-weight: ${props => (props.$isFirst ? 'bold' : 'normal')};
+	font-weight: bold;
 	transition: 0.3s;
 	overflow: hidden;
+	color: ${theme.colors.secondary};
 
-	// &::before,
-	// &::after {
-	// 	content: '';
-	// 	position: absolute;
-	// 	top: 0;
-	// 	width: 0px;
-	// 	border-top: 2px solid white;
-	// 	transition: all 0.3s;
-	// }
-
-	// &::before {
-	// 	right: 50%;
-	// }
-
-	// &::after {
-	// 	left: 50%;
-	// }
-
-	// @media (min-width: 768px) {
-	// 	&:hover::before {
-	// 		width: 50%;
-	// 		right: 0;
-	// 	}
-
-	// 	&:hover::after {
-	// 		width: 50%;
-	// 		left: 0;
-	// 	}
-
-	// 	&:hover {
-	// 		color: ${theme.colors.lightGray};
-	// 	}
-	// }
+	@media (min-width: 768px) {
+		font-weight: normal;
+		color: #fff;
+	}
 
 	@media (min-width: 1024px) {
 		font-size: 2rem;
 	}
+`
+
+export const NavLinkLogin = styled(NavLink)`
+	background-color: ${theme.colors.secondary};
+	border-radius: 8px;
+	padding: 0.5em 1em;
+	margin: 0em 1em;
+	color: #fff;
 `
 
 export const NavRight = styled.div`

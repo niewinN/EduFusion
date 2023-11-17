@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-mui'
 import { Button } from '@mui/material'
@@ -94,11 +94,13 @@ function LoginForm() {
 			validationSchema={validationSchema}
 			validateOnBlur={false}
 			validateOnChange={true}
+			// validateOnChange={formSubmitted}
 			onSubmit={(values, { setSubmitting }) => {
+				// setFormSubmitted(true)
 				console.log(values)
 				setSubmitting(false)
 			}}>
-			{({ submitForm, isSubmitting, errors }) => (
+			{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
 				<StyledForm>
 					<Field
 						component={StyledTextField}
@@ -108,7 +110,9 @@ function LoginForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.email && <ErrorText>{errors.email}</ErrorText>}
+					{errors.email && touched.email && (
+						<ErrorText>{errors.email}</ErrorText>
+					)}
 					<Field
 						component={StyledTextField}
 						name='password'
@@ -117,12 +121,20 @@ function LoginForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.password && <ErrorText>{errors.password}</ErrorText>}
+					{errors.password && touched.password && (
+						<ErrorText>{errors.password}</ErrorText>
+					)}
 					<FormButton
 						variant='contained'
 						color='primary'
 						disabled={isSubmitting}
-						onClick={submitForm}
+						onClick={() => {
+							submitForm()
+							// Ustawienie wszystkich pól jako "dotkniętych" po próbie przesłania
+							Object.keys(errors).forEach(field => {
+								setFieldTouched(field, true, false)
+							})
+						}}
 						fullWidth>
 						Zaloguj się
 					</FormButton>

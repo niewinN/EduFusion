@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 import * as Yup from 'yup'
 import styled from 'styled-components'
 import theme from '../../Assets/Styles/GlobalStyles/theme'
+import axios from 'axios'
 
 const StyledForm = styled(Form)`
 	/* padding: 20px; */
@@ -110,13 +111,21 @@ function RegisterForm() {
 				confirmPassword: '',
 			}}
 			validationSchema={validationSchema}
-			validateOnBlur={true}
-			validateOnChange={false}
+			validateOnBlur={false}
+			validateOnChange={true}
 			onSubmit={(values, { setSubmitting }) => {
-				console.log(values)
+				axios
+					.post('http://localhost:4000/users', values)
+					.then(response => {
+						console.log('Użytkownik dodany:', response.data)
+					})
+					.catch(error => {
+						console.error('Błąd podczas dodawania użytkownika:', error)
+					})
+
 				setSubmitting(false)
 			}}>
-			{({ submitForm, isSubmitting, errors }) => (
+			{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
 				<StyledForm>
 					<Field
 						component={StyledTextField}
@@ -126,7 +135,9 @@ function RegisterForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.firstName && <ErrorText>{errors.firstName}</ErrorText>}
+					{errors.firstName && touched.firstName && (
+						<ErrorText>{errors.firstName}</ErrorText>
+					)}
 					<Field
 						component={StyledTextField}
 						name='lastName'
@@ -135,7 +146,9 @@ function RegisterForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.lastName && <ErrorText>{errors.lastName}</ErrorText>}
+					{errors.lastName && touched.lastName && (
+						<ErrorText>{errors.lastName}</ErrorText>
+					)}
 					<Field
 						component={StyledTextField}
 						name='email'
@@ -144,7 +157,9 @@ function RegisterForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.email && <ErrorText>{errors.email}</ErrorText>}
+					{errors.email && touched.email && (
+						<ErrorText>{errors.email}</ErrorText>
+					)}
 					<Field
 						component={StyledTextField}
 						name='phoneNumber'
@@ -153,7 +168,9 @@ function RegisterForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.phoneNumber && <ErrorText>{errors.phoneNumber}</ErrorText>}
+					{errors.phoneNumber && touched.phoneNumber && (
+						<ErrorText>{errors.phoneNumber}</ErrorText>
+					)}
 					<Field
 						component={StyledTextField}
 						name='password'
@@ -162,7 +179,9 @@ function RegisterForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.password && <ErrorText>{errors.password}</ErrorText>}
+					{errors.password && touched.password && (
+						<ErrorText>{errors.password}</ErrorText>
+					)}
 					<Field
 						component={StyledTextField}
 						name='confirmPassword'
@@ -171,14 +190,20 @@ function RegisterForm() {
 						fullWidth
 						margin='normal'
 					/>
-					{errors.confirmPassword && (
+					{errors.confirmPassword && touched.confirmPassword && (
 						<ErrorText>{errors.confirmPassword}</ErrorText>
 					)}
 					<FormButton
 						variant='contained'
 						color='primary'
 						disabled={isSubmitting}
-						onClick={submitForm}
+						onClick={() => {
+							// submitForm()
+							// Ustawienie wszystkich pól jako "dotkniętych" po próbie przesłania
+							Object.keys(errors).forEach(field => {
+								setFieldTouched(field, true, false)
+							})
+						}}
 						fullWidth>
 						Zarejestruj się
 					</FormButton>

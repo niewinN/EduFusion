@@ -10,6 +10,7 @@ import {
 	BurgerLine,
 	NavMainContainer,
 	NavRight,
+	NavLinkLogin,
 } from '../../Assets/Styles/UI/Navigation.styles'
 import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
 
@@ -40,6 +41,11 @@ const Navigation = () => {
 							<NavLink to='/contact' onClick={handleShowNav}>
 								Kontakt
 							</NavLink>
+						</li>
+						<li>
+							<NavLinkLogin to='/login' onClick={handleShowNav}>
+								Zaloguj
+							</NavLinkLogin>
 						</li>
 					</NavList>
 					<NavRight>
