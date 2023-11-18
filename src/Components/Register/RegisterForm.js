@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { TextField } from 'formik-mui'
 import { Button } from '@mui/material'
@@ -6,6 +6,7 @@ import * as Yup from 'yup'
 import styled from 'styled-components'
 import theme from '../../Assets/Styles/GlobalStyles/theme'
 import axios from 'axios'
+import RegisterModal from '../../Layouts/RegisterModal/RegisterModal'
 
 const StyledForm = styled(Form)`
 	/* padding: 20px; */
@@ -40,6 +41,7 @@ const StyledTextField = styled(TextField)`
 		font-size: 16px; /* Utrzymanie rozmiaru fontu po animacji */
 		background-color: #fff; /* tło etykiety, aby zakryć obramowanie jeśli jest potrzebne */
 		padding: 0 8px; /* lekki padding wokół tekstu etykiety, aby nie "wchodził" w obramowanie */
+		z-index: 10;
 
 		/* @media (min-width: 1024px) {
 			font-size: 20px;
@@ -100,116 +102,123 @@ const validationSchema = Yup.object({
 })
 
 function RegisterForm() {
+	const [isModalOpen, setModalOpen] = useState(false)
 	return (
-		<Formik
-			initialValues={{
-				firstName: '',
-				lastName: '',
-				email: '',
-				phoneNumber: '',
-				password: '',
-				confirmPassword: '',
-			}}
-			validationSchema={validationSchema}
-			validateOnBlur={false}
-			validateOnChange={true}
-			onSubmit={(values, { setSubmitting }) => {
-				axios
-					.post('http://localhost:4000/users', values)
-					.then(response => {
-						console.log('Użytkownik dodany:', response.data)
-					})
-					.catch(error => {
-						console.error('Błąd podczas dodawania użytkownika:', error)
-					})
+		<>
+			<Formik
+				initialValues={{
+					firstName: '',
+					lastName: '',
+					email: '',
+					phoneNumber: '',
+					password: '',
+					confirmPassword: '',
+				}}
+				validationSchema={validationSchema}
+				validateOnBlur={false}
+				validateOnChange={true}
+				onSubmit={(values, { setSubmitting }) => {
+					axios
+						.post('http://localhost:4000/users', values)
+						.then(response => {
+							console.log('Użytkownik dodany:', response.data)
+							setModalOpen(true)
+						})
+						.catch(error => {
+							console.error('Błąd podczas dodawania użytkownika:', error)
+						})
 
-				setSubmitting(false)
-			}}>
-			{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
-				<StyledForm>
-					<Field
-						component={StyledTextField}
-						name='firstName'
-						type='text'
-						label='Imię'
-						fullWidth
-						margin='normal'
-					/>
-					{errors.firstName && touched.firstName && (
-						<ErrorText>{errors.firstName}</ErrorText>
-					)}
-					<Field
-						component={StyledTextField}
-						name='lastName'
-						type='text'
-						label='Nazwisko'
-						fullWidth
-						margin='normal'
-					/>
-					{errors.lastName && touched.lastName && (
-						<ErrorText>{errors.lastName}</ErrorText>
-					)}
-					<Field
-						component={StyledTextField}
-						name='email'
-						type='email'
-						label='E-mail'
-						fullWidth
-						margin='normal'
-					/>
-					{errors.email && touched.email && (
-						<ErrorText>{errors.email}</ErrorText>
-					)}
-					<Field
-						component={StyledTextField}
-						name='phoneNumber'
-						type='tel'
-						label='Nr telefonu'
-						fullWidth
-						margin='normal'
-					/>
-					{errors.phoneNumber && touched.phoneNumber && (
-						<ErrorText>{errors.phoneNumber}</ErrorText>
-					)}
-					<Field
-						component={StyledTextField}
-						name='password'
-						type='password'
-						label='Hasło'
-						fullWidth
-						margin='normal'
-					/>
-					{errors.password && touched.password && (
-						<ErrorText>{errors.password}</ErrorText>
-					)}
-					<Field
-						component={StyledTextField}
-						name='confirmPassword'
-						type='password'
-						label='Powtórz hasło'
-						fullWidth
-						margin='normal'
-					/>
-					{errors.confirmPassword && touched.confirmPassword && (
-						<ErrorText>{errors.confirmPassword}</ErrorText>
-					)}
-					<FormButton
-						variant='contained'
-						color='primary'
-						disabled={isSubmitting}
-						onClick={() => {
-							// submitForm()
-							// Ustawienie wszystkich pól jako "dotkniętych" po próbie przesłania
-							Object.keys(errors).forEach(field => {
-								setFieldTouched(field, true, false)
-							})
-						}}
-						fullWidth>
-						Zarejestruj się
-					</FormButton>
-				</StyledForm>
-			)}
-		</Formik>
+					setSubmitting(false)
+				}}>
+				{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
+					<StyledForm>
+						<Field
+							component={StyledTextField}
+							name='firstName'
+							type='text'
+							label='Imię'
+							fullWidth
+							margin='normal'
+						/>
+						{errors.firstName && touched.firstName && (
+							<ErrorText>{errors.firstName}</ErrorText>
+						)}
+						<Field
+							component={StyledTextField}
+							name='lastName'
+							type='text'
+							label='Nazwisko'
+							fullWidth
+							margin='normal'
+						/>
+						{errors.lastName && touched.lastName && (
+							<ErrorText>{errors.lastName}</ErrorText>
+						)}
+						<Field
+							component={StyledTextField}
+							name='email'
+							type='email'
+							label='E-mail'
+							fullWidth
+							margin='normal'
+						/>
+						{errors.email && touched.email && (
+							<ErrorText>{errors.email}</ErrorText>
+						)}
+						<Field
+							component={StyledTextField}
+							name='phoneNumber'
+							type='tel'
+							label='Nr telefonu'
+							fullWidth
+							margin='normal'
+						/>
+						{errors.phoneNumber && touched.phoneNumber && (
+							<ErrorText>{errors.phoneNumber}</ErrorText>
+						)}
+						<Field
+							component={StyledTextField}
+							name='password'
+							type='password'
+							label='Hasło'
+							fullWidth
+							margin='normal'
+						/>
+						{errors.password && touched.password && (
+							<ErrorText>{errors.password}</ErrorText>
+						)}
+						<Field
+							component={StyledTextField}
+							name='confirmPassword'
+							type='password'
+							label='Powtórz hasło'
+							fullWidth
+							margin='normal'
+						/>
+						{errors.confirmPassword && touched.confirmPassword && (
+							<ErrorText>{errors.confirmPassword}</ErrorText>
+						)}
+						<FormButton
+							variant='contained'
+							color='primary'
+							disabled={isSubmitting}
+							onClick={() => {
+								// submitForm()
+								// Ustawienie wszystkich pól jako "dotkniętych" po próbie przesłania
+								Object.keys(errors).forEach(field => {
+									setFieldTouched(field, true, false)
+								})
+							}}
+							fullWidth>
+							Zarejestruj się
+						</FormButton>
+					</StyledForm>
+				)}
+			</Formik>
+			<RegisterModal
+				isOpen={isModalOpen}
+				onClose={() => setModalOpen(false)}></RegisterModal>
+		</>
 	)
 }
 

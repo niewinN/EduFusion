@@ -10,8 +10,10 @@ import {
 	LogoutBtnBox,
 } from '../../Assets/Styles/UserProfile/EditData.styles'
 import { Title } from '../../Assets/Styles/UserProfile/Lessons.styles'
+import { useLogin } from '../../Context/LoginContext'
 
 function EditData() {
+	const { logout } = useLogin()
 	return (
 		<EditDataContainer>
 			<Title>Moje dane</Title>
@@ -43,7 +45,7 @@ function EditData() {
 				<EditBtn>Edytuj</EditBtn>
 			</EditBox>
 			<LogoutBtnBox>
-				<LogoutBtn>Wyloguj</LogoutBtn>
+				<LogoutBtn onClick={logout}>Wyloguj</LogoutBtn>
 			</LogoutBtnBox>
 		</EditDataContainer>
 	)

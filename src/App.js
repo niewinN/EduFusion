@@ -15,8 +15,8 @@ import UserProfile from './Pages/UserProfile'
 function App() {
 	return (
 		<>
-			<LoginProvider>
-				<SelectedOptionsProvider>
+			<SelectedOptionsProvider>
+				<LoginProvider>
 					{/* <AvailabilityProvider> */}
 					<Navigation />
 					<Routes>
@@ -30,8 +30,8 @@ function App() {
 					</Routes>
 					<Footer />
 					{/* </AvailabilityProvider> */}
-				</SelectedOptionsProvider>
-			</LoginProvider>
+				</LoginProvider>
+			</SelectedOptionsProvider>
 		</>
 	)
 }

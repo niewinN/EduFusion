@@ -15,7 +15,7 @@ import DatePickerComponent from '../../../Main/DatePickerComponent'
 import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
 function Tile({ icon, type, id, options = [], selectedValue }) {
-	console.log('Otrzymana data w Tile:', selectedValue)
+	// console.log('Otrzymana data w Tile:', selectedValue)
 	const { setSelectedOptions } = useSelectedOptions()
 
 	const handleChange = event => {

@@ -7,8 +7,11 @@ import {
 	LessonsBtnBox,
 	Title,
 } from '../../../Assets/Styles/UserProfile/Lessons.styles'
+import { useSelectedOptions } from '../../../Context/SelectedOptionsContext'
 
 function Lessons() {
+	const { lessons } = useSelectedOptions()
+	console.log('Lekcje w kontekście:', lessons)
 	return (
 		<LessonsContainer>
 			<Title>Moje lekcje</Title>
@@ -18,9 +21,12 @@ function Lessons() {
 				<LessonsBtn>Zakończone</LessonsBtn>
 			</LessonsBtnBox>
 			<LessonsBox>
+				{lessons.map((lessonData, index) => (
+					<LessonCard key={index} lessonData={lessonData} />
+				))}
+				{/* <LessonCard />
 				<LessonCard />
-				<LessonCard />
-				<LessonCard />
+				<LessonCard /> */}
 			</LessonsBox>
 		</LessonsContainer>
 	)

@@ -18,6 +18,7 @@ import {
 import ScheduleCalendar from './ScheduleCalendar'
 import axios from 'axios'
 import { SelectedOptionsContext } from '../../../../Context/SelectedOptionsContext'
+import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
 function TutorReserveCard({
 	img,
@@ -28,11 +29,37 @@ function TutorReserveCard({
 	selectedTutorId,
 }) {
 	const [selectedTutor, setSelectedTutor] = useState(null)
-	const { selectedOptions } = useContext(SelectedOptionsContext)
+	// const { selectedOptions } = useContext(SelectedOptionsContext)
+	const { selectedOptions, setSelectedOptions, addLesson } =
+		useSelectedOptions()
 	const selectedDate = selectedOptions.date
 
+	// const handleAddLesson = () => {
+	// 	setSelectedOptions(prevOptions => {
+	// 		// Tworzenie nowego obiektu z aktualizacją
+	// 		const updatedOptions = {
+	// 			...prevOptions,
+	// 			tutorName: name, // Ustaw nazwę nauczyciela
+	// 			selectedDate: selectedDate, // Ustaw wybraną datę
+	// 		}
+
+	// 		// Dodawanie lekcji z aktualizowanymi opcjami
+	// 		addLesson(updatedOptions)
+
+	// 		// Zwracanie aktualizowanego stanu
+	// 		return updatedOptions
+	// 	})
+	// }
+	const handleAddLesson = () => {
+		// Użyj aktualnych selectedOptions do dodania lekcji
+		addLesson({
+			...selectedOptions,
+			tutorName: name, // Dodaj nazwę nauczyciela
+		})
+	}
+
 	useEffect(() => {
-		console.log('selectedTutorId:', selectedTutorId)
+		// console.log('selectedTutorId:', selectedTutorId)
 		const fetchTutorData = async () => {
 			try {
 				const response = await axios.get(`./tutors.json`)
@@ -71,7 +98,7 @@ function TutorReserveCard({
 
 				<CardPriceAndBtn>
 					<CardPrice>{price} / 60 min</CardPrice>
-					<CardReserveBtn>Zarezerwuj</CardReserveBtn>
+					<CardReserveBtn onClick={handleAddLesson}>Zarezerwuj</CardReserveBtn>
 				</CardPriceAndBtn>
 			</CardRight>
 		</CardBox>

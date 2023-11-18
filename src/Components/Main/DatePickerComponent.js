@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
 function DatePickerComponent({ startDate, setStartDate, dateName }) {
-	console.log('Data wybrana w DatePickerComponent:', startDate)
+	// console.log('Data wybrana w DatePickerComponent:', startDate)
 	return (
 		<DatePicker
 			selected={startDate}

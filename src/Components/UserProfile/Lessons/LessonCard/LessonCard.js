@@ -11,22 +11,75 @@ import {
 	CardMontAndYear,
 	CardSubject,
 	CardTutor,
+	CardTime,
+	DataBold,
 } from '../../../../Assets/Styles/UserProfile/LessonCard.styles'
+import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
-function LessonCard() {
+function LessonCard({ lessonData }) {
+	console.log('Dane lekcji:', lessonData)
+	const { selectedOptions } = useSelectedOptions()
+	if (!(lessonData.selectedDate instanceof Date)) {
+		lessonData.selectedDate = new Date(lessonData.selectedDate)
+	}
+
+	const monthYearFormat = { month: 'long', year: 'numeric' }
+	const dayOfWeekFormat = { weekday: 'long' }
+
+	const formattedMonthYear = lessonData.selectedDate.toLocaleDateString(
+		'pl-PL',
+		monthYearFormat
+	)
+	const formattedDayOfWeek = lessonData.selectedDate.toLocaleDateString(
+		'pl-PL',
+		dayOfWeekFormat
+	)
+
+	function getEndTime(startTimeString) {
+		const [hours, minutes] = startTimeString.split(':').map(Number)
+		const endTime = new Date()
+		endTime.setHours(hours, minutes + 60) // Dodaj 60 minut do wybranej godziny
+		return endTime
+	}
+
+	const startTimeString = lessonData.startTime // Załóżmy, że jest to string w formacie "HH:MM"
+	const endTime = getEndTime(startTimeString)
+
+	const formattedStartTime = startTimeString // Godzina rozpoczęcia jest już sformatowana
+	const formattedEndTime = endTime.toTimeString().substring(0, 5) // Formatujemy godzinę zakończeniac
+
 	return (
 		<CardBox>
 			<CardDate>
-				<CardDay>18</CardDay>
-				<CardDayOfWeek>Czwartek</CardDayOfWeek>
-				<CardMontAndYear>LISTOPAD 2023</CardMontAndYear>
+				<CardDay>{lessonData.selectedDate.getDate()}</CardDay>
+				<CardDayOfWeek>{formattedDayOfWeek}</CardDayOfWeek>
+				<CardMontAndYear>{formattedMonthYear}</CardMontAndYear>
 			</CardDate>
 			<CardInformation>
-				<CardSubject>MATEMATYKA</CardSubject>
-				<CardTutor>Prowadzący: Jakub</CardTutor>
-				<CardLevel>Poziom nauki: Szkoła podstawowa </CardLevel>
-				<CardMode>Tryb nauki: Zdalnie</CardMode>
-				<CardCity>Miasto: Brak</CardCity>
+				<CardSubject>
+					<DataBold>{lessonData.subject}</DataBold>
+				</CardSubject>
+				<CardTutor>
+					Prowadzący: <DataBold>{lessonData.tutorName}</DataBold>
+				</CardTutor>
+				<CardLevel>
+					Poziom nauki: <DataBold>{lessonData.level}</DataBold>{' '}
+				</CardLevel>
+				<CardMode>
+					Tryb nauki: <DataBold>{lessonData.mode}</DataBold>
+				</CardMode>
+				<CardCity>
+					Miasto:{' '}
+					<DataBold>
+						{lessonData.city === '' ? 'Brak' : lessonData.city}
+					</DataBold>
+				</CardCity>
+				<CardTime>
+					Godzina zajęć:{' '}
+					<DataBold>
+						{formattedStartTime} - {formattedEndTime}
+					</DataBold>
+				</CardTime>
 			</CardInformation>
 		</CardBox>
 	)

@@ -16,7 +16,8 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons'
 // import axios from 'axios'
-import { SelectedOptionsContext } from '../../../../Context/SelectedOptionsContext'
+// import { SelectedOptionsContext } from '../../../../Context/SelectedOptionsContext'
+import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
 export const CalendarWrapper = styled.div`
 	display: flex;
@@ -97,7 +98,8 @@ const ScheduleCalendar = ({ selectedTutor }) => {
 	const [isExpanded, setIsExpanded] = useState(false)
 	const [selectedTimeSlot, setSelectedTimeSlot] = useState(null)
 
-	const { selectedOptions } = useContext(SelectedOptionsContext)
+	// const { selectedOptions } = useContext(SelectedOptionsContext)
+	const { selectedOptions, setSelectedOptions } = useSelectedOptions()
 	const selectedDate = selectedOptions.date
 	// const daysOfWeek = Array.from({ length: 7 }, (_, i) =>
 	// 	addDays(selectedDate, i)
@@ -112,6 +114,14 @@ const ScheduleCalendar = ({ selectedTutor }) => {
 		setSelectedTimeSlot(prev =>
 			prev && prev[0] === day && prev[1] === time ? null : newSelection
 		)
+
+		// Aktualizuj kontekst z wybraną godziną
+		setSelectedOptions(prevOptions => ({
+			...prevOptions,
+			selectedDate: day,
+			startTime: time,
+			// Zapisz wybraną godzinę
+		}))
 	}
 
 	const hasMoreThanThreeTimeslots = daysOfWeek.some(day => {

@@ -24,7 +24,9 @@ export const CardDayOfWeek = styled.p`
 	margin-bottom: 10px;
 `
 
-export const CardMontAndYear = styled.p``
+export const CardMontAndYear = styled.p`
+	text-transform: uppercase;
+`
 
 export const CardInformation = styled.div`
 	flex-basis: 65%;
@@ -40,6 +42,7 @@ export const CardSubject = styled.p`
 	font-size: 1.5rem;
 	color: ${theme.colors.secondary};
 	margin-bottom: 15px;
+	text-transform: uppercase;
 `
 
 export const CardTutor = styled.p`
@@ -55,5 +58,13 @@ export const CardMode = styled.p`
 `
 
 export const CardCity = styled.p`
+	margin-bottom: 5px;
+`
+
+export const CardTime = styled.p`
 	margin-bottom: 10px;
+`
+
+export const DataBold = styled.span`
+	font-weight: bold;
 `
