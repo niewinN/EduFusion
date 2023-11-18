@@ -5,6 +5,9 @@ import { Button } from '@mui/material'
 import * as Yup from 'yup'
 import styled from 'styled-components'
 import theme from '../../Assets/Styles/GlobalStyles/theme'
+import axios from 'axios'
+import { useLogin } from '../../Context/LoginContext'
+import { useNavigate } from 'react-router-dom'
 
 const StyledForm = styled(Form)`
 	/* padding: 20px; */
@@ -85,6 +88,12 @@ const validationSchema = Yup.object({
 })
 
 function LoginForm() {
+	const navigate = useNavigate()
+	const { onLoginSuccess } = useLogin()
+	const verifyLogin = (email, password, users) => {
+		const user = users.find(u => u.email === email && u.password === password)
+		return user
+	}
 	return (
 		<Formik
 			initialValues={{
@@ -96,9 +105,28 @@ function LoginForm() {
 			validateOnChange={true}
 			// validateOnChange={formSubmitted}
 			onSubmit={(values, { setSubmitting }) => {
-				// setFormSubmitted(true)
-				console.log(values)
-				setSubmitting(false)
+				axios
+					.get('http://localhost:4000/users')
+					.then(response => {
+						const user = verifyLogin(
+							values.email,
+							values.password,
+							response.data
+						)
+						if (user) {
+							onLoginSuccess(user)
+							navigate('/')
+							console.log('zalogowano')
+						} else {
+							console.log('Błędne dane')
+						}
+					})
+					.catch(error => {
+						console.error('Błąd podczas wczytywania danych:', error)
+					})
+					.finally(() => {
+						setSubmitting(false)
+					})
 			}}>
 			{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
 				<StyledForm>

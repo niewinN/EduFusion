@@ -13,13 +13,22 @@ import {
 	NavLinkLogin,
 } from '../../Assets/Styles/UI/Navigation.styles'
 import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
+import { useLogin } from '../../Context/LoginContext'
 
 const Navigation = () => {
+	const { isLoggedIn, userName } = useLogin()
 	const [showNav, setShowNav] = useState(false)
+	// const [isLoggedIn, setIsLoggedIn] = useState(false)
+	// const [userName, setUserName] = useState('')
 
 	const handleShowNav = () => {
 		setShowNav(!showNav)
 	}
+
+	// const handleLoginSuccess = user => {
+	// 	setIsLoggedIn(true)
+	// 	setUserName(user.name) // Załóżmy, że obiekt user zawiera pole name
+	// }
 
 	return (
 		<NavMainContainer>
@@ -43,8 +52,10 @@ const Navigation = () => {
 							</NavLink>
 						</li>
 						<li>
-							<NavLinkLogin to='/login' onClick={handleShowNav}>
-								Zaloguj
+							<NavLinkLogin
+								to={isLoggedIn ? '/user' : '/login'}
+								onClick={handleShowNav}>
+								{isLoggedIn ? userName : 'Zaloguj'}
 							</NavLinkLogin>
 						</li>
 					</NavList>
