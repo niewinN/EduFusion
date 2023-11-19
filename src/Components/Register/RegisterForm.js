@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import theme from '../../Assets/Styles/GlobalStyles/theme'
 import axios from 'axios'
 import RegisterModal from '../../Layouts/RegisterModal/RegisterModal'
+import { useNavigate } from 'react-router-dom'
 
 const StyledForm = styled(Form)`
 	/* padding: 20px; */
@@ -103,6 +104,19 @@ const validationSchema = Yup.object({
 
 function RegisterForm() {
 	const [isModalOpen, setModalOpen] = useState(false)
+	const [isFormSubmitted, setFormSubmitted] = useState(false)
+	const navigate = useNavigate()
+	const handleModalClose = () => {
+		setModalOpen(false)
+		if (isFormSubmitted) {
+			navigate('/login')
+		}
+	}
+
+	const handleAutoClose = () => {
+		navigate('/login')
+	}
+
 	return (
 		<>
 			<Formik
@@ -122,7 +136,9 @@ function RegisterForm() {
 						.post('http://localhost:4000/users', values)
 						.then(response => {
 							console.log('Użytkownik dodany:', response.data)
+							setFormSubmitted(true)
 							setModalOpen(true)
+							// navigate('/login')
 						})
 						.catch(error => {
 							console.error('Błąd podczas dodawania użytkownika:', error)
@@ -217,7 +233,7 @@ function RegisterForm() {
 			</Formik>
 			<RegisterModal
 				isOpen={isModalOpen}
-				onClose={() => setModalOpen(false)}></RegisterModal>
+				onClose={handleModalClose}></RegisterModal>
 		</>
 	)
 }

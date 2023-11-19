@@ -8,7 +8,15 @@ export const useLogin = () => useContext(LoginContext)
 
 export const LoginProvider = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
-	const [userName, setUserName] = useState('')
+	// const [user, setUser] = useState(null)
+	const [user, setUser] = useState({
+		email: '',
+		firstName: '',
+		lastName: '',
+		phoneNumber: '',
+	})
+
+	// const [userName, setUserName] = useState('')
 	const { setLessons } = useSelectedOptions()
 	const navigate = useNavigate()
 
@@ -16,53 +24,62 @@ export const LoginProvider = ({ children }) => {
 		const checkAuth = () => {
 			const expiry = localStorage.getItem('expiry')
 			if (!expiry) return false
-			const now = new Date()
-			return now < new Date(expiry)
+			return new Date() < new Date(expiry)
 		}
 
 		if (checkAuth()) {
-			const user = JSON.parse(localStorage.getItem('user'))
-			console.log('Znaleziono zalogowanego użytkownika:', user)
-			setIsLoggedIn(true)
-			setUserName(user.firstName)
+			const storedUser = JSON.parse(localStorage.getItem('user'))
+			console.log('Znaleziono zalogowanego użytkownika:', storedUser)
+			if (storedUser) {
+				console.log('Znaleziono zalogowanego użytkownika:', storedUser)
+				setUser(storedUser)
+				setIsLoggedIn(true)
+				// ... pozostała część logiki
 
-			// Ładowanie lekcji użytkownika
-			const userLessons =
-				JSON.parse(localStorage.getItem(`lessons_${user.email}`)) || []
-			const convertedLessons = userLessons.map(lesson => ({
-				...lesson,
-				selectedDate: new Date(lesson.selectedDate),
-			}))
-			setLessons(convertedLessons)
-			// Upewnij się, że ta funkcja istnieje w Twoim kontekście i jest poprawnie zaimplementowana
+				// setUserName(user.firstName)
+
+				// Ładowanie lekcji użytkownika
+				const userLessons =
+					JSON.parse(localStorage.getItem(`lessons_${storedUser.email}`)) || []
+
+				setLessons(
+					userLessons.map(lesson => ({
+						...lesson,
+						selectedDate: new Date(lesson.selectedDate),
+					}))
+				)
+			}
 		}
 	}, [setLessons])
 
-	const onLoginSuccess = user => {
+	const onLoginSuccess = userData => {
 		const now = new Date()
 		const expiryTime = new Date(now.getTime() + 3600000) // Dodaj 1 godzinę
 
-		localStorage.setItem('user', JSON.stringify(user))
+		localStorage.setItem('user', JSON.stringify(userData))
+		setUser(userData)
+		setIsLoggedIn(true)
 		localStorage.setItem('expiry', expiryTime.toISOString())
 
 		const userLessons =
-			JSON.parse(localStorage.getItem(`lessons_${user.email}`)) || []
+			JSON.parse(localStorage.getItem(`lessons_${userData.email}`)) || []
 		setLessons(userLessons)
-		setIsLoggedIn(true)
-		setUserName(user.firstName)
+		// setUser(userData)
+		// setIsLoggedIn(true)
+		// setUserName(user.firstName)
 	}
 
 	const logout = () => {
 		localStorage.removeItem('user')
 		localStorage.removeItem('expiry')
 		setIsLoggedIn(false)
-		setUserName('')
+		// setUserName('')
+		setUser({ email: '', firstName: '', lastName: '', phoneNumber: '' }) // Resetuj stan user
 		navigate('/')
 	}
 
 	return (
-		<LoginContext.Provider
-			value={{ isLoggedIn, userName, onLoginSuccess, logout }}>
+		<LoginContext.Provider value={{ isLoggedIn, onLoginSuccess, logout, user }}>
 			{children}
 		</LoginContext.Provider>
 	)

@@ -16,7 +16,7 @@ import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
 import { useLogin } from '../../Context/LoginContext'
 
 const Navigation = () => {
-	const { isLoggedIn, userName } = useLogin()
+	const { isLoggedIn, user } = useLogin()
 	const [showNav, setShowNav] = useState(false)
 	// const [isLoggedIn, setIsLoggedIn] = useState(false)
 	// const [userName, setUserName] = useState('')
@@ -55,7 +55,7 @@ const Navigation = () => {
 							<NavLinkLogin
 								to={isLoggedIn ? '/user' : '/login'}
 								onClick={handleShowNav}>
-								{isLoggedIn ? userName : 'Zaloguj'}
+								{isLoggedIn ? user.firstName : 'Zaloguj'}
 							</NavLinkLogin>
 						</li>
 					</NavList>

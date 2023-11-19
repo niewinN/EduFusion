@@ -15,6 +15,9 @@ const RegisterModal = ({ isOpen, onClose }) => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			onClose()
+			// if (onAutoClose) {
+			// 	onAutoClose()
+			// }
 		}, 5000)
 
 		return () => clearTimeout(timer)

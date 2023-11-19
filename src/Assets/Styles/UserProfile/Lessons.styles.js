@@ -35,6 +35,9 @@ export const LessonsBtn = styled.button`
 	background-color: transparent;
 	color: #646464;
 	font-size: 1.5rem;
+	color: ${props => (props.isActive ? theme.colors.primary : '#646464')};
+	font-weight: ${props => (props.isActive ? 'bold' : 'normal')};
+	cursor: pointer;
 `
 
 export const LessonsBox = styled.div`
