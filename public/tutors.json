@@ -27,7 +27,7 @@
 		"price": "70zł",
 		"subject": "biologia",
 		"level": ["szkoła ponadpodstawowa"],
-		"mode": ["zdalnie"],
+		"mode": ["zdalnie", "stacjonarnie"],
 		"city": "Warszawa",
 		"availability": {
 			"monday": ["10:00", "11:00"],

@@ -2,7 +2,6 @@ import React from 'react'
 import {
 	InformationContainer,
 	InformationPicture,
-	// InformationPictureBox,
 	InformationStats,
 	InformationStatsBox,
 	InformationStatsText,
@@ -16,7 +15,6 @@ function Information() {
 	return (
 		<Wrapper>
 			<InformationContainer>
-				{/* <div className='wrapper'></div> */}
 				<InformationText>
 					<InformationTitle>Zobacz EduFusion w liczbach</InformationTitle>
 					<InformationStatsBox>
@@ -34,9 +32,7 @@ function Information() {
 						<InformationStatsText>Przeprowadzonych zajęć</InformationStatsText>
 					</InformationStatsBox>
 				</InformationText>
-				{/* <InformationPictureBox> */}
 				<InformationPicture src={infoPic} alt='Teacher'></InformationPicture>
-				{/* </InformationPictureBox> */}
 			</InformationContainer>
 		</Wrapper>
 	)

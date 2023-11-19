@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import Tile from './Tile/Tile'
 import {
 	faBook,
@@ -14,6 +14,8 @@ import { useSelectedOptions } from '../../../Context/SelectedOptionsContext'
 
 function FilterPanel() {
 	const { selectedOptions } = useSelectedOptions()
+	console.log('Wybrany tryb: ', selectedOptions.mode)
+	const isRemoteMode = selectedOptions.mode === 'zdalnie'
 	const tilesData = [
 		{
 			id: 'subject',
@@ -57,6 +59,7 @@ function FilterPanel() {
 								? selectedOptions.date
 								: selectedOptions[tile.id]
 						}
+						disabled={tile.id === 'city' && isRemoteMode}
 					/>
 				))}
 			</TilesContainer>

@@ -53,18 +53,15 @@ function EditData() {
 				updatedUser
 			)
 			console.log('Dane zaktualizowane:', response.data)
-			// Możesz również zaktualizować stan użytkownika tutaj, jeśli to konieczne
 		} catch (error) {
 			console.error('Błąd podczas aktualizacji użytkownika:', error)
 		}
 	}
 
 	const handleSave = field => {
-		// Logika zapisu danych
 		console.log(`Zapisano: ${field} = ${formData[field]}`)
 		setIsEditable({ ...isEditable, [field]: false })
 
-		// Utwórz obiekt zaktualizowanego użytkownika
 		const updatedUser = { ...user, ...formData }
 		updateUser(updatedUser)
 	}

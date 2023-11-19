@@ -11,23 +11,21 @@ function SelectComponent({
 	selectedValue,
 	onChange,
 	styleType,
+	disabled = false,
 }) {
 	const Select = styleType === 'filter' ? FilterSelect : SearchSelect
 
-	const handleChange = event => {
-		onChange(event.target.value)
-	}
+	// const handleChange = event => {
+	// 	onChange(event.target.value)
+	// }
 	return (
-		// <div>
-		<Select onChange={onChange} value={selectedValue}>
-			{/* <SearchOption value=''>{label}</SearchOption> */}
+		<Select onChange={onChange} value={selectedValue} disabled={disabled}>
 			{options.map((option, index) => (
 				<SearchOption key={index} value={option.value}>
 					{option.label}
 				</SearchOption>
 			))}
 		</Select>
-		// </div>
 	)
 }
 

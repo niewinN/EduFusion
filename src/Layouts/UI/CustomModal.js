@@ -9,15 +9,11 @@ import {
 	ModalInformation,
 	ModalText,
 } from '../../Assets/Styles/UI/RegisterModal.styles'
-import registerModal from '../../Assets/Images/Register/registerModal.png'
 
-const RegisterModal = ({ isOpen, onClose }) => {
+const CustomModal = ({ isOpen, onClose, title, text, imageSrc }) => {
 	useEffect(() => {
 		const timer = setTimeout(() => {
 			onClose()
-			// if (onAutoClose) {
-			// 	onAutoClose()
-			// }
 		}, 5000)
 
 		return () => clearTimeout(timer)
@@ -30,20 +26,15 @@ const RegisterModal = ({ isOpen, onClose }) => {
 			<ModalBox onClick={e => e.stopPropagation()}>
 				<CloseButton onClick={onClose}>&times;</CloseButton>
 				<ModalImgBox>
-					<ModalImg src={registerModal}></ModalImg>
+					<ModalImg src={imageSrc}></ModalImg>
 				</ModalImgBox>
 				<ModalInformation>
-					<ModalTitle>
-						Witaj w <span>EduFusion!</span>
-					</ModalTitle>
-					<ModalText>
-						Od teraz możesz rezerwować lekcje i wspólnie z korepetytorami
-						zdobywać wymarzone cele!
-					</ModalText>
+					<ModalTitle>{title}</ModalTitle>
+					<ModalText>{text}</ModalText>
 				</ModalInformation>
 			</ModalBox>
 		</Overlay>
 	)
 }
 
-export default RegisterModal
+export default CustomModal

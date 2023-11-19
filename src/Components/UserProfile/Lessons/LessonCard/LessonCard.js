@@ -14,11 +14,11 @@ import {
 	CardTime,
 	DataBold,
 } from '../../../../Assets/Styles/UserProfile/LessonCard.styles'
-import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
+// import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
 function LessonCard({ lessonData }) {
 	console.log('Dane lekcji:', lessonData)
-	const { selectedOptions } = useSelectedOptions()
+	// const { selectedOptions } = useSelectedOptions()
 	if (!(lessonData.selectedDate instanceof Date)) {
 		lessonData.selectedDate = new Date(lessonData.selectedDate)
 	}
@@ -38,15 +38,15 @@ function LessonCard({ lessonData }) {
 	function getEndTime(startTimeString) {
 		const [hours, minutes] = startTimeString.split(':').map(Number)
 		const endTime = new Date()
-		endTime.setHours(hours, minutes + 60) // Dodaj 60 minut do wybranej godziny
+		endTime.setHours(hours, minutes + 60)
 		return endTime
 	}
 
-	const startTimeString = lessonData.startTime // Załóżmy, że jest to string w formacie "HH:MM"
+	const startTimeString = lessonData.startTime
 	const endTime = getEndTime(startTimeString)
 
-	const formattedStartTime = startTimeString // Godzina rozpoczęcia jest już sformatowana
-	const formattedEndTime = endTime.toTimeString().substring(0, 5) // Formatujemy godzinę zakończeniac
+	const formattedStartTime = startTimeString
+	const formattedEndTime = endTime.toTimeString().substring(0, 5)
 
 	return (
 		<CardBox>

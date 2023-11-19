@@ -54,9 +54,6 @@ function Lessons() {
 				{filterLessons().map((lessonData, index) => (
 					<LessonCard key={index} lessonData={lessonData} />
 				))}
-				{/* <LessonCard />
-				<LessonCard />
-				<LessonCard /> */}
 			</LessonsBox>
 		</LessonsContainer>
 	)

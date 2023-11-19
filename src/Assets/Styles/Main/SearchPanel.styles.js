@@ -193,7 +193,7 @@ export const SearchPhotoBox = styled.div`
 `
 
 export const SearchPhoto = styled.img`
-	z-index: 9999;
+	z-index: 9;
 	width: 260px;
 
 	@media (min-width: 768px) {

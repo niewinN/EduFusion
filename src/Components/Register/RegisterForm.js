@@ -1,83 +1,18 @@
 import React, { useState } from 'react'
-import { Formik, Form, Field } from 'formik'
-import { TextField } from 'formik-mui'
-import { Button } from '@mui/material'
+import { Formik, Field } from 'formik'
 import * as Yup from 'yup'
-import styled from 'styled-components'
-import theme from '../../Assets/Styles/GlobalStyles/theme'
 import axios from 'axios'
-import RegisterModal from '../../Layouts/RegisterModal/RegisterModal'
+// import RegisterModal from '../../Layouts/UI/RegisterModal'
 import { useNavigate } from 'react-router-dom'
+import {
+	StyledForm,
+	FormButton,
+	StyledTextField,
+	ErrorText,
+} from '../../Assets/Styles/Login/LoginForm.styles'
+import CustomModal from '../../Layouts/UI/CustomModal'
+import registerModalImg from '../../Assets/Images/Register/registerModal.png'
 
-const StyledForm = styled(Form)`
-	/* padding: 20px; */
-`
-
-const FormButton = styled.button`
-	width: 100%;
-	border: none;
-	padding: 10px;
-	background-color: ${theme.colors.secondary};
-	color: #fff;
-	border-radius: 8px;
-	margin-top: 15px;
-	cursor: pointer;
-	font-size: 1.5rem;
-`
-const StyledTextField = styled(TextField)`
-	& .MuiInputLabel-outlined {
-		font-size: 14px; /* Ustawienie domyślnego rozmiaru etykiety */
-	}
-
-	&.MuiFormControl-root-MuiTextField-root {
-		margin-top: 2px;
-	}
-
-	& .MuiFormHelperText-root {
-		display: none;
-	}
-
-	& .MuiInputLabel-outlined.MuiInputLabel-shrink {
-		transform: translate(14px, -6px) scale(0.75); /* Dostosuj, aby pasowało do większego fontu */
-		font-size: 16px; /* Utrzymanie rozmiaru fontu po animacji */
-		background-color: #fff; /* tło etykiety, aby zakryć obramowanie jeśli jest potrzebne */
-		padding: 0 8px; /* lekki padding wokół tekstu etykiety, aby nie "wchodził" w obramowanie */
-		z-index: 10;
-
-		/* @media (min-width: 1024px) {
-			font-size: 20px;
-		} */
-	}
-
-	& .MuiOutlinedInput-notchedOutline {
-		top: 0; /* Upewnij się, że notched outline nie jest zbyt wysoko */
-	}
-
-	& .MuiOutlinedInput-root {
-		padding: 0; /* Usunięcie domyślnego paddingu */
-		position: relative;
-		line-height: 2em;
-		top: -3px; /* Może być potrzebne dostosowanie, aby wynieść input wyżej */
-
-		&.Mui-focused fieldset {
-			border-color: ${theme.colors
-				.primary}; /* zmień na preferowany kolor obramowania przy aktywacji */
-			border-width: 2px; /* opcjonalnie, możesz też zmienić szerokość obramowania */
-		}
-	}
-
-	& .MuiOutlinedInput-input {
-		padding: 18px 14px;
-		line-height: 15px;
-		font-size: 16px;
-	}
-`
-
-const ErrorText = styled.div`
-	font-size: 1rem;
-	color: red;
-`
-//Schemat walidacji formularza z Yup
 const validationSchema = Yup.object({
 	firstName: Yup.string()
 		.required('Imię jest wymagane')
@@ -113,9 +48,9 @@ function RegisterForm() {
 		}
 	}
 
-	const handleAutoClose = () => {
-		navigate('/login')
-	}
+	// const handleAutoClose = () => {
+	// 	navigate('/login')
+	// }
 
 	return (
 		<>
@@ -138,7 +73,6 @@ function RegisterForm() {
 							console.log('Użytkownik dodany:', response.data)
 							setFormSubmitted(true)
 							setModalOpen(true)
-							// navigate('/login')
 						})
 						.catch(error => {
 							console.error('Błąd podczas dodawania użytkownika:', error)
@@ -219,8 +153,6 @@ function RegisterForm() {
 							color='primary'
 							disabled={isSubmitting}
 							onClick={() => {
-								// submitForm()
-								// Ustawienie wszystkich pól jako "dotkniętych" po próbie przesłania
 								Object.keys(errors).forEach(field => {
 									setFieldTouched(field, true, false)
 								})
@@ -231,9 +163,13 @@ function RegisterForm() {
 					</StyledForm>
 				)}
 			</Formik>
-			<RegisterModal
+			<CustomModal
 				isOpen={isModalOpen}
-				onClose={handleModalClose}></RegisterModal>
+				onClose={handleModalClose}
+				title='Witaj w EduFusion!'
+				text='Od teraz możesz rezerwować lekcje i wspólnie z korepetytorami zdobywać wymarzone cele!'
+				imageSrc={registerModalImg}
+			/>
 		</>
 	)
 }

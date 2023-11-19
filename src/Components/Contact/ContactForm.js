@@ -21,9 +21,6 @@ import contactPhoto from '../../Assets/Images/Contact/contact_form.png'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-// Reszta importów...
-
-// Definicja schematu walidacji
 const validationSchema = Yup.object({
 	imie: Yup.string().required('Imię jest wymagane'),
 	nazwisko: Yup.string().required('Nazwisko jest wymagane'),
@@ -34,6 +31,7 @@ const validationSchema = Yup.object({
 })
 
 function ContactForm() {
+	// eslint-disable-next-line
 	const [isSubmitting, setIsSubmitting] = useState(false)
 	const formik = useFormik({
 		initialValues: {
@@ -56,7 +54,6 @@ function ContactForm() {
 
 		const errors = await formik.validateForm()
 		if (Object.keys(errors).length > 0) {
-			// Tworzenie elementów React dla każdego błędu
 			const errorElements = Object.values(errors).map((error, index) => (
 				<ErrorMessage key={index}>{error}</ErrorMessage>
 			))
@@ -74,7 +71,6 @@ function ContactForm() {
 				<ContactBox>
 					<Form onSubmit={handleFormSubmit} noValidate>
 						<FormTitle>Skontaktuj się!</FormTitle>
-						{/* Wyświetlanie błędów tutaj */}
 
 						<FormBox>
 							<FormLabel htmlFor='imie'>Imię</FormLabel>

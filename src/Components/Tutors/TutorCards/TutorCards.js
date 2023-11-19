@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import TutorReserveCard from './TutorReserveCard/TutorReserveCard'
 import { Wrapper } from '../../../Assets/Styles/GlobalStyles/wrapper'
-import styled from 'styled-components'
 import axios from 'axios'
 import tutor1 from '../../../Assets/Images/Main/tutor1.png'
 import tutor2 from '../../../Assets/Images/Main/tutor2.png'
@@ -11,12 +10,13 @@ import tutor5 from '../../../Assets/Images/Main/tutor5.png'
 import tutor6 from '../../../Assets/Images/Main/tutor6.png'
 import tutor7 from '../../../Assets/Images/Main/tutor7.png'
 import tutor8 from '../../../Assets/Images/Main/tutor8.png'
-
-const TutorCardsContainer = styled.div`
-	padding: 20px;
-`
+import {
+	TutorCardsContainer,
+	ErrorFilterMsg,
+} from '../../../Assets/Styles/Tutors/TutorCards.styles'
 
 function TutorCards({ filteredTutors }) {
+	// eslint-disable-next-line
 	const [tutors, setTutors] = useState([])
 
 	useEffect(() => {
@@ -57,18 +57,23 @@ function TutorCards({ filteredTutors }) {
 	return (
 		<TutorCardsContainer>
 			<Wrapper>
-				{filteredTutors.map(tutor => (
-					// <TutorReserveCard key={tutor.id} img={tutor.img} {...tutor} />
-					<TutorReserveCard
-						key={tutor.id}
-						img={tutor.img}
-						name={tutor.name}
-						desc={tutor.desc}
-						subject={tutor.subject}
-						price={tutor.price}
-						selectedTutorId={tutor.id} // Assuming `id` is the tutor ID
-					/>
-				))}
+				{filteredTutors.length === 0 ? (
+					<ErrorFilterMsg>
+						Nie znaleziono korepetytorów spełniających twoje wymagania!
+					</ErrorFilterMsg>
+				) : (
+					filteredTutors.map(tutor => (
+						<TutorReserveCard
+							key={tutor.id}
+							img={tutor.img}
+							name={tutor.name}
+							desc={tutor.desc}
+							subject={tutor.subject}
+							price={tutor.price}
+							selectedTutorId={tutor.id}
+						/>
+					))
+				)}
 			</Wrapper>
 		</TutorCardsContainer>
 	)

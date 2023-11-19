@@ -1,25 +1,19 @@
-import React, { useContext } from 'react'
-import { AvailabilityContext } from '../../../../Context/AvailabilityContext'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React from 'react'
 import {
 	TileBox,
 	TileIcon,
-	Select,
-	Option,
 	SearchSelectDateTile,
 } from '../../../../Assets/Styles/Tutors/Tile.styles'
-import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import SelectComponent from '../../../Main/SelectComponent'
 import DatePickerComponent from '../../../Main/DatePickerComponent'
 import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
-function Tile({ icon, type, id, options = [], selectedValue }) {
-	// console.log('Otrzymana data w Tile:', selectedValue)
+function Tile({ icon, type, id, options = [], selectedValue, disabled }) {
 	const { setSelectedOptions } = useSelectedOptions()
 
 	const handleChange = event => {
-		const value = event.target.value // Uzyskaj wartość z wybranego elementu
+		const value = event.target.value
 		setSelectedOptions(prevOptions => ({
 			...prevOptions,
 			[id]: value,
@@ -48,7 +42,6 @@ function Tile({ icon, type, id, options = [], selectedValue }) {
 		}
 	}
 
-	// Ensure that the placeholder is not duplicated if already present
 	const placeholderOption = { value: '', label: getPlaceholder() }
 	const optionExists = options.some(
 		option => option.label === placeholderOption.label
@@ -74,6 +67,7 @@ function Tile({ icon, type, id, options = [], selectedValue }) {
 					styleType='filter'
 					selectedValue={selectedValue}
 					onChange={handleChange}
+					disabled={disabled}
 				/>
 			)}
 		</TileBox>

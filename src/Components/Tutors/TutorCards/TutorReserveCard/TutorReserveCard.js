@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
 import {
 	CardBox,
-	// CardCalendar,
 	CardPhotoBox,
 	CardPrice,
 	CardPriceAndBtn,
@@ -17,8 +16,12 @@ import {
 } from '../../../../Assets/Styles/Tutors/TutorReserveCard.styles'
 import ScheduleCalendar from './ScheduleCalendar'
 import axios from 'axios'
-import { SelectedOptionsContext } from '../../../../Context/SelectedOptionsContext'
 import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
+import CustomModal from '../../../../Layouts/UI/CustomModal'
+import { useNavigate } from 'react-router-dom'
+import successImg from '../../../../Assets/Images/UI/successImg.png'
+import filtersModalImg from '../../../../Assets/Images/UI/filterImg.png'
+import { useLogin } from '../../../../Context/LoginContext'
 
 function TutorReserveCard({
 	img,
@@ -29,41 +32,60 @@ function TutorReserveCard({
 	selectedTutorId,
 }) {
 	const [selectedTutor, setSelectedTutor] = useState(null)
-	// const { selectedOptions } = useContext(SelectedOptionsContext)
-	const { selectedOptions, setSelectedOptions, addLesson } =
-		useSelectedOptions()
+	const [modalOpen, setModalOpen] = useState(false)
+	const [lessonReserved, setLessonReserved] = useState(false)
+	const [modalTitle, setModalTitle] = useState('')
+	const [modalText, setModalText] = useState('')
+	const { selectedOptions, addLesson } = useSelectedOptions()
 	const selectedDate = selectedOptions.date
+	const navigate = useNavigate()
+	const { isLoggedIn } = useLogin()
 
-	// const handleAddLesson = () => {
-	// 	setSelectedOptions(prevOptions => {
-	// 		// Tworzenie nowego obiektu z aktualizacją
-	// 		const updatedOptions = {
-	// 			...prevOptions,
-	// 			tutorName: name, // Ustaw nazwę nauczyciela
-	// 			selectedDate: selectedDate, // Ustaw wybraną datę
-	// 		}
+	const areAllCriteriaMet = () => {
+		const { subject, level, mode, city, date } = selectedOptions
+		const isStationary = mode === 'stacjonarnie' // Zakładając, że 'stacjonarnie' to jeden z trybów
+		return subject && level && mode && date && (!isStationary || city)
+	}
 
-	// 		// Dodawanie lekcji z aktualizowanymi opcjami
-	// 		addLesson(updatedOptions)
-
-	// 		// Zwracanie aktualizowanego stanu
-	// 		return updatedOptions
-	// 	})
-	// }
 	const handleAddLesson = () => {
-		// Użyj aktualnych selectedOptions do dodania lekcji
+		if (!isLoggedIn) {
+			navigate('/login')
+			return
+		}
+
+		if (!areAllCriteriaMet()) {
+			setModalTitle('Uzupełnij kryteria!')
+			setModalText(
+				'Musisz uzupełnić wszystkie potrzebne kryteria, aby móc wyszukać odpowiedniego korepetytora!'
+			)
+			setModalOpen(true)
+			return
+		}
+
 		addLesson({
 			...selectedOptions,
-			tutorName: name, // Dodaj nazwę nauczyciela
+			tutorName: name,
 		})
+		setModalOpen(true)
+		setLessonReserved(true)
+		setModalTitle('Pomyślnie zarezerwowano lekcję!')
+		setModalText(
+			'Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć.'
+		)
+	}
+
+	const handleModalClose = () => {
+		setModalOpen(false)
+		if (lessonReserved) {
+			navigate('/user')
+			setLessonReserved(false) // Reset flagi po przekierowaniu
+		}
 	}
 
 	useEffect(() => {
-		// console.log('selectedTutorId:', selectedTutorId)
 		const fetchTutorData = async () => {
 			try {
 				const response = await axios.get(`./tutors.json`)
-				// setSelectedTutor(response.data)
 				setSelectedTutor(
 					response.data.find(tutor => tutor.id === selectedTutorId)
 				)
@@ -76,32 +98,45 @@ function TutorReserveCard({
 	}, [selectedTutorId])
 
 	return (
-		<CardBox>
-			<CardPhotoBox img={img}>
-				<InfoBtn icon={faCircleQuestion}></InfoBtn>
-				<InfoText>
-					<TutorName>{name}</TutorName>
-					<TutorDesc>{desc}</TutorDesc>
-					<TutorSubject>{subject}</TutorSubject>
-				</InfoText>
-			</CardPhotoBox>
-			<CardRight>
-				<CardRightTitle>
-					Kliknij w wolny termin i zarezerwuj zajęcia!
-				</CardRightTitle>
-				{/* <ScheduleCalendar selectedTutor={selectedTutor} /> */}
-				{/* {selectedDate && <ScheduleCalendar selectedTutor={selectedTutor} />} */}
-				<ScheduleCalendar
-					selectedTutor={selectedTutor}
-					selectedDate={selectedDate || new Date()}
-				/>
+		<>
+			<CardBox>
+				<CardPhotoBox img={img}>
+					<InfoBtn icon={faCircleQuestion}></InfoBtn>
+					<InfoText>
+						<TutorName>{name}</TutorName>
+						<TutorDesc>{desc}</TutorDesc>
+						<TutorSubject>{subject}</TutorSubject>
+					</InfoText>
+				</CardPhotoBox>
+				<CardRight>
+					<CardRightTitle>
+						Kliknij w wolny termin i zarezerwuj zajęcia!
+					</CardRightTitle>
+					<ScheduleCalendar
+						selectedTutor={selectedTutor}
+						selectedDate={selectedDate || new Date()}
+					/>
 
-				<CardPriceAndBtn>
-					<CardPrice>{price} / 60 min</CardPrice>
-					<CardReserveBtn onClick={handleAddLesson}>Zarezerwuj</CardReserveBtn>
-				</CardPriceAndBtn>
-			</CardRight>
-		</CardBox>
+					<CardPriceAndBtn>
+						<CardPrice>{price} / 60 min</CardPrice>
+						<CardReserveBtn onClick={handleAddLesson}>
+							Zarezerwuj
+						</CardReserveBtn>
+					</CardPriceAndBtn>
+				</CardRight>
+			</CardBox>
+			<CustomModal
+				isOpen={modalOpen}
+				onClose={handleModalClose}
+				title={modalTitle}
+				text={modalText}
+				imageSrc={
+					modalTitle === 'Pomyślnie zarezerwowano lekcję!'
+						? successImg
+						: filtersModalImg
+				}
+			/>
+		</>
 	)
 }
 

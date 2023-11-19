@@ -3,7 +3,6 @@ import {
 	ForWhomContainer,
 	Title,
 	Description,
-	// ForWhomPhoto,
 } from '../../Assets/Styles/AboutUs/ForWhom.styles'
 import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
 
@@ -28,7 +27,6 @@ function ForWhom() {
 						pomóc w zdobyciu wiedzy, ale także inspirować do dalszego rozwoju
 						naukowego i osiągania sukcesów w przyszłości.
 					</Description>
-					{/* <ForWhomPhoto></ForWhomPhoto> */}
 				</Wrapper>
 			</ForWhomContainer>
 		</>
