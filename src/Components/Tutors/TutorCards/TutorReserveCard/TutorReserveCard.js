@@ -62,9 +62,15 @@ function TutorReserveCard({
 			return
 		}
 
+		const currentUser = JSON.parse(localStorage.getItem('user'))
+
 		addLesson({
 			...selectedOptions,
 			tutorName: name,
+			tutorEmail: selectedTutor ? selectedTutor.email : null,
+			studentName: currentUser
+				? `${currentUser.firstName} ${currentUser.lastName}`
+				: 'Nieznany Uczeń',
 		})
 		setModalOpen(true)
 		setLessonReserved(true)
@@ -85,7 +91,7 @@ function TutorReserveCard({
 	useEffect(() => {
 		const fetchTutorData = async () => {
 			try {
-				const response = await axios.get(`./tutors.json`)
+				const response = await axios.get(`http://localhost:4001/tutors`)
 				setSelectedTutor(
 					response.data.find(tutor => tutor.id === selectedTutorId)
 				)
@@ -118,7 +124,7 @@ function TutorReserveCard({
 					/>
 
 					<CardPriceAndBtn>
-						<CardPrice>{price} / 60 min</CardPrice>
+						<CardPrice>{price}zł / 60 min</CardPrice>
 						<CardReserveBtn onClick={handleAddLesson}>
 							Zarezerwuj
 						</CardReserveBtn>

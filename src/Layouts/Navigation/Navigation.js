@@ -53,7 +53,13 @@ const Navigation = () => {
 						</li>
 						<li>
 							<NavLinkLogin
-								to={isLoggedIn ? '/user' : '/login'}
+								to={
+									isLoggedIn
+										? user.role === 'tutor'
+											? '/tutor'
+											: '/user'
+										: '/login'
+								}
 								onClick={handleShowNav}>
 								{isLoggedIn ? user.firstName : 'Zaloguj'}
 							</NavLinkLogin>

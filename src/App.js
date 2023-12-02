@@ -11,6 +11,7 @@ import Register from './Pages/Register'
 import Login from './Pages/Login'
 import { LoginProvider } from './Context/LoginContext'
 import UserProfile from './Pages/UserProfile'
+import TutorProfile from './Pages/TutorProfile'
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 						<Route path='/register' element={<Register />} />
 						<Route path='/login' element={<Login />} />
 						<Route path='/user' element={<UserProfile />} />
+						<Route path='/tutor' element={<TutorProfile />} />
 					</Routes>
 					<Footer />
 					{/* </AvailabilityProvider> */}

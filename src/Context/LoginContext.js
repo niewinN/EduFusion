@@ -14,6 +14,7 @@ export const LoginProvider = ({ children }) => {
 		firstName: '',
 		lastName: '',
 		phoneNumber: '',
+		role: '',
 	})
 
 	// const [userName, setUserName] = useState('')

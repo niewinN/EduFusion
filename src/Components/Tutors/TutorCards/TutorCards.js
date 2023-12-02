@@ -21,7 +21,7 @@ function TutorCards({ filteredTutors }) {
 
 	useEffect(() => {
 		axios
-			.get('/tutors.json')
+			.get(`http://localhost:4001/tutors`)
 			.then(response => {
 				const tutorsWithImages = response.data.map(tutor => {
 					switch (tutor.img) {

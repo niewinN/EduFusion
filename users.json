@@ -1,148 +1,34 @@
 {
   "users": [
     {
-      "firstName": "sfdsd",
-      "lastName": "dfsdfs",
-      "email": "piotrek.niew@vp.pl",
-      "phoneNumber": "432234342324",
-      "password": "qwerty",
-      "confirmPassword": "qwerty",
-      "id": 1
-    },
-    {
-      "firstName": "sfdsd",
-      "lastName": "dfsdfs",
-      "email": "piotrek.niew@vp.pl",
-      "phoneNumber": "432234342324",
-      "password": "qwerty",
-      "confirmPassword": "qwerty",
-      "id": 2
-    },
-    {
-      "firstName": "sfdsd",
-      "lastName": "dfsdfs",
-      "email": "piotrek.niew@vp.pl",
-      "phoneNumber": "432234342324",
-      "password": "qwerty",
-      "confirmPassword": "qwerty",
-      "id": 3
-    },
-    {
-      "firstName": "Piotr",
-      "lastName": "Niewiński",
-      "email": "piotrek.niew@vp.pl",
-      "phoneNumber": "+48790292052",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 4
-    },
-    {
-      "firstName": "Janol",
-      "lastName": "Kowalski",
-      "email": "jan.kowalski@wp.pl",
-      "phoneNumber": "2432432432",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 5
-    },
-    {
       "firstName": "Jan",
       "lastName": "Kowalski",
       "email": "jan.kowalski@wp.pl",
-      "phoneNumber": "2432432432",
+      "phoneNumber": "565645645",
       "password": "EloElo12@",
       "confirmPassword": "EloElo12@",
-      "id": 6
+      "role": "student",
+      "id": 1
     },
     {
-      "firstName": "Janek",
-      "lastName": "Dzbanek",
-      "email": "jan.dzban@wp.pl",
-      "phoneNumber": "5434353432",
+      "firstName": "Kamil",
+      "lastName": "Tutor",
+      "email": "kamil.tutor@wp.pl",
+      "phoneNumber": "543543343",
       "password": "EloElo12@",
       "confirmPassword": "EloElo12@",
-      "id": 7
+      "role": "tutor",
+      "id": 2
     },
     {
-      "firstName": "kamil",
-      "lastName": "koks",
-      "email": "kamil.koks@wp.pl",
-      "phoneNumber": "543534534",
+      "firstName": "Ewa",
+      "lastName": "Tutor",
+      "email": "ewa.tutor@wp.pl",
+      "phoneNumber": "5435345334",
       "password": "EloElo12@",
       "confirmPassword": "EloElo12@",
-      "id": 8
-    },
-    {
-      "firstName": "kamil",
-      "lastName": "koks",
-      "email": "kamil.koks@wp.pl",
-      "phoneNumber": "543534534",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 9
-    },
-    {
-      "firstName": "elo",
-      "lastName": "elo",
-      "email": "elo.elo@wp.pl",
-      "phoneNumber": "54345343543",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 10
-    },
-    {
-      "firstName": "elo",
-      "lastName": "elo",
-      "email": "elo.elo@wp.pl",
-      "phoneNumber": "54345343543",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 11
-    },
-    {
-      "firstName": "fsdfsdsfd",
-      "lastName": "fdsfds",
-      "email": "fdsfsdfsd@fsddfs.pl",
-      "phoneNumber": "234342324324",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 12
-    },
-    {
-      "firstName": "dsfsdfsd",
-      "lastName": "fdsfdsfds",
-      "email": "jan.kowal3ski@wp.pl",
-      "phoneNumber": "435345345",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 13
-    },
-    {
-      "firstName": "fsdfdsfd",
-      "lastName": "fdsfdsfds",
-      "email": "jan.kowa34lski@wp.pl",
-      "phoneNumber": "4354353453",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 14
-    },
-    {
-      "firstName": "fsdfdsfd",
-      "lastName": "fdsfdsfds",
-      "email": "jan.kowa34lski@wp.pl",
-      "phoneNumber": "4354353453",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 15
-    },
-    {
-      "firstName": "fsdfdsfd",
-      "lastName": "fdsfdsfds",
-      "email": "jan.kowa34lski@wp.pl",
-      "phoneNumber": "4354353453",
-      "password": "EloElo12@",
-      "confirmPassword": "EloElo12@",
-      "id": 16
+      "role": "tutor",
+      "id": 3
     }
   ]
 }

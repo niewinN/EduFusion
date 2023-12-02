@@ -6,12 +6,13 @@ export const EditDataContainer = styled.div`
 	border-radius: 8px;
 	padding-bottom: 15px;
 	flex-basis: 20%;
-	align-self: flex-start;
+	/* align-self: flex-start; */
 `
 
 export const EditBox = styled.div`
 	display: flex;
 	margin: 15px;
+	justify-content: space-between;
 `
 
 export const EditLabel = styled.label`
@@ -38,15 +39,17 @@ export const LogoutBtn = styled.button`
 	border: none;
 	color: #fff;
 	font-size: 1.5rem;
+	cursor: pointer;
 `
 
 export const EditBtn = styled.button`
-	margin-left: 20px;
+	/* margin-left: 20px; */
 	padding: 5px 10px;
 	border: none;
 	background-color: ${theme.colors.primary};
 	color: #fff;
 	border-radius: 8px;
+	cursor: pointer;
 `
 
 export const EditDataInfo = styled.div`

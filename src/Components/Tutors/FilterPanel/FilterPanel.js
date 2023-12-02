@@ -14,7 +14,7 @@ import { useSelectedOptions } from '../../../Context/SelectedOptionsContext'
 
 function FilterPanel() {
 	const { selectedOptions } = useSelectedOptions()
-	console.log('Wybrany tryb: ', selectedOptions.mode)
+	// console.log('Wybrany tryb: ', selectedOptions.mode)
 	const isRemoteMode = selectedOptions.mode === 'zdalnie'
 	const tilesData = [
 		{
