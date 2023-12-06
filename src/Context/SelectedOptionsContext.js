@@ -121,7 +121,169 @@
 // 	)
 // }
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
+// import React, { createContext, useContext, useState, useEffect } from 'react'
+// import axios from 'axios'
+
+// export const SelectedOptionsContext = createContext()
+
+// export const useSelectedOptions = () => useContext(SelectedOptionsContext)
+
+// export const SelectedOptionsProvider = ({ children }) => {
+// 	const [selectedOptions, setSelectedOptions] = useState({
+// 		subject: '',
+// 		level: '',
+// 		mode: '',
+// 		city: '',
+// 		date: new Date(),
+// 		tutorName: '',
+// 		studentName: '',
+// 		selectedDate: new Date(),
+// 		startTime: '',
+// 		tutorEmail: '', // Email nauczyciela
+// 		studentEmail: '', // Email ucznia
+// 	})
+// 	const [lessons, setLessons] = useState([])
+
+// 	const addLesson = async lessonData => {
+// 		// Logika dodawania lekcji dla studenta pozostaje taka sama.
+// 		const currentUser = JSON.parse(localStorage.getItem('user'))
+// 		const updatedLessonData = {
+// 			...lessonData,
+// 			studentEmail: currentUser.email, // zakładamy, że zalogowany użytkownik to student
+// 		}
+
+// 		try {
+// 			// Wyślij żądanie POST do serwera
+// 			const response = await axios.post(
+// 				'http://localhost:4002/lessons',
+// 				updatedLessonData
+// 			)
+// 			console.log('Odpowiedź z serwera:', response.data)
+
+// 			setLessons(prevLessons => {
+// 				const newLessons = [...prevLessons, response.data]
+// 				console.log('Nowe lekcje po aktualizacji:', newLessons)
+// 				return newLessons
+// 			})
+// 		} catch (error) {
+// 			console.error('Błąd podczas dodawania lekcji:', error)
+// 		}
+
+// 		// Dodajemy lekcję do stanu.
+// 		setLessons(prevLessons => {
+// 			const updatedLessons = [...prevLessons, updatedLessonData]
+// 			localStorage.setItem(
+// 				'student_lessons_' + currentUser.email,
+// 				JSON.stringify(updatedLessons)
+// 			)
+// 			return updatedLessons
+// 		})
+
+// 		// Dodatkowo aktualizujemy lekcje dla nauczyciela.
+// 		const tutorLessonsKey = 'lessons_' + updatedLessonData.tutorEmail
+// 		const tutorLessons = JSON.parse(localStorage.getItem(tutorLessonsKey)) || []
+// 		tutorLessons.push(updatedLessonData)
+// 		localStorage.setItem(tutorLessonsKey, JSON.stringify(tutorLessons))
+
+// 		// Jeśli jesteś w kontekście nauczyciela, powinieneś również zaktualizować stan.
+// 		if (currentUser.role === 'tutor') {
+// 			setLessons(tutorLessons)
+// 		}
+// 	}
+
+// 	useEffect(() => {
+// 		const currentUser = JSON.parse(localStorage.getItem('user'))
+// 		if (currentUser) {
+// 			const lessonsKey =
+// 				currentUser.role === 'tutor'
+// 					? `lessons_${currentUser.email}`
+// 					: `student_lessons_${currentUser.email}`
+// 			localStorage.setItem(lessonsKey, JSON.stringify(lessons))
+// 		}
+// 	}, [lessons])
+
+// 	return (
+// 		<SelectedOptionsContext.Provider
+// 			value={{
+// 				selectedOptions,
+// 				setSelectedOptions,
+// 				lessons,
+// 				setLessons,
+// 				addLesson,
+// 			}}>
+// 			{children}
+// 		</SelectedOptionsContext.Provider>
+// 	)
+// }
+
+// import React, { createContext, useContext, useState, useEffect } from 'react'
+// import axios from 'axios'
+
+// export const SelectedOptionsContext = createContext()
+
+// export const useSelectedOptions = () => useContext(SelectedOptionsContext)
+
+// export const SelectedOptionsProvider = ({ children }) => {
+// 	const [selectedOptions, setSelectedOptions] = useState({
+// 		subject: '',
+// 		level: '',
+// 		mode: '',
+// 		city: '',
+// 		date: new Date(),
+// 		tutorName: '',
+// 		studentName: '',
+// 		selectedDate: new Date(),
+// 		startTime: '',
+// 		tutorEmail: '',
+// 		studentEmail: '',
+// 	})
+// 	const [lessons, setLessons] = useState([])
+
+// 	useEffect(() => {
+// 		const fetchLessons = async () => {
+// 			try {
+// 				const response = await axios.get('http://localhost:4002/lessons')
+// 				setLessons(response.data)
+// 			} catch (error) {
+// 				console.error('Błąd podczas pobierania lekcji:', error)
+// 			}
+// 		}
+
+// 		fetchLessons()
+// 	}, [])
+
+// 	const addLesson = async lessonData => {
+// 		const currentUser = JSON.parse(localStorage.getItem('user'))
+
+// 		const updatedLessonData = {
+// 			...lessonData,
+// 			studentEmail: currentUser.email, // zakładamy, że zalogowany użytkownik to student
+// 		}
+
+// 		try {
+// 			await axios.post('http://localhost:4002/lessons', updatedLessonData)
+// 			const response = await axios.get('http://localhost:4002/lessons')
+// 			setLessons(response.data)
+// 		} catch (error) {
+// 			console.error('Błąd podczas dodawania lekcji:', error)
+// 		}
+// 	}
+
+// 	return (
+// 		<SelectedOptionsContext.Provider
+// 			value={{
+// 				selectedOptions,
+// 				setSelectedOptions,
+// 				lessons,
+// 				setLessons,
+// 				addLesson,
+// 			}}>
+// 			{children}
+// 		</SelectedOptionsContext.Provider>
+// 	)
+// }
+
+import React, { createContext, useContext, useState } from 'react'
 import axios from 'axios'
 
 export const SelectedOptionsContext = createContext()
@@ -139,66 +301,26 @@ export const SelectedOptionsProvider = ({ children }) => {
 		studentName: '',
 		selectedDate: new Date(),
 		startTime: '',
-		tutorEmail: '', // Email nauczyciela
-		studentEmail: '', // Email ucznia
+		tutorEmail: '',
+		studentEmail: '',
 	})
 	const [lessons, setLessons] = useState([])
 
 	const addLesson = async lessonData => {
-		// Logika dodawania lekcji dla studenta pozostaje taka sama.
 		const currentUser = JSON.parse(localStorage.getItem('user'))
 		const updatedLessonData = {
 			...lessonData,
-			studentEmail: currentUser.email, // zakładamy, że zalogowany użytkownik to student
+			studentEmail: currentUser.email,
 		}
 
 		try {
-			// Wyślij żądanie POST do serwera
-			const response = await axios.post(
-				'http://localhost:4002/lessons',
-				updatedLessonData
-			)
-			console.log(response.data.message) // Wiadomość zwrotna z serwera
-
-			// Aktualizacja stanu po pomyślnym dodaniu lekcji
-			setLessons(prevLessons => [...prevLessons, updatedLessonData])
+			await axios.post('http://localhost:4002/lessons', updatedLessonData)
+			const response = await axios.get('http://localhost:4002/lessons')
+			setLessons(response.data)
 		} catch (error) {
 			console.error('Błąd podczas dodawania lekcji:', error)
 		}
-
-		// Dodajemy lekcję do stanu.
-		setLessons(prevLessons => {
-			const updatedLessons = [...prevLessons, updatedLessonData]
-			localStorage.setItem(
-				'student_lessons_' + currentUser.email,
-				JSON.stringify(updatedLessons)
-			)
-			return updatedLessons
-		})
-
-		// Dodatkowo aktualizujemy lekcje dla nauczyciela.
-		const tutorLessonsKey = 'lessons_' + updatedLessonData.tutorEmail
-		const tutorLessons = JSON.parse(localStorage.getItem(tutorLessonsKey)) || []
-		tutorLessons.push(updatedLessonData)
-		localStorage.setItem(tutorLessonsKey, JSON.stringify(tutorLessons))
-
-		// Jeśli jesteś w kontekście nauczyciela, powinieneś również zaktualizować stan.
-		if (currentUser.role === 'tutor') {
-			setLessons(tutorLessons)
-		}
 	}
-
-	useEffect(() => {
-		const currentUser = JSON.parse(localStorage.getItem('user'))
-		if (currentUser) {
-			const lessonsKey =
-				currentUser.role === 'tutor'
-					? `lessons_${currentUser.email}`
-					: `student_lessons_${currentUser.email}`
-			const storedLessons = JSON.parse(localStorage.getItem(lessonsKey)) || []
-			setLessons(storedLessons)
-		}
-	}, [])
 
 	return (
 		<SelectedOptionsContext.Provider

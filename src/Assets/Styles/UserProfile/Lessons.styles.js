@@ -5,6 +5,7 @@ export const LessonsContainer = styled.div`
 	box-shadow: 0 2px 15px #646464;
 	border-radius: 8px;
 	flex-basis: 50%;
+	align-self: flex-start;
 
 	@media (min-width: 900px) {
 		flex-basis: 60%;

@@ -36,7 +36,7 @@ export const EditChange = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	font-size: 1.5rem;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 `
 
 export const EditGroup = styled.div`
@@ -47,10 +47,11 @@ export const EditLabel = styled.label`
 	display: block;
 	font-size: 1.5rem;
 	margin-bottom: 5px;
-	padding-bottom: 3px;
+	padding-bottom: 5px;
 	color: ${theme.colors.secondary};
 	border-bottom: 2px solid ${theme.colors.primary};
-	/* font-weight: bold; */
+	font-weight: bold;
+	text-align: center;
 `
 
 export const EditInput = styled.input`
@@ -100,9 +101,9 @@ export const EditButtonDown = styled(EditButton)`
 export const ErrorMsg = styled.p`
 	color: red;
 	font-size: 1.2rem;
+	margin-bottom: 5px;
 `
 
-// export const EditBtnBox = styled.div`
-// 	display: flex;
-// 	flex-direction: column;
-// `
+export const EditDays = styled.h4`
+	font-size: 1.5rem;
+`

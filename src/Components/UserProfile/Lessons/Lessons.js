@@ -9,6 +9,7 @@ import {
 } from '../../../Assets/Styles/UserProfile/Lessons.styles'
 import { useSelectedOptions } from '../../../Context/SelectedOptionsContext'
 import { useLogin } from '../../../Context/LoginContext'
+import axios from 'axios'
 
 function Lessons() {
 	const [selectedFilter, setSelectedFilter] = useState('All')
@@ -18,15 +19,29 @@ function Lessons() {
 	const { lessons, setLessons } = useSelectedOptions()
 
 	useEffect(() => {
-		const lessonsKey =
-			user.role === 'tutor'
-				? `lessons_${user.email}`
-				: `student_lessons_${user.email}`
-		const storedLessons = JSON.parse(localStorage.getItem(lessonsKey)) || []
-		setLessons(storedLessons)
-	}, [user, setLessons])
+		const fetchLessons = async () => {
+			try {
+				const response = await axios.get('http://localhost:4002/lessons')
+				setLessons(response.data)
+			} catch (error) {
+				console.error('Błąd podczas pobierania lekcji:', error)
+			}
+		}
 
-	console.log('Lekcje z kontekstu w Lessons:', lessons)
+		fetchLessons()
+	}, [setLessons])
+
+	// useEffect(() => {
+	// 	const lessonsKey =
+	// 		user.role === 'tutor'
+	// 			? `lessons_${user.email}`
+	// 			: `student_lessons_${user.email}`
+	// 	const storedLessons = JSON.parse(localStorage.getItem(lessonsKey)) || []
+	// 	console.log('Załadowane lekcje z localStorage:', storedLessons)
+	// 	setLessons(storedLessons)
+	// }, [user, setLessons])
+
+	// console.log('Lekcje z kontekstu w Lessons:', lessons)
 	// const filterLessons = () => {
 	// 	const now = new Date()
 	// 	switch (selectedFilter) {
@@ -123,8 +138,12 @@ function Lessons() {
 				</LessonsBtn>
 			</LessonsBtnBox>
 			<LessonsBox>
-				{filterLessons().map((lessonData, index) => (
-					<LessonCard key={index} lessonData={lessonData} loggedInUser={user} />
+				{filterLessons().map(lessonData => (
+					<LessonCard
+						key={lessonData.id}
+						lessonData={lessonData}
+						loggedInUser={user}
+					/>
 				))}
 			</LessonsBox>
 		</LessonsContainer>

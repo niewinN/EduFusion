@@ -15,6 +15,7 @@ import {
 	EditButtonDown,
 	EditSelectLast,
 	EditTextarea,
+	EditDays,
 } from '../../Assets/Styles/TutorProfile/EditLesson.styles'
 
 import { Title } from '../../Assets/Styles/UserProfile/Lessons.styles'
@@ -27,6 +28,7 @@ function EditLesson() {
 		// name: '',
 		desc: '',
 		price: '',
+		subject: '',
 		availability: {
 			monday: [],
 			tuesday: [],
@@ -40,14 +42,55 @@ function EditLesson() {
 		id: '',
 	})
 	const [isEditable, setIsEditable] = useState(false)
+	const [isAvailabilityEditable, setIsAvailabilityEditable] = useState(false)
+
 	const { user } = useLogin()
 	const [newLevel, setNewLevel] = useState('')
 	const [newMode, setNewMode] = useState('')
 	const [levelError, setLevelError] = useState('')
 	const [modeError, setModeError] = useState('')
+	const initialTimeState = {
+		monday: '',
+		tuesday: '',
+		wednesday: '',
+		thursday: '',
+		friday: '',
+		saturday: '',
+		sunday: '',
+	}
+
+	const initialErrorState = {
+		monday: '',
+		tuesday: '',
+		wednesday: '',
+		thursday: '',
+		friday: '',
+		saturday: '',
+		sunday: '',
+	}
+
+	const daysMapping = {
+		monday: 'Poniedziałek',
+		tuesday: 'Wtorek',
+		wednesday: 'Środa',
+		thursday: 'Czwartek',
+		friday: 'Piątek',
+		saturday: 'Sobota',
+		sunday: 'Niedziela',
+	}
+
+	const [timeErrors, setTimeErrors] = useState(initialErrorState)
+
+	const [newTimes, setNewTimes] = useState(initialTimeState)
+
+	const [timeError, setTimeError] = useState('')
 
 	const [isLevelRemovable, setIsLevelRemovable] = useState(false)
 	const [isModeRemovable, setIsModeRemovable] = useState(false)
+	const hoursOptions = []
+	for (let i = 8; i <= 23; i++) {
+		hoursOptions.push(`${String(i).padStart(2, '0')}:00`)
+	}
 
 	useEffect(() => {
 		const fetchLoggedInTutorData = async () => {
@@ -70,7 +113,10 @@ function EditLesson() {
 		fetchLoggedInTutorData()
 	}, [user])
 
-	const handleEdit = () => setIsEditable(true)
+	const handleEdit = () => {
+		setIsEditable(true)
+		setIsAvailabilityEditable(true)
+	}
 
 	const handleChange = (field, value) => {
 		setTutorData({ ...tutorData, [field]: value })
@@ -137,30 +183,65 @@ function EditLesson() {
 	const EditAvailability = ({ day, times, onTimeChange }) => {
 		return (
 			<div>
-				<h4>{day}</h4>
-				{times.map((time, index) => (
-					<div key={index}>
+				<EditDays>{daysMapping[day]}</EditDays> {/* Zmiana tutaj */}
+				{times.sort().map((time, index) => (
+					<EditChange key={index}>
 						{time}
-						<button onClick={() => onTimeChange(day, time, 'remove')}>
-							Usuń
-						</button>
-					</div>
+						{isAvailabilityEditable && (
+							<EditButton onClick={() => onTimeChange(day, time, 'remove')}>
+								Usuń
+							</EditButton>
+						)}
+					</EditChange>
 				))}
-				<button onClick={() => onTimeChange(day, '', 'add')}>
-					Dodaj godzinę
-				</button>
+				{isAvailabilityEditable && (
+					<EditChange>
+						<EditSelect
+							value={newTimes[day]}
+							onChange={e =>
+								setNewTimes({ ...newTimes, [day]: e.target.value })
+							}>
+							<option value=''>Wybierz godzinę</option>
+							{hoursOptions.map(hour => (
+								<option key={hour} value={hour}>
+									{hour}
+								</option>
+							))}
+						</EditSelect>
+						<EditButton onClick={() => onTimeChange(day, newTimes[day], 'add')}>
+							Dodaj
+						</EditButton>
+					</EditChange>
+				)}
+				{timeErrors[day] && <ErrorMsg>{timeErrors[day]}</ErrorMsg>}
 			</div>
 		)
 	}
 
 	const handleTimeChange = (day, time, action) => {
+		// Clear the specific day's error first
+		setTimeErrors({ ...timeErrors, [day]: '' })
+
 		setTutorData(prevData => {
-			const newTimes = prevData.availability[day].slice()
+			let newTimes = [...prevData.availability[day]]
 			if (action === 'add') {
-				// Dodaj nową godzinę (tu możesz dodać logikę do wyboru godziny)
-				newTimes.push('Nowa Godzina')
+				if (!time) {
+					setTimeErrors(prevErrors => ({
+						...prevErrors,
+						[day]: 'Proszę wybrać godzinę.',
+					}))
+					return prevData
+				}
+				if (newTimes.includes(time)) {
+					setTimeErrors(prevErrors => ({
+						...prevErrors,
+						[day]: 'Ta godzina już istnieje.',
+					}))
+					return prevData
+				}
+				newTimes.push(time)
+				newTimes.sort()
 			} else if (action === 'remove') {
-				// Usuń wybraną godzinę
 				const index = newTimes.indexOf(time)
 				if (index > -1) newTimes.splice(index, 1)
 			}
@@ -169,6 +250,9 @@ function EditLesson() {
 				availability: { ...prevData.availability, [day]: newTimes },
 			}
 		})
+		if (action === 'add') {
+			setNewTimes({ ...newTimes, [day]: '' })
+		}
 	}
 
 	const updateTutor = async () => {
@@ -191,6 +275,23 @@ function EditLesson() {
 		<EditLessonContainer>
 			<Title>Dane lekcji</Title>
 			<EditLessonBox>
+				<EditDataInfoBox>
+					<EditLabel>Przedmiot</EditLabel>
+					<EditChangeBox>
+						<EditSelectLast
+							value={tutorData.subject}
+							onChange={e => handleChange('subject', e.target.value)}
+							disabled={!isEditable}>
+							<option value=''>Wybierz przedmiot</option>
+							{baseSelectOptions.subject.map(option => (
+								<option key={option.value} value={option.value}>
+									{option.label}
+								</option>
+							))}
+						</EditSelectLast>
+					</EditChangeBox>
+				</EditDataInfoBox>
+
 				<EditDataInfoBox>
 					<EditLabel>Poziom</EditLabel>
 					<EditChangeBox>
@@ -248,9 +349,9 @@ function EditLesson() {
 								</EditSelect>
 
 								<EditButton onClick={addMode}>Dodaj</EditButton>
-								{modeError && <ErrorMsg>{modeError}</ErrorMsg>}
 							</EditChange>
 						)}
+						{modeError && <ErrorMsg>{modeError}</ErrorMsg>}
 					</EditChangeBox>
 				</EditDataInfoBox>
 
