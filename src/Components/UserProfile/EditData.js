@@ -49,7 +49,7 @@ function EditData() {
 	const updateUser = async updatedUser => {
 		try {
 			const response = await axios.put(
-				`http://localhost:4000/users/${updatedUser.id}`,
+				`http://localhost:8080/users/${updatedUser.id}`,
 				updatedUser
 			)
 			console.log('Dane zaktualizowane:', response.data)

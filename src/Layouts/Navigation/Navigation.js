@@ -55,7 +55,7 @@ const Navigation = () => {
 							<NavLinkLogin
 								to={
 									isLoggedIn
-										? user.role === 'tutor'
+										? user.role === 'TUTOR'
 											? '/tutor'
 											: '/user'
 										: '/login'

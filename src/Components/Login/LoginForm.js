@@ -10,6 +10,7 @@ import {
 	ErrorText,
 	StyledForm,
 } from '../../Assets/Styles/Login/LoginForm.styles'
+const bcrypt = require('bcryptjs')
 
 const validationSchema = Yup.object({
 	email: Yup.string()
@@ -25,9 +26,19 @@ function LoginForm() {
 	const navigate = useNavigate()
 	const { onLoginSuccess } = useLogin()
 	const [loginError, setLoginError] = useState('')
+	// const verifyLogin = (email, password, users) => {
+	// 	const user = users.find(u => u.email === email && u.password === password)
+	// 	return !!user
+	// }
+
 	const verifyLogin = (email, password, users) => {
-		const user = users.find(u => u.email === email && u.password === password)
-		return !!user
+		const user = users.find(u => u.email === email)
+		if (user) {
+			// Porównaj zahaszowane hasło
+			const isPasswordCorrect = bcrypt.compareSync(password, user.password)
+			return isPasswordCorrect
+		}
+		return false
 	}
 
 	return (
@@ -42,7 +53,7 @@ function LoginForm() {
 			// validateOnChange={formSubmitted}
 			onSubmit={(values, { setSubmitting }) => {
 				axios
-					.get('http://localhost:4000/users')
+					.get('http://localhost:8080/users')
 					.then(response => {
 						if (verifyLogin(values.email, values.password, response.data)) {
 							onLoginSuccess(response.data.find(u => u.email === values.email))
@@ -58,6 +69,24 @@ function LoginForm() {
 					.finally(() => {
 						setSubmitting(false)
 					})
+
+				// axios
+				// 	.get('http://localhost:8080/users')
+				// 	.then(response => {
+				// 		if (verifyLogin(values.email, values.password, response.data)) {
+				// 			onLoginSuccess(response.data.find(u => u.email === values.email))
+				// 			navigate('/')
+				// 			console.log('zalogowano')
+				// 		} else {
+				// 			setLoginError('E-mail lub hasło jest nieprawidłowe') // Ustawienie komunikatu o błędzie
+				// 		}
+				// 	})
+				// 	.catch(error => {
+				// 		console.error('Błąd podczas wczytywania danych:', error)
+				// 	})
+				// 	.finally(() => {
+				// 		setSubmitting(false)
+				// 	})
 			}}>
 			{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
 				<StyledForm>

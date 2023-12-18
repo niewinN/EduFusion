@@ -43,12 +43,30 @@ function EditLesson() {
 	})
 	const [isEditable, setIsEditable] = useState(false)
 	const [isAvailabilityEditable, setIsAvailabilityEditable] = useState(false)
+	const [newTutorData, setNewTutorData] = useState({
+		level: [],
+		mode: [],
+		city: '',
+		desc: '',
+		price: '',
+		subject: '',
+		availability: {
+			monday: [],
+			tuesday: [],
+			wednesday: [],
+			thursday: [],
+			friday: [],
+			saturday: [],
+			sunday: [],
+		},
+	})
 
 	const { user } = useLogin()
 	const [newLevel, setNewLevel] = useState('')
 	const [newMode, setNewMode] = useState('')
 	const [levelError, setLevelError] = useState('')
 	const [modeError, setModeError] = useState('')
+	const [hasTutor, setHasTutor] = useState(false)
 	const initialTimeState = {
 		monday: '',
 		tuesday: '',
@@ -97,10 +115,18 @@ function EditLesson() {
 			try {
 				if (user && user.email) {
 					const response = await axios.get(
-						`http://localhost:4001/tutors?email=${user.email}`
+						`http://localhost:8080/tutors?email=${user.email}`
 					)
 					const data = response.data[0]
-					setTutorData(data)
+					if (data) {
+						setTutorData(data)
+						setHasTutor(true) // Ustaw hasTutor na true, bo masz już tutora
+					} else {
+						setNewTutorData({
+							// Inicjalizuj dane nowego tutora tutaj
+						})
+						setHasTutor(false) // Ustaw hasTutor na false, bo nie masz jeszcze tutora
+					}
 				}
 			} catch (error) {
 				console.error(
@@ -255,15 +281,83 @@ function EditLesson() {
 		}
 	}
 
+	// const addNewTutor = async () => {
+	// 	try {
+	// 		const newUser = {
+	// 			id: user.id,
+	// 			firstName: user.firstName,
+	// 			lastName: user.lastName,
+	// 			email: user.email,
+	// 			phoneNumber: user.phoneNumber,
+	// 			password: user.password,
+	// 			role: 'TUTOR',
+	// 			tutor: {
+	// 				img: 'photo.png',
+	// 				level: newTutorData.level,
+	// 				mode: newTutorData.mode,
+	// 				city: newTutorData.city,
+	// 				desc: newTutorData.desc,
+	// 				price: newTutorData.price,
+	// 				subject: newTutorData.subject,
+	// 				availability: newTutorData.availability,
+	// 				userId: user.id,
+	// 			},
+	// 		}
+
+	// 		await axios.post('http://localhost:8080/tutors', newUser)
+	// 		console.log('Nowy tutor został dodany pomyślnie')
+	// 	} catch (error) {
+	// 		if (error.response) {
+	// 			// Błąd generowany przez serwer
+	// 			console.error('Błąd serwera:', error.response.data)
+	// 		} else if (error.request) {
+	// 			// Żądanie zostało wysłane, ale nie otrzymano odpowiedzi
+	// 			console.error('Brak odpowiedzi serwera:', error.request)
+	// 		} else {
+	// 			// Coś poszło nie tak przy tworzeniu żądania
+	// 			console.error('Błąd:', error.message)
+	// 		}
+	// 	}
+	// }
+
 	const updateTutor = async () => {
 		try {
-			await axios.put(`http://localhost:4001/tutors/${tutorData.id}`, tutorData)
-			console.log('Dane tutora zostały zaktualizowane pomyślnie')
+			const tutorDataToSend = {
+				// Przygotuj dane do wysłania, na przykład:
+				userId: user.id,
+				img: 'elo.png',
+				desc: tutorData.desc,
+				price: tutorData.price,
+				subject: tutorData.subject,
+				level: tutorData.level,
+				mode: tutorData.mode,
+				city: tutorData.city,
+				availability: tutorData.availability,
+			}
+			let response
+			if (hasTutor) {
+				response = await axios.put(
+					`http://localhost:8080/tutors/${tutorData.id}`,
+					tutorDataToSend
+				)
+			} else {
+				response = await axios.post(
+					'http://localhost:8080/tutors',
+					tutorDataToSend
+				)
+			}
+
+			if (response.status === 200) {
+				setTutorData(response.data) // Aktualizacja stanu po pomyślnym zapisie
+				console.log('Dane tutora zostały zaktualizowane/dodane pomyślnie')
+			}
 			setIsEditable(false)
 			setLevelError('')
 			setModeError('')
+
+			console.log('Dane tutora zostały zaktualizowane/dodane pomyślnie')
 		} catch (error) {
-			console.error('Błąd podczas aktualizacji danych tutora:', error)
+			console.error('Błąd podczas aktualizacji/dodawania danych tutora:', error)
 		}
 	}
 

@@ -68,7 +68,7 @@ function RegisterForm() {
 				validateOnChange={true}
 				onSubmit={(values, { setSubmitting }) => {
 					axios
-						.post('http://localhost:4000/users', values)
+						.post('http://localhost:8080/users', values)
 						.then(response => {
 							console.log('Użytkownik dodany:', response.data)
 							setFormSubmitted(true)
