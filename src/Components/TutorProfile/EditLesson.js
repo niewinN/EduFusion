@@ -39,7 +39,7 @@ function EditLesson() {
 			sunday: [],
 		},
 		// email: '',
-		id: '',
+		// id: '',
 	})
 	const [isEditable, setIsEditable] = useState(false)
 	const [isAvailabilityEditable, setIsAvailabilityEditable] = useState(false)
@@ -113,20 +113,19 @@ function EditLesson() {
 	useEffect(() => {
 		const fetchLoggedInTutorData = async () => {
 			try {
-				if (user && user.email) {
+				if (user && user.id) {
 					const response = await axios.get(
-						`http://localhost:8080/tutors?email=${user.email}`
+						`http://localhost:8080/tutors/user/${user.id}`
 					)
-					const data = response.data[0]
-					if (data) {
-						setTutorData(data)
-						setHasTutor(true) // Ustaw hasTutor na true, bo masz już tutora
+					if (response.data) {
+						setTutorData(response.data)
+						setHasTutor(true)
 					} else {
-						setNewTutorData({
-							// Inicjalizuj dane nowego tutora tutaj
-						})
-						setHasTutor(false) // Ustaw hasTutor na false, bo nie masz jeszcze tutora
+						resetTutorData()
+						setHasTutor(false)
 					}
+				} else {
+					resetTutorData()
 				}
 			} catch (error) {
 				console.error(
@@ -138,6 +137,26 @@ function EditLesson() {
 
 		fetchLoggedInTutorData()
 	}, [user])
+
+	const resetTutorData = () => {
+		setTutorData({
+			level: [],
+			mode: [],
+			city: '',
+			desc: '',
+			price: '',
+			subject: '',
+			availability: {
+				monday: [],
+				tuesday: [],
+				wednesday: [],
+				thursday: [],
+				friday: [],
+				saturday: [],
+				sunday: [],
+			},
+		})
+	}
 
 	const handleEdit = () => {
 		setIsEditable(true)
@@ -325,7 +344,7 @@ function EditLesson() {
 			const tutorDataToSend = {
 				// Przygotuj dane do wysłania, na przykład:
 				userId: user.id,
-				img: 'elo.png',
+				// img: 'Obraz do uzupełnienia',
 				desc: tutorData.desc,
 				price: tutorData.price,
 				subject: tutorData.subject,

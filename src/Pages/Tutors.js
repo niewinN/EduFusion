@@ -16,35 +16,50 @@ function Tutors() {
 	const [tutors, setTutors] = useState([])
 	const { selectedOptions } = useSelectedOptions()
 
+	// useEffect(() => {
+	// 	axios
+	// 		.get('http://localhost:4001/tutors') // Zmienić na właściwy URL
+	// 		.then(response => {
+	// 			const tutorsWithImages = response.data.map(tutor => {
+	// 				switch (tutor.img) {
+	// 					case 'tutor1.jpg':
+	// 						return { ...tutor, img: tutor1 }
+	// 					case 'tutor2.jpg':
+	// 						return { ...tutor, img: tutor2 }
+	// 					case 'tutor3.jpg':
+	// 						return { ...tutor, img: tutor3 }
+	// 					case 'tutor4.jpg':
+	// 						return { ...tutor, img: tutor4 }
+	// 					case 'tutor5.jpg':
+	// 						return { ...tutor, img: tutor5 }
+	// 					case 'tutor6.jpg':
+	// 						return { ...tutor, img: tutor6 }
+	// 					case 'tutor7.jpg':
+	// 						return { ...tutor, img: tutor7 }
+	// 					case 'tutor8.jpg':
+	// 						return { ...tutor, img: tutor8 }
+
+	// 					default:
+	// 						return tutor
+	// 				}
+	// 			})
+
+	// 			setTutors(tutorsWithImages)
+	// 		})
+	// 		.catch(error => {
+	// 			console.error('Błąd podczas pobierania danych:', error)
+	// 		})
+	// }, [])
+
 	useEffect(() => {
 		axios
-			.get('http://localhost:4001/tutors') // Zmienić na właściwy URL
+			.get(`http://localhost:8080/tutors`)
 			.then(response => {
-				const tutorsWithImages = response.data.map(tutor => {
-					switch (tutor.img) {
-						case 'tutor1.jpg':
-							return { ...tutor, img: tutor1 }
-						case 'tutor2.jpg':
-							return { ...tutor, img: tutor2 }
-						case 'tutor3.jpg':
-							return { ...tutor, img: tutor3 }
-						case 'tutor4.jpg':
-							return { ...tutor, img: tutor4 }
-						case 'tutor5.jpg':
-							return { ...tutor, img: tutor5 }
-						case 'tutor6.jpg':
-							return { ...tutor, img: tutor6 }
-						case 'tutor7.jpg':
-							return { ...tutor, img: tutor7 }
-						case 'tutor8.jpg':
-							return { ...tutor, img: tutor8 }
-
-						default:
-							return tutor
-					}
+				const tutorsWithLocalImagePath = response.data.map(tutor => {
+					return { ...tutor, img: `/images/${tutor.img}` }
 				})
 
-				setTutors(tutorsWithImages)
+				setTutors(tutorsWithLocalImagePath)
 			})
 			.catch(error => {
 				console.error('Błąd podczas pobierania danych:', error)

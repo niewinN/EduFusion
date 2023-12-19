@@ -91,7 +91,7 @@ function TutorReserveCard({
 	useEffect(() => {
 		const fetchTutorData = async () => {
 			try {
-				const response = await axios.get(`http://localhost:4001/tutors`)
+				const response = await axios.get(`http://localhost:8080/tutors`)
 				setSelectedTutor(
 					response.data.find(tutor => tutor.id === selectedTutorId)
 				)
