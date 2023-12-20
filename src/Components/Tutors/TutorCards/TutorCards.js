@@ -57,8 +57,13 @@ function TutorCards({ filteredTutors }) {
 		axios
 			.get(`http://localhost:8080/tutors`)
 			.then(response => {
+				console.log(response.data)
 				const tutorsWithLocalImagePath = response.data.map(tutor => {
-					return { ...tutor, img: `/images/${tutor.img}` }
+					return {
+						...tutor,
+						img: `/images/${tutor.img}`,
+						// name: tutor.firstName,
+					}
 				})
 
 				setTutors(tutorsWithLocalImagePath)
@@ -80,7 +85,9 @@ function TutorCards({ filteredTutors }) {
 						<TutorReserveCard
 							key={tutor.id}
 							img={tutor.img}
-							name={tutor.name}
+							// name={tutor.user.name}
+							// name={tutor.user ? tutor.user.name : 'Brak imienia'}
+							name={tutor.firstName}
 							desc={tutor.desc}
 							subject={tutor.subject}
 							price={tutor.price}

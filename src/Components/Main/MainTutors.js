@@ -24,29 +24,12 @@ function MainTutors() {
 
 	useEffect(() => {
 		axios
-			.get('http://localhost:4001/tutors')
+			.get('http://localhost:8080/tutors')
 			.then(response => {
 				const tutorsWithImages = response.data.map(tutor => {
-					switch (tutor.img) {
-						case 'tutor1.jpg':
-							return { ...tutor, img: tutor1 }
-						case 'tutor2.jpg':
-							return { ...tutor, img: tutor2 }
-						case 'tutor3.jpg':
-							return { ...tutor, img: tutor3 }
-						case 'tutor4.jpg':
-							return { ...tutor, img: tutor4 }
-						case 'tutor5.jpg':
-							return { ...tutor, img: tutor5 }
-						case 'tutor6.jpg':
-							return { ...tutor, img: tutor6 }
-						case 'tutor7.jpg':
-							return { ...tutor, img: tutor7 }
-						case 'tutor8.jpg':
-							return { ...tutor, img: tutor8 }
-
-						default:
-							return tutor
+					return {
+						...tutor,
+						img: `/images/${tutor.img}`,
 					}
 				})
 

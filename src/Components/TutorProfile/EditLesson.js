@@ -110,31 +110,58 @@ function EditLesson() {
 		hoursOptions.push(`${String(i).padStart(2, '0')}:00`)
 	}
 
-	useEffect(() => {
-		const fetchLoggedInTutorData = async () => {
-			try {
-				if (user && user.id) {
-					const response = await axios.get(
-						`http://localhost:8080/tutors/user/${user.id}`
-					)
-					if (response.data) {
-						setTutorData(response.data)
-						setHasTutor(true)
-					} else {
-						resetTutorData()
-						setHasTutor(false)
-					}
+	// useEffect(() => {
+	// 	const fetchLoggedInTutorData = async () => {
+	// 		try {
+	// 			if (user && user.id) {
+	// 				const response = await axios.get(
+	// 					`http://localhost:8080/tutors/user/${user.id}`
+	// 				)
+	// 				if (response.data) {
+	// 					setTutorData(response.data)
+	// 					setHasTutor(true)
+	// 				} else {
+	// 					resetTutorData()
+	// 					setHasTutor(false)
+	// 				}
+	// 			} else {
+	// 				resetTutorData()
+	// 			}
+	// 		} catch (error) {
+	// 			console.error(
+	// 				'Błąd podczas pobierania danych zalogowanego tutora:',
+	// 				error
+	// 			)
+	// 		}
+	// 	}
+
+	// 	fetchLoggedInTutorData()
+	// }, [user])
+	const fetchLoggedInTutorData = async () => {
+		try {
+			if (user && user.id) {
+				const response = await axios.get(
+					`http://localhost:8080/tutors/user/${user.id}`
+				)
+				if (response.data) {
+					setTutorData(response.data)
+					setHasTutor(true)
 				} else {
 					resetTutorData()
+					setHasTutor(false)
 				}
-			} catch (error) {
-				console.error(
-					'Błąd podczas pobierania danych zalogowanego tutora:',
-					error
-				)
+			} else {
+				resetTutorData()
 			}
+		} catch (error) {
+			console.error(
+				'Błąd podczas pobierania danych zalogowanego tutora:',
+				error
+			)
 		}
+	}
 
+	useEffect(() => {
 		fetchLoggedInTutorData()
 	}, [user])
 
@@ -242,7 +269,7 @@ function EditLesson() {
 				{isAvailabilityEditable && (
 					<EditChange>
 						<EditSelect
-							value={newTimes[day]}
+							value={newTimes[day] || ''}
 							onChange={e =>
 								setNewTimes({ ...newTimes, [day]: e.target.value })
 							}>
@@ -338,10 +365,13 @@ function EditLesson() {
 	// 		}
 	// 	}
 	// }
+	useEffect(() => {
+		console.log('Aktualna dostępność:', tutorData.availability)
+	}, [tutorData.availability])
 
 	const updateTutor = async () => {
 		try {
-			const tutorDataToSend = {
+			let tutorDataToSend = {
 				// Przygotuj dane do wysłania, na przykład:
 				userId: user.id,
 				// img: 'Obraz do uzupełnienia',
@@ -353,6 +383,15 @@ function EditLesson() {
 				city: tutorData.city,
 				availability: tutorData.availability,
 			}
+
+			if (!hasTutor) {
+				// Dodaj obraz tylko podczas pierwszego tworzenia profilu tutora
+				tutorDataToSend = {
+					...tutorDataToSend,
+					img: 'Obraz do uzupełnienia',
+				}
+			}
+
 			let response
 			if (hasTutor) {
 				response = await axios.put(
@@ -367,8 +406,15 @@ function EditLesson() {
 			}
 
 			if (response.status === 200) {
-				setTutorData(response.data) // Aktualizacja stanu po pomyślnym zapisie
+				fetchLoggedInTutorData()
+				setTutorData(response.data)
+				setNewTimes(initialTimeState)
+				setTimeErrors(initialErrorState)
 				console.log('Dane tutora zostały zaktualizowane/dodane pomyślnie')
+				setIsEditable(false) // Tutaj zmieniając stan na false
+				setIsAvailabilityEditable(false) // Jeśli chcesz również wyłączyć edycję dostępności
+				setLevelError('')
+				setModeError('')
 			}
 			setIsEditable(false)
 			setLevelError('')
@@ -508,14 +554,15 @@ function EditLesson() {
 				<EditDataInfoBox>
 					<EditLabel>Dostępność</EditLabel>
 					<EditChangeBox>
-						{Object.entries(tutorData.availability).map(([day, times]) => (
-							<EditAvailability
-								key={day}
-								day={day}
-								times={times}
-								onTimeChange={handleTimeChange}
-							/>
-						))}
+						{tutorData.availability &&
+							Object.entries(tutorData.availability).map(([day, times]) => (
+								<EditAvailability
+									key={day}
+									day={day}
+									times={times}
+									onTimeChange={handleTimeChange}
+								/>
+							))}
 					</EditChangeBox>
 				</EditDataInfoBox>
 

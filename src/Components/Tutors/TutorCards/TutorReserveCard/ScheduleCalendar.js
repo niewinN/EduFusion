@@ -168,9 +168,10 @@ const ScheduleCalendar = ({ selectedTutor }) => {
 
 	const hasMoreThanThreeTimeslots = daysOfWeek.some(day => {
 		const dayLabel = dayLabels[new Date(day).getDay()]
-		const times = selectedTutor
-			? selectedTutor.availability[dayLabel] || []
-			: []
+		const times =
+			selectedTutor && selectedTutor.availability
+				? selectedTutor.availability[dayLabel] || []
+				: []
 		return times.length > 3
 	})
 
@@ -180,9 +181,10 @@ const ScheduleCalendar = ({ selectedTutor }) => {
 				{daysOfWeek.map((day, index) => {
 					const dayOfWeek = day.getDay()
 					const dayLabel = dayLabels[dayOfWeek === 0 ? 6 : dayOfWeek - 1]
-					const times = selectedTutor
-						? selectedTutor.availability[dayLabel] || []
-						: []
+					const times =
+						selectedTutor && selectedTutor.availability
+							? selectedTutor.availability[dayLabel] || []
+							: []
 					const timesToShow = isExpanded ? times : times.slice(0, 3)
 					const formattedDay = format(day, 'yyyy-MM-dd')
 
@@ -193,18 +195,22 @@ const ScheduleCalendar = ({ selectedTutor }) => {
 								{format(day, 'dd MMM', { locale: pl })}
 							</FullDateLabel>
 							<TimeSlotsWrapper>
-								{timesToShow.map((time, timeIndex) => (
-									<TimeSlot
-										key={`time-${timeIndex}-${time}`}
-										selected={
-											selectedTimeSlot &&
-											selectedTimeSlot[0] === formattedDay &&
-											selectedTimeSlot[1] === time
-										}
-										onClick={() => handleTimeSlotClick(formattedDay, time)}>
-										{time}
-									</TimeSlot>
-								))}
+								{timesToShow.length > 0 ? (
+									timesToShow.map((time, timeIndex) => (
+										<TimeSlot
+											key={`time-${timeIndex}-${time}`}
+											selected={
+												selectedTimeSlot &&
+												selectedTimeSlot[0] === formattedDay &&
+												selectedTimeSlot[1] === time
+											}
+											onClick={() => handleTimeSlotClick(formattedDay, time)}>
+											{time}
+										</TimeSlot>
+									))
+								) : (
+									<p>-</p>
+								)}
 							</TimeSlotsWrapper>
 						</DayWrapper>
 					)

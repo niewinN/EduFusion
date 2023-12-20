@@ -21,7 +21,7 @@ function TutorCard({ img, name, desc, price, subject }) {
 				<CardName>{name}</CardName>
 				<CardDesc>{desc}</CardDesc>
 				<CardBottom>
-					<CardPrice>{price} / 60 min</CardPrice>
+					<CardPrice>{price} zł / 60 min</CardPrice>
 					<CardSubjcet>{subject}</CardSubjcet>
 				</CardBottom>
 			</CardInformation>
