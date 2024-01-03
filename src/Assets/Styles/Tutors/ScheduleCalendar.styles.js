@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export const CalendarWrapper = styled.div`
@@ -47,7 +47,16 @@ export const TimeSlot = styled.div`
 	border: 1px solid #646464;
 	box-shadow: 0 2px 15px #646464;
 	cursor: pointer;
+
+	${props =>
+		props.disabled &&
+		css`
+			/* background-color: gray; */
+			text-decoration: line-through; // Skreślenie
+			cursor: not-allowed; // Kursor 'zakaz'
+		`}
 `
+
 export const ShowMoreButton = styled.button`
 	padding: 5px 10px;
 	margin: 5px 0 15px 0;

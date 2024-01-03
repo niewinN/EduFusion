@@ -69,24 +69,6 @@ function LoginForm() {
 					.finally(() => {
 						setSubmitting(false)
 					})
-
-				// axios
-				// 	.get('http://localhost:8080/users')
-				// 	.then(response => {
-				// 		if (verifyLogin(values.email, values.password, response.data)) {
-				// 			onLoginSuccess(response.data.find(u => u.email === values.email))
-				// 			navigate('/')
-				// 			console.log('zalogowano')
-				// 		} else {
-				// 			setLoginError('E-mail lub hasło jest nieprawidłowe') // Ustawienie komunikatu o błędzie
-				// 		}
-				// 	})
-				// 	.catch(error => {
-				// 		console.error('Błąd podczas wczytywania danych:', error)
-				// 	})
-				// 	.finally(() => {
-				// 		setSubmitting(false)
-				// 	})
 			}}>
 			{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
 				<StyledForm>

@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import theme from '../GlobalStyles/theme'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -148,6 +148,14 @@ export const CardReserveBtn = styled.button`
 	font-size: 1.5rem;
 	text-transform: uppercase;
 	/* margin-bottom: 20px; */
+
+	&:disabled {
+		background-color: gray;
+	}
+
+	&:disabled:hover {
+		cursor: no-drop;
+	}
 
 	@media (min-width: 1024px) {
 		padding: 10px 70px;

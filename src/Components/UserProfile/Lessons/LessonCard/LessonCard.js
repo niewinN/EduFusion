@@ -19,47 +19,77 @@ import {
 function LessonCard({ lessonData, loggedInUser }) {
 	console.log('Dane lekcji w LessonCard:', lessonData)
 	console.log('Zalogowany użytkownik w LessonCard:', loggedInUser)
+	// // Sprawdź, czy zalogowany użytkownik jest nauczycielem
+	// const isTutor = loggedInUser.role === 'tutor'
+
+	// // Decyduj, co wyświetlić w zależności od roli
+	// const displayRole = isTutor ? 'Uczeń' : 'Nauczyciel'
+	// const displayName = isTutor ? lessonData.studentName : lessonData.tutorName
+	// // console.log('Dane lekcji:', lessonData)
+	// // const { selectedOptions } = useSelectedOptions()
+	// if (!(lessonData.selectedDate instanceof Date)) {
+	// 	lessonData.selectedDate = new Date(lessonData.selectedDate)
+	// }
+
+	// const monthYearFormat = { month: 'long', year: 'numeric' }
+	// const dayOfWeekFormat = { weekday: 'long' }
+
+	// const formattedMonthYear = lessonData.selectedDate.toLocaleDateString(
+	// 	'pl-PL',
+	// 	monthYearFormat
+	// )
+	// const formattedDayOfWeek = lessonData.selectedDate.toLocaleDateString(
+	// 	'pl-PL',
+	// 	dayOfWeekFormat
+	// )
+
+	// function getEndTime(startTimeString) {
+	// 	const [hours, minutes] = startTimeString.split(':').map(Number)
+	// 	const endTime = new Date()
+	// 	endTime.setHours(hours, minutes + 60)
+	// 	return endTime
+	// }
+
+	// const startTimeString = lessonData.startTime
+	// const endTime = getEndTime(startTimeString)
+
+	// const formattedStartTime = startTimeString
+	// const formattedEndTime = endTime.toTimeString().substring(0, 5)
 	// Sprawdź, czy zalogowany użytkownik jest nauczycielem
-	const isTutor = loggedInUser.role === 'tutor'
+	const isTutor = loggedInUser.role === 'TUTOR'
+	// console.log(isTutor)
 
 	// Decyduj, co wyświetlić w zależności od roli
 	const displayRole = isTutor ? 'Uczeń' : 'Nauczyciel'
 	const displayName = isTutor ? lessonData.studentName : lessonData.tutorName
-	// console.log('Dane lekcji:', lessonData)
-	// const { selectedOptions } = useSelectedOptions()
-	if (!(lessonData.selectedDate instanceof Date)) {
-		lessonData.selectedDate = new Date(lessonData.selectedDate)
-	}
 
-	const monthYearFormat = { month: 'long', year: 'numeric' }
-	const dayOfWeekFormat = { weekday: 'long' }
+	// Konwersja stringa daty na obiekt Date
+	const lessonDate = new Date(lessonData.lessonDate)
 
-	const formattedMonthYear = lessonData.selectedDate.toLocaleDateString(
-		'pl-PL',
-		monthYearFormat
-	)
-	const formattedDayOfWeek = lessonData.selectedDate.toLocaleDateString(
-		'pl-PL',
-		dayOfWeekFormat
-	)
+	// Formatowanie daty
+	const formattedMonthYear = lessonDate.toLocaleDateString('pl-PL', {
+		month: 'long',
+		year: 'numeric',
+	})
+	const formattedDayOfWeek = lessonDate.toLocaleDateString('pl-PL', {
+		weekday: 'long',
+	})
+	const dayOfMonth = lessonDate.getDate()
 
 	function getEndTime(startTimeString) {
 		const [hours, minutes] = startTimeString.split(':').map(Number)
-		const endTime = new Date()
+		const endTime = new Date(lessonDate)
 		endTime.setHours(hours, minutes + 60)
-		return endTime
+		return endTime.toTimeString().substring(0, 5)
 	}
 
-	const startTimeString = lessonData.startTime
-	const endTime = getEndTime(startTimeString)
-
-	const formattedStartTime = startTimeString
-	const formattedEndTime = endTime.toTimeString().substring(0, 5)
+	const formattedStartTime = lessonData.startTime
+	const formattedEndTime = getEndTime(formattedStartTime)
 
 	return (
 		<CardBox>
 			<CardDate>
-				<CardDay>{lessonData.selectedDate.getDate()}</CardDay>
+				<CardDay>{dayOfMonth}</CardDay>
 				<CardDayOfWeek>{formattedDayOfWeek}</CardDayOfWeek>
 				<CardMontAndYear>{formattedMonthYear}</CardMontAndYear>
 			</CardDate>

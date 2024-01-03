@@ -6,7 +6,7 @@ export const EditDataContainer = styled.div`
 	border-radius: 8px;
 	padding-bottom: 15px;
 	flex-basis: 20%;
-	/* align-self: flex-start; */
+	align-self: flex-start;
 `
 
 export const EditBox = styled.div`

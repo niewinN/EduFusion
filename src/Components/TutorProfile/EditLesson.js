@@ -191,6 +191,7 @@ function EditLesson() {
 	}
 
 	const handleChange = (field, value) => {
+		console.log('handleChange:', field, value) // Dodaj tę linię
 		setTutorData({ ...tutorData, [field]: value })
 	}
 
@@ -370,6 +371,7 @@ function EditLesson() {
 	}, [tutorData.availability])
 
 	const updateTutor = async () => {
+		console.log('Przed wysłaniem:', tutorData) // Dodaj tę linię
 		try {
 			let tutorDataToSend = {
 				// Przygotuj dane do wysłania, na przykład:
@@ -394,11 +396,13 @@ function EditLesson() {
 
 			let response
 			if (hasTutor) {
+				console.log('Wysyłanie PUT z danymi:', tutorDataToSend) // Dodaj tę linię
 				response = await axios.put(
 					`http://localhost:8080/tutors/${tutorData.id}`,
 					tutorDataToSend
 				)
 			} else {
+				console.log('Wysyłanie POST z danymi:', tutorDataToSend)
 				response = await axios.post(
 					'http://localhost:8080/tutors',
 					tutorDataToSend
@@ -423,6 +427,9 @@ function EditLesson() {
 			console.log('Dane tutora zostały zaktualizowane/dodane pomyślnie')
 		} catch (error) {
 			console.error('Błąd podczas aktualizacji/dodawania danych tutora:', error)
+			if (error.response) {
+				console.log('Odpowiedź serwera:', error.response.data) // Dodaj tę linię
+			}
 		}
 	}
 
@@ -519,7 +526,10 @@ function EditLesson() {
 					<EditChangeBox>
 						<EditSelectLast
 							value={tutorData.city}
-							onChange={e => handleChange('city', e.target.value)}
+							onChange={e => {
+								console.log('EditSelectLast value:', e.target.value) // Dodaj tę linię
+								handleChange('city', e.target.value)
+							}}
 							disabled={!isEditable}>
 							<option value=''>Wybierz miasto</option>
 							{baseSelectOptions.city.map(option => (

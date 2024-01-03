@@ -29,6 +29,7 @@ function TutorReserveCard({
 	desc,
 	subject,
 	price,
+	email,
 	selectedTutorId,
 }) {
 	const [selectedTutor, setSelectedTutor] = useState(null)
@@ -36,10 +37,13 @@ function TutorReserveCard({
 	const [lessonReserved, setLessonReserved] = useState(false)
 	const [modalTitle, setModalTitle] = useState('')
 	const [modalText, setModalText] = useState('')
+	const [selectedLessonDate, setSelectedLessonDate] = useState(null) // Nowy stan
 	const { selectedOptions, addLesson } = useSelectedOptions()
 	const selectedDate = selectedOptions.date
 	const navigate = useNavigate()
-	const { isLoggedIn } = useLogin()
+	const { isLoggedIn, user } = useLogin()
+
+	const isStudent = isLoggedIn && user.role === 'STUDENT'
 
 	const areAllCriteriaMet = () => {
 		const { subject, level, mode, city, date } = selectedOptions
@@ -47,7 +51,7 @@ function TutorReserveCard({
 		return subject && level && mode && date && (!isStationary || city)
 	}
 
-	const handleAddLesson = () => {
+	const handleAddLesson = async () => {
 		if (!isLoggedIn) {
 			navigate('/login')
 			return
@@ -62,23 +66,100 @@ function TutorReserveCard({
 			return
 		}
 
-		const currentUser = JSON.parse(localStorage.getItem('user'))
+		try {
+			const currentUser = JSON.parse(localStorage.getItem('user'))
 
-		addLesson({
-			...selectedOptions,
-			tutorName: name,
-			tutorEmail: selectedTutor ? selectedTutor.email : null,
-			studentName: currentUser
-				? `${currentUser.firstName} ${currentUser.lastName}`
-				: 'Nieznany Uczeń',
-		})
-		setModalOpen(true)
-		setLessonReserved(true)
-		setModalTitle('Pomyślnie zarezerwowano lekcję!')
-		setModalText(
-			'Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć.'
-		)
+			// Fetch the tutor data from the backend
+			// const tutorResponse = await axios.get(
+			// 	`http://localhost:8080/tutors/${selectedTutorId}`
+			// )
+			// const selectedTutor = tutorResponse.data
+
+			// Fetch the tutor data from the backend
+			const tutorResponse = await axios.get(
+				`http://localhost:8080/tutors/${selectedTutorId}`
+			)
+			const selectedTutor = tutorResponse.data
+
+			// Fetch the student data from the backend
+			// const studentResponse = await axios.get(
+			// 	`http://localhost:8080/users/${currentUser.userId}`
+			// )
+			// const selectedStudent = studentResponse.data
+
+			// Create a lesson DTO object
+			const lessonData = {
+				subject: selectedOptions.subject,
+				level: selectedOptions.level,
+				mode: selectedOptions.mode,
+				city: selectedOptions.city,
+				lessonDate: selectedLessonDate,
+				tutorId: selectedTutorId, // Dodajemy tutorId
+				studentId: user.id,
+				tutorName: name,
+				tutorEmail: email,
+				studentName: `${user.firstName} ${user.lastName}`,
+				studentEmail: user.email,
+				startTime: selectedOptions.startTime, // Add this line
+				// lessonDate: new Date(),
+			}
+
+			console.log(`Dane ktore chce przeslac: `, lessonData)
+
+			// Post the lesson data to the backend
+			await axios.post(
+				'http://localhost:8080/lessons',
+				JSON.stringify(lessonData),
+				{
+					headers: {
+						'Content-Type': 'application/json',
+					},
+				}
+			)
+
+			setModalOpen(true)
+			setLessonReserved(true)
+			setModalTitle('Pomyślnie zarezerwowano lekcję!')
+			setModalText(
+				'Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć.'
+			)
+		} catch (error) {
+			console.error('Błąd podczas rezerwacji lekcji:', error)
+		}
 	}
+
+	// const handleAddLesson = () => {
+	// 	if (!isLoggedIn) {
+	// 		navigate('/login')
+	// 		return
+	// 	}
+
+	// 	if (!areAllCriteriaMet()) {
+	// 		setModalTitle('Uzupełnij kryteria!')
+	// 		setModalText(
+	// 			'Musisz uzupełnić wszystkie potrzebne kryteria, aby móc wyszukać odpowiedniego korepetytora!'
+	// 		)
+	// 		setModalOpen(true)
+	// 		return
+	// 	}
+
+	// 	const currentUser = JSON.parse(localStorage.getItem('user'))
+
+	// 	addLesson({
+	// 		...selectedOptions,
+	// 		tutorName: name,
+	// 		tutorEmail: selectedTutor ? selectedTutor.email : null,
+	// 		studentName: currentUser
+	// 			? `${currentUser.firstName} ${currentUser.lastName}`
+	// 			: 'Nieznany Uczeń',
+	// 	})
+	// 	setModalOpen(true)
+	// 	setLessonReserved(true)
+	// 	setModalTitle('Pomyślnie zarezerwowano lekcję!')
+	// 	setModalText(
+	// 		'Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć.'
+	// 	)
+	// }
 
 	const handleModalClose = () => {
 		setModalOpen(false)
@@ -121,11 +202,12 @@ function TutorReserveCard({
 					<ScheduleCalendar
 						selectedTutor={selectedTutor}
 						selectedDate={selectedDate || new Date()}
+						setSelectedLessonDate={setSelectedLessonDate}
 					/>
 
 					<CardPriceAndBtn>
 						<CardPrice>{price}zł / 60 min</CardPrice>
-						<CardReserveBtn onClick={handleAddLesson}>
+						<CardReserveBtn onClick={handleAddLesson} disabled={!isStudent}>
 							Zarezerwuj
 						</CardReserveBtn>
 					</CardPriceAndBtn>
