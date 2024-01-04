@@ -6,6 +6,7 @@ export const FooterContainer = styled.div`
 	background-color: ${theme.colors.primary};
 	padding: 40px 20px;
 	color: #fff;
+	margin-top: auto;
 `
 
 export const FooterBoxes = styled.div`

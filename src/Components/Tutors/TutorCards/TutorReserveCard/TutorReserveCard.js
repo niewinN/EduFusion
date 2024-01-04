@@ -43,7 +43,7 @@ function TutorReserveCard({
 	const navigate = useNavigate()
 	const { isLoggedIn, user } = useLogin()
 
-	const isStudent = isLoggedIn && user.role === 'STUDENT'
+	const isTutor = user.role === 'TUTOR'
 
 	const areAllCriteriaMet = () => {
 		const { subject, level, mode, city, date } = selectedOptions
@@ -128,39 +128,6 @@ function TutorReserveCard({
 		}
 	}
 
-	// const handleAddLesson = () => {
-	// 	if (!isLoggedIn) {
-	// 		navigate('/login')
-	// 		return
-	// 	}
-
-	// 	if (!areAllCriteriaMet()) {
-	// 		setModalTitle('Uzupełnij kryteria!')
-	// 		setModalText(
-	// 			'Musisz uzupełnić wszystkie potrzebne kryteria, aby móc wyszukać odpowiedniego korepetytora!'
-	// 		)
-	// 		setModalOpen(true)
-	// 		return
-	// 	}
-
-	// 	const currentUser = JSON.parse(localStorage.getItem('user'))
-
-	// 	addLesson({
-	// 		...selectedOptions,
-	// 		tutorName: name,
-	// 		tutorEmail: selectedTutor ? selectedTutor.email : null,
-	// 		studentName: currentUser
-	// 			? `${currentUser.firstName} ${currentUser.lastName}`
-	// 			: 'Nieznany Uczeń',
-	// 	})
-	// 	setModalOpen(true)
-	// 	setLessonReserved(true)
-	// 	setModalTitle('Pomyślnie zarezerwowano lekcję!')
-	// 	setModalText(
-	// 		'Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć.'
-	// 	)
-	// }
-
 	const handleModalClose = () => {
 		setModalOpen(false)
 		if (lessonReserved) {
@@ -207,7 +174,7 @@ function TutorReserveCard({
 
 					<CardPriceAndBtn>
 						<CardPrice>{price}zł / 60 min</CardPrice>
-						<CardReserveBtn onClick={handleAddLesson} disabled={!isStudent}>
+						<CardReserveBtn onClick={handleAddLesson} disabled={isTutor}>
 							Zarezerwuj
 						</CardReserveBtn>
 					</CardPriceAndBtn>

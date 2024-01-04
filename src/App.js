@@ -16,24 +16,30 @@ import TutorProfile from './Pages/TutorProfile'
 function App() {
 	return (
 		<>
-			<SelectedOptionsProvider>
-				<LoginProvider>
-					{/* <AvailabilityProvider> */}
-					<Navigation />
-					<Routes>
-						<Route path='/tutors' element={<Tutors />} />
-						<Route path='/aboutus' element={<AboutUs />} />
-						<Route path='/contact' element={<Contact />} />
-						<Route path='/' element={<Main />} />
-						<Route path='/register' element={<Register />} />
-						<Route path='/login' element={<Login />} />
-						<Route path='/user' element={<UserProfile />} />
-						<Route path='/tutor' element={<TutorProfile />} />
-					</Routes>
-					<Footer />
-					{/* </AvailabilityProvider> */}
-				</LoginProvider>
-			</SelectedOptionsProvider>
+			<div className='app-container'>
+				<SelectedOptionsProvider>
+					<LoginProvider>
+						{/* <AvailabilityProvider> */}
+						<Navigation />
+						<div className='content'>
+							<Routes>
+								<Route path='/tutors' element={<Tutors />} />
+								<Route path='/aboutus' element={<AboutUs />} />
+								<Route path='/contact' element={<Contact />} />
+								<Route path='/' element={<Main />} />
+								<Route path='/register' element={<Register />} />
+								<Route path='/login' element={<Login />} />
+								<Route path='/user' element={<UserProfile />} />
+								<Route path='/tutor' element={<TutorProfile />} />
+							</Routes>
+						</div>
+
+						<Footer />
+
+						{/* </AvailabilityProvider> */}
+					</LoginProvider>
+				</SelectedOptionsProvider>
+			</div>
 		</>
 	)
 }
