@@ -100,8 +100,7 @@ function TutorReserveCard({
 				tutorEmail: email,
 				studentName: `${user.firstName} ${user.lastName}`,
 				studentEmail: user.email,
-				startTime: selectedOptions.startTime, // Add this line
-				// lessonDate: new Date(),
+				startTime: selectedOptions.startTime,
 			}
 
 			console.log(`Dane ktore chce przeslac: `, lessonData)

@@ -66,7 +66,7 @@ export const InfoBtn = styled(FontAwesomeIcon)`
 	background: none;
 	border: none;
 	cursor: pointer;
-	z-index: 99;
+	z-index: 10;
 	color: #fff;
 	/* box-shadow: 0 2px 15px #646464; */
 

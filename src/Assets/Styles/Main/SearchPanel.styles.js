@@ -52,6 +52,7 @@ export const SearchSelect = styled.select`
 	border: none;
 	padding: 8px;
 	color: ${theme.colors.secondary};
+	cursor: pointer;
 `
 export const SearchSelectDate = styled.div`
 	position: relative;
@@ -87,6 +88,7 @@ export const SearchSelectDate = styled.div`
 		padding: 8px;
 		border-radius: 8px;
 		margin: 10px 0;
+		cursor: pointer;
 
 		&::placeholder {
 			/* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -168,6 +170,7 @@ export const SearchBtn = styled.button`
 	padding: 8px;
 	color: #fff;
 	text-transform: uppercase;
+	cursor: pointer;
 `
 
 export const SearchPhotoBox = styled.div`

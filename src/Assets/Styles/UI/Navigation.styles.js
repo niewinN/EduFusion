@@ -3,12 +3,8 @@ import { Link } from 'react-router-dom'
 import theme from '../GlobalStyles/theme'
 
 export const NavMainContainer = styled.div`
-	/* position: fixed; */
-	/* top: 0; */
-	/* left: 0; */
 	width: 100%;
 	z-index: 9999;
-	/* margin-bottom: 30px; */
 	${props =>
 		props.isScrolling &&
 		`
@@ -87,7 +83,7 @@ export const NavList = styled.ul`
 export const NavLink = styled(Link)`
 	position: relative;
 	display: block;
-	padding: 1em 2em;
+	padding: 1.6em 2em;
 	font-size: 1.8rem;
 	color: white;
 	text-decoration: none;
@@ -99,10 +95,30 @@ export const NavLink = styled(Link)`
 	@media (min-width: 768px) {
 		font-weight: normal;
 		color: #fff;
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 6px;
+			background-color: ${theme.colors.secondary};
+			display: none;
+			transition: display 0.3s;
+		}
+
+		&:hover::before {
+			display: block;
+		}
 	}
 
 	@media (min-width: 1024px) {
 		font-size: 2rem;
+
+		&::before {
+			height: 9px;
+		}
 	}
 `
 
@@ -110,7 +126,7 @@ export const NavLinkLogin = styled(NavLink)`
 	background-color: ${theme.colors.secondary};
 	border-radius: 8px;
 	padding: 0.5em 1em;
-	margin: 0em 1em;
+	margin: 1.6em 1em;
 	color: #fff;
 `
 

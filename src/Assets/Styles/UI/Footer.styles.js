@@ -53,6 +53,7 @@ export const FooterLinks = styled.div`
 export const FooterLink = styled.a`
 	font-size: 1.2rem;
 	margin-bottom: 10px;
+	cursor: pointer;
 
 	@media (min-width: 992px) {
 		font-size: 1.4rem;
@@ -74,6 +75,7 @@ export const FooterContact = styled.p`
 
 export const FooterIcons = styled.div`
 	display: flex;
+	cursor: pointer;
 
 	@media (min-width: 768px) {
 		justify-content: center;

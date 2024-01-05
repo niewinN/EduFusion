@@ -24,7 +24,7 @@ export const Overlay = styled.div`
 	align-items: center;
 	background-color: rgba(0, 0, 0, 0.4);
 	backdrop-filter: blur(5px);
-	z-index: 11;
+	z-index: 9999999;
 `
 
 export const ModalBox = styled.div`

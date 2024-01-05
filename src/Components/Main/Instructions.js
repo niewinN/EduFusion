@@ -44,12 +44,11 @@ function Instructions() {
 							</InstructionNrBox>
 							<InstructionTextBox>
 								<InstructionTitle>
-									Wypełnij podstawowe kryteria rezerwacji
+									Wybierz swojego korepetytora
 								</InstructionTitle>
 								<InstructionText>
-									Skorzystaj z naszej wyszukiwarki uzupełniając, przedmiot,
-									poziom i tryb nauki, dzień korepetycji oraz ewentualnie miasto
-									w przypadku zajęć stacjonarnych.
+									Z listy dostępnych korepetytorów wybierz nauczyciela
+									najbardziej pasującego do twoich wymagań.
 								</InstructionText>
 							</InstructionTextBox>
 						</InstructionBox>
@@ -58,13 +57,12 @@ function Instructions() {
 								<InstructionNr>3</InstructionNr>
 							</InstructionNrBox>
 							<InstructionTextBox>
-								<InstructionTitle>
-									Wypełnij podstawowe kryteria rezerwacji
-								</InstructionTitle>
+								<InstructionTitle>Zarezerwuj korepetycje</InstructionTitle>
 								<InstructionText>
-									Skorzystaj z naszej wyszukiwarki uzupełniając, przedmiot,
-									poziom i tryb nauki, dzień korepetycji oraz ewentualnie miasto
-									w przypadku zajęć stacjonarnych.
+									Po dokonaniu wyboru nauczyciela kliknij przycisk zarezerwuj,
+									żeby potwierdzić korepetycję. Korepetytor skontaktuję się z
+									tobą najszybciej jak będzie mógł i omówi telefonicznie
+									szczegóły spotkania oraz formę rozliczania za zajęcia.
 								</InstructionText>
 							</InstructionTextBox>
 						</InstructionBox>

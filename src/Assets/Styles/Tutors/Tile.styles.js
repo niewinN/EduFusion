@@ -12,6 +12,7 @@ export const TileBox = styled.div`
 	margin: 10px;
 	width: 180px;
 	flex-grow: 1;
+	/* cursor: pointer; */
 `
 
 export const TileIcon = styled(FontAwesomeIcon)`
@@ -29,6 +30,7 @@ export const FilterSelect = styled.select`
 	text-align: center;
 	background-color: ${theme.colors.secondary};
 	color: #fff;
+	cursor: pointer;
 
 	-webkit-appearance: none; /* Usuwa strzałki dla WebKit i Blink */
 	-moz-appearance: none; /* Usuwa strzałki dla Gecko */
@@ -57,6 +59,7 @@ export const SearchSelectDateTile = styled(SearchSelectDate)`
 		padding: 10px;
 		margin: 0;
 		border-radius: 0;
+		cursor: pointer;
 	}
 
 	.react-datepicker__input-container input::placeholder {
