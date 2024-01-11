@@ -10,7 +10,7 @@ import {
 	ErrorText,
 	StyledForm,
 } from '../../Assets/Styles/Login/LoginForm.styles'
-const bcrypt = require('bcryptjs')
+// const bcrypt = require('bcryptjs')
 
 const validationSchema = Yup.object({
 	email: Yup.string()
@@ -31,15 +31,15 @@ function LoginForm() {
 	// 	return !!user
 	// }
 
-	const verifyLogin = (email, password, users) => {
-		const user = users.find(u => u.email === email)
-		if (user) {
-			// Porównaj zahaszowane hasło
-			const isPasswordCorrect = bcrypt.compareSync(password, user.password)
-			return isPasswordCorrect
-		}
-		return false
-	}
+	// const verifyLogin = (email, password, users) => {
+	// 	const user = users.find(u => u.email === email)
+	// 	if (user) {
+	// 		// Porównaj zahaszowane hasło
+	// 		const isPasswordCorrect = bcrypt.compareSync(password, user.password)
+	// 		return isPasswordCorrect
+	// 	}
+	// 	return false
+	// }
 
 	return (
 		<Formik
@@ -53,18 +53,17 @@ function LoginForm() {
 			// validateOnChange={formSubmitted}
 			onSubmit={(values, { setSubmitting }) => {
 				axios
-					.get('http://localhost:8080/users')
+					.post('http://localhost:8080/authenticate', values)
 					.then(response => {
-						if (verifyLogin(values.email, values.password, response.data)) {
-							onLoginSuccess(response.data.find(u => u.email === values.email))
-							navigate('/')
-							console.log('zalogowano')
-						} else {
-							setLoginError('E-mail lub hasło jest nieprawidłowe') // Ustawienie komunikatu o błędzie
-						}
+						console.log(response.data)
+						const token = response.data.jwt
+						localStorage.setItem('token', token)
+						onLoginSuccess(token) // Update login context
+						navigate('/') // Navigate to home or dashboard page
 					})
 					.catch(error => {
-						console.error('Błąd podczas wczytywania danych:', error)
+						setLoginError('E-mail lub hasło jest nieprawidłowe')
+						console.error('Błąd podczas logowania:', error)
 					})
 					.finally(() => {
 						setSubmitting(false)

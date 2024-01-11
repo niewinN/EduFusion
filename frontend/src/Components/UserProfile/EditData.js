@@ -27,16 +27,39 @@ function EditData() {
 		phoneNumber: false,
 	})
 
+	// useEffect(() => {
+	// 	if (user) {
+	// 		setFormData({
+	// 			email: user.email || '',
+	// 			firstName: user.firstName || '',
+	// 			lastName: user.lastName || '',
+	// 			phoneNumber: user.phoneNumber || '',
+	// 		})
+	// 	}
+	// }, [user])
 	useEffect(() => {
-		if (user) {
-			setFormData({
-				email: user.email || '',
-				firstName: user.firstName || '',
-				lastName: user.lastName || '',
-				phoneNumber: user.phoneNumber || '',
-			})
+		const fetchUserProfile = async () => {
+			try {
+				const token = localStorage.getItem('token')
+				const response = await axios.get(
+					'http://localhost:8080/users/profile',
+					{
+						headers: { Authorization: `Bearer ${token}` },
+					}
+				)
+				setFormData({
+					email: response.data.email || '',
+					firstName: response.data.firstName || '',
+					lastName: response.data.lastName || '',
+					phoneNumber: response.data.phoneNumber || '',
+				})
+			} catch (error) {
+				console.error('Błąd podczas pobierania profilu użytkownika:', error)
+			}
 		}
-	}, [user])
+
+		fetchUserProfile()
+	}, [])
 
 	const handleEdit = field => {
 		setIsEditable({ ...isEditable, [field]: true })
@@ -46,11 +69,25 @@ function EditData() {
 		setFormData({ ...formData, [field]: value })
 	}
 
-	const updateUser = async updatedUser => {
+	// const updateUser = async updatedUser => {
+	// 	try {
+	// 		const response = await axios.put(
+	// 			`http://localhost:8080/users/${updatedUser.id}`,
+	// 			updatedUser
+	// 		)
+	// 		console.log('Dane zaktualizowane:', response.data)
+	// 	} catch (error) {
+	// 		console.error('Błąd podczas aktualizacji użytkownika:', error)
+	// 	}
+	// }
+
+	const updateUser = async () => {
 		try {
+			const token = localStorage.getItem('token')
 			const response = await axios.put(
-				`http://localhost:8080/users/${updatedUser.id}`,
-				updatedUser
+				'http://localhost:8080/users/profile',
+				formData,
+				{ headers: { Authorization: `Bearer ${token}` } }
 			)
 			console.log('Dane zaktualizowane:', response.data)
 		} catch (error) {

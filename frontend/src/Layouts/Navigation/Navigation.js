@@ -18,6 +18,9 @@ import { useLogin } from '../../Context/LoginContext'
 const Navigation = () => {
 	const { isLoggedIn, user } = useLogin()
 	const [showNav, setShowNav] = useState(false)
+	// console.log('isLoggedIn:', isLoggedIn)
+	// console.log('user:', user)
+
 	// const [isLoggedIn, setIsLoggedIn] = useState(false)
 	// const [userName, setUserName] = useState('')
 
@@ -61,7 +64,7 @@ const Navigation = () => {
 										: '/login'
 								}
 								onClick={handleShowNav}>
-								{isLoggedIn ? user.firstName : 'Zaloguj'}
+								{isLoggedIn && user.firstName ? user.firstName : 'Zaloguj'}
 							</NavLinkLogin>
 						</li>
 					</NavList>

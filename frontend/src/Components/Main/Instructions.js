@@ -16,7 +16,7 @@ import {
 } from '../../Assets/Styles/Main/Instructions.styles'
 import instructionImg from '../../Assets/Images/Main/instructionImg.png'
 
-function Instructions() {
+function Instructions(props) {
 	return (
 		<InstructionContainer>
 			<Wrapper>
@@ -39,7 +39,7 @@ function Instructions() {
 							</InstructionTextBox>
 						</InstructionBox>
 						<InstructionBox>
-							<InstructionNrBox isSecondBox>
+							<InstructionNrBox isSecondBox={props.isSecondBox}>
 								<InstructionNr>2</InstructionNr>
 							</InstructionNrBox>
 							<InstructionTextBox>

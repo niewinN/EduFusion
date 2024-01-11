@@ -17,8 +17,8 @@ import {
 // import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
 
 function LessonCard({ lessonData, loggedInUser }) {
-	console.log('Dane lekcji w LessonCard:', lessonData)
-	console.log('Zalogowany użytkownik w LessonCard:', loggedInUser)
+	// console.log('Dane lekcji w LessonCard:', lessonData)
+	// console.log('Zalogowany użytkownik w LessonCard:', loggedInUser)
 	// // Sprawdź, czy zalogowany użytkownik jest nauczycielem
 	// const isTutor = loggedInUser.role === 'tutor'
 

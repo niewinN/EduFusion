@@ -12,6 +12,7 @@ import {
 } from '../../Assets/Styles/Login/LoginForm.styles'
 import CustomModal from '../../Layouts/UI/CustomModal'
 import registerModalImg from '../../Assets/Images/Register/registerModal.png'
+import { useLogin } from '../../Context/LoginContext'
 
 const validationSchema = Yup.object({
 	firstName: Yup.string()
@@ -38,13 +39,18 @@ const validationSchema = Yup.object({
 })
 
 function RegisterForm() {
+	// const csrfToken = document.cookie.replace(
+	// 	/(?:(?:^|.*;\s*)CSRF-TOKEN\s*\=\s*([^;]*).*$)|^.*$/,
+	// 	'$1'
+	// )
 	const [isModalOpen, setModalOpen] = useState(false)
 	const [isFormSubmitted, setFormSubmitted] = useState(false)
 	const navigate = useNavigate()
+	const { onLoginSuccess } = useLogin()
 	const handleModalClose = () => {
 		setModalOpen(false)
 		if (isFormSubmitted) {
-			navigate('/login')
+			navigate('/contact')
 		}
 	}
 
@@ -67,18 +73,48 @@ function RegisterForm() {
 				validateOnBlur={false}
 				validateOnChange={true}
 				onSubmit={(values, { setSubmitting }) => {
+					// 	axios
+					// 		.post('http://localhost:8080/users', values)
+					// 		.then(response => {
+					// 			console.log('Użytkownik dodany:', response.data)
+					// 			localStorage.setItem('token', response.data.jwt)
+					// 			onLoginSuccess() // Zaktualizuj kontekst logowania
+					// 			setFormSubmitted(true)
+					// 			setModalOpen(true)
+					// 		})
+					// 		.catch(error => {
+					// 			console.error('Błąd podczas dodawania użytkownika:', error)
+					// 		})
+
+					// 	setSubmitting(false)
+					// }}>
 					axios
 						.post('http://localhost:8080/users', values)
 						.then(response => {
+							// Możesz tu zalogować użytkownika automatycznie lub przekierować do strony logowania
 							console.log('Użytkownik dodany:', response.data)
 							setFormSubmitted(true)
-							setModalOpen(true)
+							setModalOpen(true) // Pokaż modal z potwierdzeniem
+							// navigate('/login'); // Opcjonalnie przekieruj do logowania
 						})
 						.catch(error => {
-							console.error('Błąd podczas dodawania użytkownika:', error)
+							if (error.response) {
+								// Zwróć uwagę na odpowiedź serwera, status, nagłówki
+								console.error('Response data:', error.response.data)
+								console.error('Response status:', error.response.status)
+								console.error('Response headers:', error.response.headers)
+							} else if (error.request) {
+								// Żądanie zostało wysłane, ale nie otrzymano odpowiedzi
+								console.error('No response received:', error.request)
+							} else {
+								// Wystąpił błąd podczas ustawiania żądania
+								console.error('Error:', error.message)
+							}
+							console.error('Config:', error.config)
 						})
-
-					setSubmitting(false)
+						.finally(() => {
+							setSubmitting(false)
+						})
 				}}>
 				{({ submitForm, isSubmitting, errors, touched, setFieldTouched }) => (
 					<StyledForm>

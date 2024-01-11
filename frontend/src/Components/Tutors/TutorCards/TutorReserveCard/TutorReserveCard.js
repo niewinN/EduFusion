@@ -43,6 +43,7 @@ function TutorReserveCard({
 	const navigate = useNavigate()
 	const { isLoggedIn, user } = useLogin()
 
+	const token = localStorage.getItem('token')
 	const isTutor = user.role === 'TUTOR'
 
 	const areAllCriteriaMet = () => {
@@ -67,7 +68,7 @@ function TutorReserveCard({
 		}
 
 		try {
-			const currentUser = JSON.parse(localStorage.getItem('user'))
+			// const currentUser = JSON.parse(localStorage.getItem('user'))
 
 			// Fetch the tutor data from the backend
 			// const tutorResponse = await axios.get(
@@ -77,7 +78,12 @@ function TutorReserveCard({
 
 			// Fetch the tutor data from the backend
 			const tutorResponse = await axios.get(
-				`http://localhost:8080/tutors/${selectedTutorId}`
+				`http://localhost:8080/tutors/${selectedTutorId}`,
+				{
+					headers: {
+						Authorization: `Bearer ${token}`, // Dodaj token dostępu w nagłówku
+					},
+				}
 			)
 			const selectedTutor = tutorResponse.data
 
@@ -88,6 +94,7 @@ function TutorReserveCard({
 			// const selectedStudent = studentResponse.data
 
 			// Create a lesson DTO object
+
 			const lessonData = {
 				subject: selectedOptions.subject,
 				level: selectedOptions.level,
@@ -106,15 +113,14 @@ function TutorReserveCard({
 			console.log(`Dane ktore chce przeslac: `, lessonData)
 
 			// Post the lesson data to the backend
-			await axios.post(
-				'http://localhost:8080/lessons',
-				JSON.stringify(lessonData),
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			)
+			axios.post('http://localhost:8080/lessons', JSON.stringify(lessonData), {
+				headers: {
+					Authorization: `Bearer ${token}`, // jeśli wymagana jest autoryzacja
+					'Content-Type': 'application/json',
+				},
+			})
+
+			console.log(lessonData)
 
 			setModalOpen(true)
 			setLessonReserved(true)

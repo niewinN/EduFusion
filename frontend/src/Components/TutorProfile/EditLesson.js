@@ -60,7 +60,7 @@ function EditLesson() {
 			sunday: [],
 		},
 	})
-
+	const token = localStorage.getItem('token')
 	const { user } = useLogin()
 	const [newLevel, setNewLevel] = useState('')
 	const [newMode, setNewMode] = useState('')
@@ -141,7 +141,10 @@ function EditLesson() {
 		try {
 			if (user && user.id) {
 				const response = await axios.get(
-					`http://localhost:8080/tutors/user/${user.id}`
+					`http://localhost:8080/tutors/user/${user.id}`,
+					{
+						headers: { Authorization: `Bearer ${token}` },
+					}
 				)
 				if (response.data) {
 					setTutorData(response.data)
@@ -399,13 +402,19 @@ function EditLesson() {
 				console.log('Wysyłanie PUT z danymi:', tutorDataToSend) // Dodaj tę linię
 				response = await axios.put(
 					`http://localhost:8080/tutors/${tutorData.id}`,
-					tutorDataToSend
+					tutorDataToSend,
+					{
+						headers: { Authorization: `Bearer ${token}` },
+					}
 				)
 			} else {
 				console.log('Wysyłanie POST z danymi:', tutorDataToSend)
 				response = await axios.post(
 					'http://localhost:8080/tutors',
-					tutorDataToSend
+					tutorDataToSend,
+					{
+						headers: { Authorization: `Bearer ${token}` },
+					}
 				)
 			}
 

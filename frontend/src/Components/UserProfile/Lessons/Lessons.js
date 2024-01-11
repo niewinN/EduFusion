@@ -192,10 +192,28 @@ function Lessons() {
 		setSelectedFilter(filter)
 	}
 
+	// useEffect(() => {
+	// 	const fetchLessons = async () => {
+	// 		try {
+	// 			const response = await axios.get('http://localhost:8080/lessons')
+	// 			setLessons(response.data)
+	// 		} catch (error) {
+	// 			console.error('Błąd podczas pobierania lekcji:', error)
+	// 		}
+	// 	}
+
+	// 	fetchLessons()
+	// }, [setLessons])
 	useEffect(() => {
 		const fetchLessons = async () => {
 			try {
-				const response = await axios.get('http://localhost:8080/lessons')
+				const token = localStorage.getItem('token')
+				const response = await axios.get(
+					'http://localhost:8080/lessons/user-lessons',
+					{
+						headers: { Authorization: `Bearer ${token}` },
+					}
+				)
 				setLessons(response.data)
 			} catch (error) {
 				console.error('Błąd podczas pobierania lekcji:', error)
@@ -203,7 +221,7 @@ function Lessons() {
 		}
 
 		fetchLessons()
-	}, [setLessons])
+	}, [])
 
 	useEffect(() => {
 		filterLessons()
