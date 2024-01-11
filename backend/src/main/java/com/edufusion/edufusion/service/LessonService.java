@@ -109,12 +109,14 @@ package com.edufusion.edufusion.service;
 
 import com.edufusion.edufusion.dto.LessonDTO;
 import com.edufusion.edufusion.model.Lesson;
+import com.edufusion.edufusion.model.Role;
 import com.edufusion.edufusion.model.Tutor;
 import com.edufusion.edufusion.model.User;
 import com.edufusion.edufusion.repository.LessonRepository;
 import com.edufusion.edufusion.repository.TutorRepository;
 import com.edufusion.edufusion.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -147,6 +149,21 @@ public class LessonService {
 
     public void deleteLesson(Long id) {
         lessonRepository.deleteById(id);
+    }
+
+    public List<Lesson> getLessonsForUser(String email) {
+        // Implementacja zależy od Twojej bazy danych i ORM
+        // Pobierz użytkownika na podstawie email
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+
+        if (user.getRole() == Role.TUTOR) {
+            // Jeśli użytkownik jest tutor, pobierz lekcje, które są przypisane do niego
+            return lessonRepository.findByTutor(user.getTutor());
+        } else {
+            // Jeśli użytkownik jest studentem, pobierz lekcje, które są przypisane do niego jako studenta
+            return lessonRepository.findByStudent(user);
+        }
     }
 
     public LessonDTO convertToDTO(Lesson lesson) {

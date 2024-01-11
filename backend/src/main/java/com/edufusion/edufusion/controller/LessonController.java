@@ -187,9 +187,11 @@ package com.edufusion.edufusion.controller;
 
 import com.edufusion.edufusion.dto.LessonDTO;
 import com.edufusion.edufusion.model.Lesson;
+import com.edufusion.edufusion.security.JwtUtil;
 import com.edufusion.edufusion.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -202,6 +204,9 @@ public class LessonController {
 
     @Autowired
     private LessonService lessonService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping
     public ResponseEntity<List<LessonDTO>> getAllLessons() {
@@ -224,6 +229,27 @@ public class LessonController {
                 .map(lessonService::convertToDTO)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+//    @GetMapping("/user-lessons")
+//    public ResponseEntity<List<LessonDTO>> getLessonsForUser(@RequestHeader("Authorization") String token) {
+//        String jwtToken = token.substring(7); // Usuń "Bearer "
+//        Long userId = jwtUtil.extractUserId(jwtToken);
+//        List<Lesson> lessons = lessonService.getLessonsForUser(userId);
+//        List<LessonDTO> lessonDTOs = lessons.stream()
+//                .map(lessonService::convertToDTO)
+//                .collect(Collectors.toList());
+//        return ResponseEntity.ok(lessonDTOs);
+//    }
+
+    @GetMapping("/user-lessons")
+    public ResponseEntity<List<LessonDTO>> getLessonsForUser() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName(); // Pobierz email z aktualnie zalogowanego użytkownika
+        List<Lesson> lessons = lessonService.getLessonsForUser(email);
+        List<LessonDTO> lessonDTOs = lessons.stream()
+                .map(lessonService::convertToDTO)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(lessonDTOs);
     }
 
     @DeleteMapping("/{id}")

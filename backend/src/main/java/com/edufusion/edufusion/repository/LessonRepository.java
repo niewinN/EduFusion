@@ -12,6 +12,8 @@
 package com.edufusion.edufusion.repository;
 
 import com.edufusion.edufusion.model.Lesson;
+import com.edufusion.edufusion.model.Tutor;
+import com.edufusion.edufusion.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +24,7 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     // Metody dla specyficznych zapytań, jeśli potrzebne
     List<Lesson> findByStudentId(Long userId);
     List<Lesson> findByTutorId(Long tutorId);
+    List<Lesson> findByStudent(User student);
+    List<Lesson> findByTutor(Tutor tutor);
+
 }

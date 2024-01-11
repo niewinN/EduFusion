@@ -1,10 +1,14 @@
 package com.edufusion.edufusion.controller;
 
-import com.edufusion.edufusion.model.User;
-import com.edufusion.edufusion.service.UserService;
 import com.edufusion.edufusion.dto.UserDTO;
+import com.edufusion.edufusion.dto.UserResponse;
+import com.edufusion.edufusion.model.User;
+import com.edufusion.edufusion.security.JwtUtil;
+import com.edufusion.edufusion.security.UserPrincipal;
+import com.edufusion.edufusion.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +20,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtUtil jwtUtil;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -29,15 +36,52 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
-        User newUser = userService.addUser(userDTO);
-        return ResponseEntity.ok(newUser);
+    @GetMapping("/profile")
+    public ResponseEntity<UserDTO> getUserProfile(Authentication authentication) {
+        String email = authentication.getName();
+        return userService.getUserByEmail(email)
+                .map(UserDTO::fromUser) // Używanie metody statycznej fabrykującej
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-        User updatedUser = userService.updateUser(id, userDTO);
+
+    //    @PostMapping
+//    public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
+//        User newUser = userService.addUser(userDTO);
+//        return ResponseEntity.ok(newUser);
+//    }
+//        @PostMapping
+//        public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO) {
+//            User newUser = userService.addUser(userDTO);
+//            final String jwt = jwtUtil.generateToken(new UserPrincipal(newUser));
+//            return ResponseEntity.ok(new UserResponse(newUser, jwt));
+//        }
+            @PostMapping
+            public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO) {
+                // Logowanie danych wejściowych
+                System.out.println("Received UserDTO: " + userDTO);
+
+                User newUser = userService.addUser(userDTO);
+                final String jwt = jwtUtil.generateToken(new UserPrincipal(newUser));
+                return ResponseEntity.ok(new UserResponse(newUser, jwt));
+            }
+
+
+//    @PutMapping("/{id}")
+//    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+//        User updatedUser = userService.updateUser(id, userDTO);
+//        if (updatedUser != null) {
+//            return ResponseEntity.ok(updatedUser);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
+    @PutMapping("/profile")
+    public ResponseEntity<User> updateUser(@RequestBody UserDTO userDTO, Authentication authentication) {
+        String email = authentication.getName();
+        User updatedUser = userService.updateUserByEmail(email, userDTO);
         if (updatedUser != null) {
             return ResponseEntity.ok(updatedUser);
         } else {
