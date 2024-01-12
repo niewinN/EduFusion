@@ -14,10 +14,18 @@ function Tile({ icon, type, id, options = [], selectedValue, disabled }) {
 
 	const handleChange = event => {
 		const value = event.target.value
-		setSelectedOptions(prevOptions => ({
-			...prevOptions,
-			[id]: value,
-		}))
+		if (id === 'mode' && value.toLowerCase() === 'zdalnie') {
+			setSelectedOptions(prevOptions => ({
+				...prevOptions,
+				city: '', // resetowanie miasta
+				[id]: value,
+			}))
+		} else {
+			setSelectedOptions(prevOptions => ({
+				...prevOptions,
+				[id]: value,
+			}))
+		}
 	}
 
 	const handleDateChange = date => {

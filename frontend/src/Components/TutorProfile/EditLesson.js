@@ -195,7 +195,13 @@ function EditLesson() {
 
 	const handleChange = (field, value) => {
 		console.log('handleChange:', field, value) // Dodaj tę linię
-		setTutorData({ ...tutorData, [field]: value })
+		if (field === 'price') {
+			// Usuwamy wszystkie znaki oprócz cyfr i kropki
+			const filteredValue = value.replace(/[^0-9.]/g, '')
+			setTutorData({ ...tutorData, [field]: filteredValue })
+		} else {
+			setTutorData({ ...tutorData, [field]: value })
+		}
 	}
 
 	const addLevel = () => {

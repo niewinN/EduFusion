@@ -35,11 +35,21 @@ function SearchPanel() {
 	const navigate = useNavigate()
 
 	const handleChange = (name, value) => {
+		console.log('handleChange - name:', name, 'value:', value)
 		const newValue = value instanceof Date ? value : value.target.value
-		setSelectedOptions(prevOptions => ({
-			...prevOptions,
-			[name]: newValue,
-		}))
+		// Jeśli zmienia się tryb nauki na 'zdalnie', zresetuj miasto
+		if (name === 'mode' && newValue.toLowerCase() === 'zdalnie') {
+			setSelectedOptions(prevOptions => ({
+				...prevOptions,
+				city: '', // resetowanie miasta
+				[name]: newValue.toLowerCase(),
+			}))
+		} else {
+			setSelectedOptions(prevOptions => ({
+				...prevOptions,
+				[name]: newValue,
+			}))
+		}
 
 		if (name === 'mode') {
 			setTutoringMode(newValue.toLowerCase())

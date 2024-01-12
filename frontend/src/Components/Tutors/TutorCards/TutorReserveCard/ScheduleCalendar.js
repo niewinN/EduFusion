@@ -33,20 +33,20 @@ const ScheduleCalendar = ({ selectedTutor, setSelectedLessonDate }) => {
 	const selectedDate =
 		selectedOptions.date instanceof Date ? selectedOptions.date : new Date()
 
-	useEffect(() => {
-		if (selectedTutor) {
-			axios
-				.get(`http://localhost:8080/lessons`)
-				.then(response => {
-					setReservedLessons(
-						response.data.filter(lesson => lesson.tutorId === selectedTutor.id)
-					)
-				})
-				.catch(error => {
-					console.error('Error fetching lessons', error)
-				})
-		}
-	}, [selectedTutor])
+	// useEffect(() => {
+	// 	if (selectedTutor) {
+	// 		axios
+	// 			.get(`http://localhost:8080/lessons`)
+	// 			.then(response => {
+	// 				setReservedLessons(
+	// 					response.data.filter(lesson => lesson.tutorId === selectedTutor.id)
+	// 				)
+	// 			})
+	// 			.catch(error => {
+	// 				console.error('Error fetching lessons', error)
+	// 			})
+	// 	}
+	// }, [selectedTutor])
 
 	const isTimeSlotReserved = (day, time) => {
 		return reservedLessons.some(

@@ -13,7 +13,7 @@ import { Title } from '../../Assets/Styles/UserProfile/Lessons.styles'
 import { useLogin } from '../../Context/LoginContext'
 import axios from 'axios'
 
-function EditData() {
+function EditData({ flexStart }) {
 	const { logout, user } = useLogin()
 	const [formData, setFormData] = useState({
 		email: '',
@@ -126,7 +126,7 @@ function EditData() {
 	)
 
 	return (
-		<EditDataContainer>
+		<EditDataContainer flexStart={flexStart}>
 			<Title>Moje dane</Title>
 			<EditBox>
 				<EditDataInfo>

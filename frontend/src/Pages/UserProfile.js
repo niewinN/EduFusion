@@ -14,7 +14,7 @@ function UserProfile() {
 				<Wrapper>
 					<LessonsFlex>
 						<Lessons />
-						<EditData />
+						<EditData flexStart={true} />
 					</LessonsFlex>
 				</Wrapper>
 			</UserProfileContainer>

@@ -50,7 +50,7 @@ function RegisterForm() {
 	const handleModalClose = () => {
 		setModalOpen(false)
 		if (isFormSubmitted) {
-			navigate('/contact')
+			navigate('/login')
 		}
 	}
 

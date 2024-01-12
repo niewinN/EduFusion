@@ -9,11 +9,7 @@ import {
 import EditLesson from '../Components/TutorProfile/EditLesson'
 import { useLogin } from '../Context/LoginContext'
 import styled from 'styled-components'
-
-const LessonsSecondFlex = styled.div`
-	display: flex;
-	flex-direction: column;
-`
+import { LessonsSecondFlex } from '../Assets/Styles/TutorProfile/TutorProfile.styles'
 
 function TutorProfile() {
 	return (
@@ -23,7 +19,7 @@ function TutorProfile() {
 					<LessonsFlex>
 						<Lessons />
 						<LessonsSecondFlex>
-							<EditData />
+							<EditData flexStart={false} />
 							<EditLesson />
 						</LessonsSecondFlex>
 					</LessonsFlex>
