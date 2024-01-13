@@ -1,5 +1,5 @@
 import Navigation from './Layouts/Navigation/Navigation'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import Tutors from './Pages/Tutors'
 import AboutUs from './Pages/AboutUs'
 import Contact from './Pages/Contact'
@@ -31,6 +31,7 @@ function App() {
 								<Route path='/login' element={<Login />} />
 								<Route path='/user' element={<UserProfile />} />
 								<Route path='/tutor' element={<TutorProfile />} />
+								<Route path='*' element={<Navigate to='/' replace />} />
 							</Routes>
 						</div>
 
