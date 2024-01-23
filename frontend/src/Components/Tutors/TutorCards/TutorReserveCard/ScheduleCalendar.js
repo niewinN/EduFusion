@@ -33,26 +33,33 @@ const ScheduleCalendar = ({ selectedTutor, setSelectedLessonDate }) => {
 	const selectedDate =
 		selectedOptions.date instanceof Date ? selectedOptions.date : new Date()
 
-	// useEffect(() => {
-	// 	if (selectedTutor) {
-	// 		axios
-	// 			.get(`http://localhost:8080/lessons`)
-	// 			.then(response => {
-	// 				setReservedLessons(
-	// 					response.data.filter(lesson => lesson.tutorId === selectedTutor.id)
-	// 				)
-	// 			})
-	// 			.catch(error => {
-	// 				console.error('Error fetching lessons', error)
-	// 			})
-	// 	}
-	// }, [selectedTutor])
+	useEffect(() => {
+		if (selectedTutor) {
+			axios
+				.get(`http://localhost:8080/lessons`)
+				.then(response => {
+					setReservedLessons(
+						response.data.filter(lesson => lesson.tutorId === selectedTutor.id)
+					)
+				})
+				.catch(error => {
+					console.error('Error fetching lessons', error)
+				})
+		}
+	}, [selectedTutor])
 
 	const isTimeSlotReserved = (day, time) => {
 		return reservedLessons.some(
 			lesson => lesson.lessonDate === day && lesson.startTime === time
 		)
 	}
+	// const isTimeSlotReserved = (day, time) => {
+	// 	const isReserved = reservedLessons.some(
+	// 		lesson => lesson.lessonDate === day && lesson.startTime === time
+	// 	)
+	// 	console.log(`Checking reservation: ${day} at ${time}: ${isReserved}`)
+	// 	return isReserved
+	// }
 
 	const daysOfWeek = Array.from({ length: 7 }, (_, i) =>
 		addDays(selectedDate, i)
