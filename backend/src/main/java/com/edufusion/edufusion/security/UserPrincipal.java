@@ -41,11 +41,8 @@ public class UserPrincipal implements UserDetails {
     }
 
 
-
-
-
     public Long getUserId() {
-        return user.getId(); // lub inna metoda uzyskania identyfikatora użytkownika
+        return user.getId();
     }
 
 
@@ -77,5 +74,4 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
-    // ... inne nadpisane metody z UserDetails
 }

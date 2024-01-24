@@ -231,17 +231,6 @@ public class LessonController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-//    @GetMapping("/user-lessons")
-//    public ResponseEntity<List<LessonDTO>> getLessonsForUser(@RequestHeader("Authorization") String token) {
-//        String jwtToken = token.substring(7); // Usuń "Bearer "
-//        Long userId = jwtUtil.extractUserId(jwtToken);
-//        List<Lesson> lessons = lessonService.getLessonsForUser(userId);
-//        List<LessonDTO> lessonDTOs = lessons.stream()
-//                .map(lessonService::convertToDTO)
-//                .collect(Collectors.toList());
-//        return ResponseEntity.ok(lessonDTOs);
-//    }
-
     @GetMapping("/user-lessons")
     public ResponseEntity<List<LessonDTO>> getLessonsForUser() {
         String email = SecurityContextHolder.getContext().getAuthentication().getName(); // Pobierz email z aktualnie zalogowanego użytkownika

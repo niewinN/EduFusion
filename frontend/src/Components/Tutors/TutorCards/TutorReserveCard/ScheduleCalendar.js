@@ -53,30 +53,10 @@ const ScheduleCalendar = ({ selectedTutor, setSelectedLessonDate }) => {
 			lesson => lesson.lessonDate === day && lesson.startTime === time
 		)
 	}
-	// const isTimeSlotReserved = (day, time) => {
-	// 	const isReserved = reservedLessons.some(
-	// 		lesson => lesson.lessonDate === day && lesson.startTime === time
-	// 	)
-	// 	console.log(`Checking reservation: ${day} at ${time}: ${isReserved}`)
-	// 	return isReserved
-	// }
 
 	const daysOfWeek = Array.from({ length: 7 }, (_, i) =>
 		addDays(selectedDate, i)
 	)
-
-	// const handleTimeSlotClick = (formattedDay, time) => {
-	// 	const newSelection = [formattedDay, time]
-	// 	setSelectedTimeSlot(prev =>
-	// 		prev && prev[0] === formattedDay && prev[1] === time ? null : newSelection
-	// 	)
-
-	// 	setSelectedOptions(prevOptions => ({
-	// 		...prevOptions,
-	// 		selectedDate: new Date(formattedDay), // Ensure it's a Date object
-	// 		startTime: time,
-	// 	}))
-	// }
 
 	const handleTimeSlotClick = (formattedDay, time) => {
 		const newSelection = [formattedDay, time]
@@ -85,7 +65,7 @@ const ScheduleCalendar = ({ selectedTutor, setSelectedLessonDate }) => {
 		)
 
 		const selectedDateTime = new Date(`${formattedDay}T${time}`)
-		const formattedDateOnly = format(selectedDateTime, 'yyyy-MM-dd') // Formatuj datę do postaci 'RRRR-MM-DD'
+		const formattedDateOnly = format(selectedDateTime, 'yyyy-MM-dd')
 
 		setSelectedOptions(prevOptions => ({
 			...prevOptions,
@@ -93,18 +73,8 @@ const ScheduleCalendar = ({ selectedTutor, setSelectedLessonDate }) => {
 			startTime: time,
 		}))
 
-		setSelectedLessonDate(formattedDateOnly) // Ustaw tylko sformatowaną datę
+		setSelectedLessonDate(formattedDateOnly)
 	}
-
-	// 	const selectedDateTime = new Date(`${formattedDay}T${time}`)
-	// 	setSelectedOptions(prevOptions => ({
-	// 		...prevOptions,
-	// 		selectedDate: selectedDateTime,
-	// 		startTime: time,
-	// 	}))
-
-	// 	setSelectedLessonDate(selectedDateTime)
-	// }
 
 	const hasMoreThanThreeTimeslots = daysOfWeek.some(day => {
 		const dayLabel = dayLabels[new Date(day).getDay()]

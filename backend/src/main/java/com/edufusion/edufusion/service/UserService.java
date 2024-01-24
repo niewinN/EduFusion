@@ -185,17 +185,6 @@ public class UserService {
         }
     }
 
-//    public User updateUser(Long id, UserDTO userDetails) {
-//        User user = userRepository.findById(id)
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        userDetails.getFirstName().ifPresent(user::setFirstName);
-//        userDetails.getLastName().ifPresent(user::setLastName);
-//        userDetails.getPhoneNumber().ifPresent(user::setPhoneNumber);
-//
-//        return userRepository.save(user);
-//    }
-
     public User updateUserByEmail(String email, UserDTO userDetails) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));

@@ -45,18 +45,6 @@ public class UserController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
-    //    @PostMapping
-//    public ResponseEntity<User> addUser(@RequestBody UserDTO userDTO) {
-//        User newUser = userService.addUser(userDTO);
-//        return ResponseEntity.ok(newUser);
-//    }
-//        @PostMapping
-//        public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO) {
-//            User newUser = userService.addUser(userDTO);
-//            final String jwt = jwtUtil.generateToken(new UserPrincipal(newUser));
-//            return ResponseEntity.ok(new UserResponse(newUser, jwt));
-//        }
             @PostMapping
             public ResponseEntity<?> addUser(@RequestBody UserDTO userDTO) {
                 // Logowanie danych wejściowych
@@ -67,16 +55,6 @@ public class UserController {
                 return ResponseEntity.ok(new UserResponse(newUser, jwt));
             }
 
-
-//    @PutMapping("/{id}")
-//    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
-//        User updatedUser = userService.updateUser(id, userDTO);
-//        if (updatedUser != null) {
-//            return ResponseEntity.ok(updatedUser);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
 
     @PutMapping("/profile")
     public ResponseEntity<User> updateUser(@RequestBody UserDTO userDTO, Authentication authentication) {

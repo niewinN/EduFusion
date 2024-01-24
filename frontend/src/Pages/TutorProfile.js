@@ -7,8 +7,6 @@ import {
 	LessonsFlex,
 } from '../Assets/Styles/UserProfile/UserProfile.styles'
 import EditLesson from '../Components/TutorProfile/EditLesson'
-import { useLogin } from '../Context/LoginContext'
-import styled from 'styled-components'
 import { LessonsSecondFlex } from '../Assets/Styles/TutorProfile/TutorProfile.styles'
 
 function TutorProfile() {

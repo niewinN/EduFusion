@@ -16,8 +16,6 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-//    private String SECRET_KEY = "secret";
-
     private String SECRET_KEY;
 
 
@@ -52,9 +50,6 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-//    public String generateToken(UserDetails userDetails) {
-//        return createToken(userDetails.getUsername());
-//    }
 
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder()
@@ -78,39 +73,6 @@ public class JwtUtil {
 
         return createToken(claims, userDetails.getUsername());
     }
-
-
-//    public String generateToken(UserDetails userDetails) {
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put("email", userDetails.getUsername());  // Przechowuj tylko email
-//
-//        return createToken(claims, userDetails.getUsername());
-//    }
-
-
-
-//    public String generateToken(UserDetails userDetails) {
-//        Map<String, Object> claims = new HashMap<>();
-//        UserPrincipal userPrincipal = (UserPrincipal) userDetails;
-//
-//        claims.put("email", userPrincipal.getUsername());
-//        claims.put("firstName", userPrincipal.getFirstName());
-//        claims.put("lastName", userPrincipal.getLastName());
-//        claims.put("phoneNumber", userPrincipal.getPhoneNumber());
-//        // ... dodaj inne pola, które chcesz uwzględnić
-//
-//        return createToken(claims, userPrincipal.getUsername());
-//    }
-
-
-    //    private String createToken(String subject) {
-//        return Jwts.builder().setSubject(subject)
-//                .setIssuedAt(new Date(System.currentTimeMillis()))
-//                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-//                .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
-//    }
-
-
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);

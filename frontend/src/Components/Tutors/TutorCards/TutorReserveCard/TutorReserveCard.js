@@ -70,13 +70,6 @@ function TutorReserveCard({
 		try {
 			// const currentUser = JSON.parse(localStorage.getItem('user'))
 
-			// Fetch the tutor data from the backend
-			// const tutorResponse = await axios.get(
-			// 	`http://localhost:8080/tutors/${selectedTutorId}`
-			// )
-			// const selectedTutor = tutorResponse.data
-
-			// Fetch the tutor data from the backend
 			const tutorResponse = await axios.get(
 				`http://localhost:8080/tutors/${selectedTutorId}`,
 				{
@@ -86,14 +79,6 @@ function TutorReserveCard({
 				}
 			)
 			const selectedTutor = tutorResponse.data
-
-			// Fetch the student data from the backend
-			// const studentResponse = await axios.get(
-			// 	`http://localhost:8080/users/${currentUser.userId}`
-			// )
-			// const selectedStudent = studentResponse.data
-
-			// Create a lesson DTO object
 
 			const lessonData = {
 				subject: selectedOptions.subject,

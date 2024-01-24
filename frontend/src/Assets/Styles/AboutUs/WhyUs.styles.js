@@ -1,6 +1,21 @@
 import styled from 'styled-components'
 import theme from '../GlobalStyles/theme'
+import { keyframes } from 'styled-components'
 
+const popIn = keyframes`
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+`
 export const Title = styled.h2`
 	padding: 20px;
 	text-align: center;
@@ -18,6 +33,15 @@ export const TipBox = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-bottom: 15px;
+	animation: ${popIn} 0.5s ease-out forwards;
+
+	&:nth-of-type(2) {
+		animation-delay: 0.2s;
+	}
+
+	&:nth-of-type(3) {
+		animation-delay: 0.4s;
+	}
 
 	@media (min-width: 576px) {
 		flex-direction: row;

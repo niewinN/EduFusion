@@ -15,7 +15,7 @@ function TutorCards({ filteredTutors }) {
 		axios
 			.get(`http://localhost:8080/tutors`)
 			.then(response => {
-				console.log(response.data)
+				// console.log(response.data)
 				const tutorsWithLocalImagePath = response.data.map(tutor => {
 					return {
 						...tutor,
@@ -24,7 +24,7 @@ function TutorCards({ filteredTutors }) {
 					}
 				})
 
-				console.log(`jak to wyglada`, tutorsWithLocalImagePath)
+				// console.log(`jak to wyglada`, tutorsWithLocalImagePath)
 				setTutors(tutorsWithLocalImagePath)
 			})
 			.catch(error => {

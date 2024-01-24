@@ -62,17 +62,6 @@ public class Tutor {
     @Column(name = "AVAILABLE_HOURS")
     private Map<String, List<String>> availability;
 
-//    @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Lesson> lessonsAsTutor;
-
-    // W klasie Tutor
-//    @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Lesson> lessonsAsTutor = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "tutor", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @JsonIgnore
-//    private Set<Lesson> lessonsAsTutor = new HashSet<>();
-
     @OneToMany(mappedBy = "tutor")
     @JsonIgnore
 //    @JsonBackReference

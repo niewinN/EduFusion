@@ -26,15 +26,3 @@ export const Description = styled.p`
 		font-size: 1.8rem;
 	}
 `
-
-// export const ForWhomPhoto = styled.div`
-// 	position: absolute;
-// 	top: 30px;
-// 	right: 10px;
-// 	background-image: url(${forWhomImg});
-// 	background-size: cover;
-// 	width: 50px;
-// 	height: 50px;
-// 	color: black;
-// 	z-index: 9999999;
-// `

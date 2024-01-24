@@ -1,5 +1,26 @@
 import styled from 'styled-components'
 import theme from '../GlobalStyles/theme'
+import { keyframes } from 'styled-components'
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+const slideInLeft = keyframes`
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+`
 
 export const InformationContainer = styled.div`
 	display: flex;
@@ -16,14 +37,9 @@ export const InformationContainer = styled.div`
 	}
 `
 
-// export const Wrapper = styled.div`
-// 	max-width: 1260px;
-// 	margin: 0 auto;
-// 	padding: 0 20px;
-// `
-
 export const InformationText = styled.div`
 	margin-right: 20px;
+	animation: ${slideInLeft} 1s ease-out;
 `
 
 export const InformationTitle = styled.h1`
@@ -76,6 +92,7 @@ export const InformationPictureBox = styled.div``
 
 export const InformationPicture = styled.img`
 	width: 320px;
+	animation: ${fadeIn} 2s linear;
 
 	@media (min-width: 992px) {
 		width: 420px;
