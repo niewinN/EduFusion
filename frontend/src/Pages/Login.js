@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from "react"
 import {
 	RegisterImg,
 	RegisterImgBox,
@@ -6,23 +6,23 @@ import {
 	RegisterBox,
 	RegisterFormBox,
 	FormTitle,
-} from '../Assets/Styles/Register/Register.styles'
+} from "../Assets/Styles/Register/Register.styles"
 import {
 	LoginText,
 	LoginLink,
 	LoginToRegister,
-} from '../Assets/Styles/Login/Login.styles'
-import { Wrapper } from '../Assets/Styles/GlobalStyles/wrapper'
-import loginImg from '../Assets/Images/Register/registerImg.png'
-import LoginForm from '../Components/Login/LoginForm'
+} from "../Assets/Styles/Login/Login.styles"
+import { Wrapper } from "../Assets/Styles/GlobalStyles/wrapper"
+import loginImg from "../Assets/Images/Register/registerImg.png"
+import LoginForm from "../Components/Login/LoginForm"
 
 function Login() {
 	const [isLoggedIn, setIsLoggedIn] = useState(false)
-	const [userName, setUserName] = useState('')
+	const [userName, setUserName] = useState("")
 
 	const onLoginSuccess = user => {
 		setIsLoggedIn(true)
-		setUserName(user.name) // Zakładając, że obiekt user zawiera pole name
+		setUserName(user.name)
 	}
 	return (
 		<RegisterSection>

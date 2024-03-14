@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons'
+import React, { useState, useEffect } from "react"
+import { faCircleQuestion } from "@fortawesome/free-regular-svg-icons"
 import {
 	CardBox,
 	CardPhotoBox,
@@ -13,15 +13,15 @@ import {
 	TutorSubject,
 	CardRight,
 	CardRightTitle,
-} from '../../../../Assets/Styles/Tutors/TutorReserveCard.styles'
-import ScheduleCalendar from './ScheduleCalendar'
-import axios from 'axios'
-import { useSelectedOptions } from '../../../../Context/SelectedOptionsContext'
-import CustomModal from '../../../../Layouts/UI/CustomModal'
-import { useNavigate } from 'react-router-dom'
-import successImg from '../../../../Assets/Images/UI/successImg.png'
-import filtersModalImg from '../../../../Assets/Images/UI/filterImg.png'
-import { useLogin } from '../../../../Context/LoginContext'
+} from "../../../../Assets/Styles/Tutors/TutorReserveCard.styles"
+import ScheduleCalendar from "./ScheduleCalendar"
+import axios from "axios"
+import { useSelectedOptions } from "../../../../Context/SelectedOptionsContext"
+import CustomModal from "../../../../Layouts/UI/CustomModal"
+import { useNavigate } from "react-router-dom"
+import successImg from "../../../../Assets/Images/UI/successImg.png"
+import filtersModalImg from "../../../../Assets/Images/UI/filterImg.png"
+import { useLogin } from "../../../../Context/LoginContext"
 
 function TutorReserveCard({
 	img,
@@ -35,65 +35,48 @@ function TutorReserveCard({
 	const [selectedTutor, setSelectedTutor] = useState(null)
 	const [modalOpen, setModalOpen] = useState(false)
 	const [lessonReserved, setLessonReserved] = useState(false)
-	const [modalTitle, setModalTitle] = useState('')
-	const [modalText, setModalText] = useState('')
+	const [modalTitle, setModalTitle] = useState("")
+	const [modalText, setModalText] = useState("")
 	const [selectedLessonDate, setSelectedLessonDate] = useState(null) // Nowy stan
 	const { selectedOptions, addLesson } = useSelectedOptions()
 	const selectedDate = selectedOptions.date
 	const navigate = useNavigate()
 	const { isLoggedIn, user } = useLogin()
 
-	const token = localStorage.getItem('token')
-	const isTutor = user.role === 'TUTOR'
+	const token = localStorage.getItem("token")
+	const isTutor = user.role === "TUTOR"
 
 	const areAllCriteriaMet = () => {
 		const { subject, level, mode, city, date } = selectedOptions
-		const isStationary = mode === 'stacjonarnie' // Zakładając, że 'stacjonarnie' to jeden z trybów
+		const isStationary = mode === "stacjonarnie"
 		return subject && level && mode && date && (!isStationary || city)
 	}
 
 	const handleAddLesson = async () => {
 		if (!isLoggedIn) {
-			navigate('/login')
+			navigate("/login")
 			return
 		}
 
 		if (!areAllCriteriaMet()) {
-			setModalTitle('Uzupełnij kryteria!')
+			setModalTitle("Uzupełnij kryteria!")
 			setModalText(
-				'Musisz uzupełnić wszystkie potrzebne kryteria, aby móc wyszukać odpowiedniego korepetytora!'
+				"Musisz uzupełnić wszystkie potrzebne kryteria, aby móc wyszukać odpowiedniego korepetytora!"
 			)
 			setModalOpen(true)
 			return
 		}
 
 		try {
-			// const currentUser = JSON.parse(localStorage.getItem('user'))
-
-			// Fetch the tutor data from the backend
-			// const tutorResponse = await axios.get(
-			// 	`http://localhost:8080/tutors/${selectedTutorId}`
-			// )
-			// const selectedTutor = tutorResponse.data
-
-			// Fetch the tutor data from the backend
 			const tutorResponse = await axios.get(
 				`http://localhost:8080/tutors/${selectedTutorId}`,
 				{
 					headers: {
-						Authorization: `Bearer ${token}`, // Dodaj token dostępu w nagłówku
+						Authorization: `Bearer ${token}`,
 					},
 				}
 			)
 			const selectedTutor = tutorResponse.data
-
-			// Fetch the student data from the backend
-			// const studentResponse = await axios.get(
-			// 	`http://localhost:8080/users/${currentUser.userId}`
-			// )
-			// const selectedStudent = studentResponse.data
-
-			// Create a lesson DTO object
 
 			const lessonData = {
 				subject: selectedOptions.subject,
@@ -101,7 +84,7 @@ function TutorReserveCard({
 				mode: selectedOptions.mode,
 				city: selectedOptions.city,
 				lessonDate: selectedLessonDate,
-				tutorId: selectedTutorId, // Dodajemy tutorId
+				tutorId: selectedTutorId,
 				studentId: user.id,
 				tutorName: name,
 				tutorEmail: email,
@@ -112,11 +95,10 @@ function TutorReserveCard({
 
 			console.log(`Dane ktore chce przeslac: `, lessonData)
 
-			// Post the lesson data to the backend
-			axios.post('http://localhost:8080/lessons', JSON.stringify(lessonData), {
+			axios.post("http://localhost:8080/lessons", JSON.stringify(lessonData), {
 				headers: {
-					Authorization: `Bearer ${token}`, // jeśli wymagana jest autoryzacja
-					'Content-Type': 'application/json',
+					Authorization: `Bearer ${token}`,
+					"Content-Type": "application/json",
 				},
 			})
 
@@ -124,20 +106,20 @@ function TutorReserveCard({
 
 			setModalOpen(true)
 			setLessonReserved(true)
-			setModalTitle('Pomyślnie zarezerwowano lekcję!')
+			setModalTitle("Pomyślnie zarezerwowano lekcję!")
 			setModalText(
-				'Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć.'
+				"Twój korepetytor skontaktuje się z Tobą najszybciej, jak tylko będzie mógł, w celu omówienia szczegółów zajęć."
 			)
 		} catch (error) {
-			console.error('Błąd podczas rezerwacji lekcji:', error)
+			console.error("Błąd podczas rezerwacji lekcji:", error)
 		}
 	}
 
 	const handleModalClose = () => {
 		setModalOpen(false)
 		if (lessonReserved) {
-			navigate('/user')
-			setLessonReserved(false) // Reset flagi po przekierowaniu
+			navigate("/user")
+			setLessonReserved(false)
 		}
 	}
 
@@ -149,7 +131,7 @@ function TutorReserveCard({
 					response.data.find(tutor => tutor.id === selectedTutorId)
 				)
 			} catch (error) {
-				console.error('Błąd podczas pobierania danych nauczyciela:', error)
+				console.error("Błąd podczas pobierania danych nauczyciela:", error)
 			}
 		}
 
@@ -191,7 +173,7 @@ function TutorReserveCard({
 				title={modalTitle}
 				text={modalText}
 				imageSrc={
-					modalTitle === 'Pomyślnie zarezerwowano lekcję!'
+					modalTitle === "Pomyślnie zarezerwowano lekcję!"
 						? successImg
 						: filtersModalImg
 				}

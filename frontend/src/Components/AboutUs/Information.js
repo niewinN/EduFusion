@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
 	InformationContainer,
 	InformationPicture,
@@ -7,9 +7,10 @@ import {
 	InformationStatsText,
 	InformationTitle,
 	InformationText,
-} from '../../Assets/Styles/AboutUs/Information.styles'
-import infoPic from '../../Assets/Images/AboutUs/aboutus_info.png'
-import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
+} from "../../Assets/Styles/AboutUs/Information.styles"
+import infoPic from "../../Assets/Images/AboutUs/aboutus_info.png"
+import { Wrapper } from "../../Assets/Styles/GlobalStyles/wrapper"
+import { informationData } from "../../constants/informationData"
 
 function Information() {
 	return (
@@ -17,20 +18,12 @@ function Information() {
 			<InformationContainer>
 				<InformationText>
 					<InformationTitle>Zobacz EduFusion w liczbach</InformationTitle>
-					<InformationStatsBox>
-						<InformationStats>40+</InformationStats>
-						<InformationStatsText>
-							Sprawdzonych korepetytorów
-						</InformationStatsText>
-					</InformationStatsBox>
-					<InformationStatsBox>
-						<InformationStats>260+</InformationStats>
-						<InformationStatsText>Zadowolonych uczniów</InformationStatsText>
-					</InformationStatsBox>
-					<InformationStatsBox>
-						<InformationStats>2240+</InformationStats>
-						<InformationStatsText>Przeprowadzonych zajęć</InformationStatsText>
-					</InformationStatsBox>
+					{informationData.map(item => (
+						<InformationStatsBox key={item.description}>
+							<InformationStats>{item.count}</InformationStats>
+							<InformationStatsText>{item.description}</InformationStatsText>
+						</InformationStatsBox>
+					))}
 				</InformationText>
 				<InformationPicture src={infoPic} alt='Teacher'></InformationPicture>
 			</InformationContainer>

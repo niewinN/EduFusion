@@ -1,17 +1,16 @@
-import Navigation from './Layouts/Navigation/Navigation'
-import { Route, Routes } from 'react-router-dom'
-import Tutors from './Pages/Tutors'
-import AboutUs from './Pages/AboutUs'
-import Contact from './Pages/Contact'
-import Footer from './Layouts/Footer/Footer'
-import Main from './Pages/Main'
-// import { AvailabilityProvider } from './Context/AvailabilityContext'
-import { SelectedOptionsProvider } from './Context/SelectedOptionsContext'
-import Register from './Pages/Register'
-import Login from './Pages/Login'
-import { LoginProvider } from './Context/LoginContext'
-import UserProfile from './Pages/UserProfile'
-import TutorProfile from './Pages/TutorProfile'
+import Navigation from "./Layouts/Navigation/Navigation"
+import { Route, Routes } from "react-router-dom"
+import Tutors from "./Pages/Tutors"
+import AboutUs from "./Pages/AboutUs"
+import Contact from "./Pages/Contact"
+import Footer from "./Layouts/Footer/Footer"
+import Main from "./Pages/Main"
+import { SelectedOptionsProvider } from "./Context/SelectedOptionsContext"
+import Register from "./Pages/Register"
+import Login from "./Pages/Login"
+import { LoginProvider } from "./Context/LoginContext"
+import UserProfile from "./Pages/UserProfile"
+import TutorProfile from "./Pages/TutorProfile"
 
 function App() {
 	return (
@@ -19,7 +18,6 @@ function App() {
 			<div className='app-container'>
 				<SelectedOptionsProvider>
 					<LoginProvider>
-						{/* <AvailabilityProvider> */}
 						<Navigation />
 						<div className='content'>
 							<Routes>
@@ -35,8 +33,6 @@ function App() {
 						</div>
 
 						<Footer />
-
-						{/* </AvailabilityProvider> */}
 					</LoginProvider>
 				</SelectedOptionsProvider>
 			</div>

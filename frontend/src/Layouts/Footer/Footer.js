@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 import {
 	FooterContact,
 	FooterBox,
@@ -10,18 +10,11 @@ import {
 	FooterLinks,
 	FooterName,
 	FooterText,
-} from '../../Assets/Styles/UI/Footer.styles'
-import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
-import {
-	faFacebook,
-	faInstagram,
-	faYoutube,
-	faTiktok,
-} from '@fortawesome/free-brands-svg-icons'
+} from "../../Assets/Styles/UI/Footer.styles"
+import { Wrapper } from "../../Assets/Styles/GlobalStyles/wrapper"
+import { footerLinks, footerIcons } from "../../constants/footerData"
 
 function Footer() {
-	// const handleClick = e => e.preventDefault()
-
 	return (
 		<>
 			<FooterContainer>
@@ -34,19 +27,17 @@ function Footer() {
 						</FooterBox>
 						<FooterBox>
 							<FooterLinks>
-								<FooterLink>O firmie</FooterLink>
-								<FooterLink>Ogólne warunki</FooterLink>
-								<FooterLink>Klauzule informacyjne</FooterLink>
-								<FooterLink>Polityka prywatności</FooterLink>
+								{footerLinks.map((link, index) => (
+									<FooterLink key={index}>{link.text}</FooterLink>
+								))}
 							</FooterLinks>
 						</FooterBox>
 						<FooterBox>
 							<FooterContact>Kontakt</FooterContact>
 							<FooterIcons>
-								<FooterIcon icon={faFacebook} />
-								<FooterIcon icon={faInstagram} />
-								<FooterIcon icon={faYoutube} />
-								<FooterIcon icon={faTiktok} />
+								{footerIcons.map((icon, index) => (
+									<FooterIcon key={index} icon={icon.icon} />
+								))}
 							</FooterIcons>
 						</FooterBox>
 					</FooterBoxes>

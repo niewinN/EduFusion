@@ -1,51 +1,36 @@
-import React, { useState } from 'react'
-import { Formik, Field } from 'formik'
-import * as Yup from 'yup'
-import axios from 'axios'
-import { useLogin } from '../../Context/LoginContext'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from "react"
+import { Formik, Field } from "formik"
+import * as Yup from "yup"
+import axios from "axios"
+import { useLogin } from "../../Context/LoginContext"
+import { useNavigate } from "react-router-dom"
 import {
 	FormButton,
 	StyledTextField,
 	ErrorText,
 	StyledForm,
-} from '../../Assets/Styles/Login/LoginForm.styles'
-// const bcrypt = require('bcryptjs')
+} from "../../Assets/Styles/Login/LoginForm.styles"
 
 const validationSchema = Yup.object({
 	email: Yup.string()
-		.required('E-mail jest wymagany')
+		.required("E-mail jest wymagany")
 		.matches(
 			/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/,
-			'Podaj poprawny adres e-mail'
+			"Podaj poprawny adres e-mail"
 		),
-	password: Yup.string().required('Hasło jest wymagane'),
+	password: Yup.string().required("Hasło jest wymagane"),
 })
 
 function LoginForm() {
 	const navigate = useNavigate()
 	const { onLoginSuccess } = useLogin()
-	const [loginError, setLoginError] = useState('')
-	// const verifyLogin = (email, password, users) => {
-	// 	const user = users.find(u => u.email === email && u.password === password)
-	// 	return !!user
-	// }
-
-	// const verifyLogin = (email, password, users) => {
-	// 	const user = users.find(u => u.email === email)
-	// 	if (user) {
-	// 		// Porównaj zahaszowane hasło
-	// 		const isPasswordCorrect = bcrypt.compareSync(password, user.password)
-	// 		return isPasswordCorrect
-	// 	}
-	// 	return false
-	// }
+	const [loginError, setLoginError] = useState("")
 
 	return (
 		<Formik
 			initialValues={{
-				email: '',
-				password: '',
+				email: "",
+				password: "",
 			}}
 			validationSchema={validationSchema}
 			validateOnBlur={false}
@@ -53,17 +38,17 @@ function LoginForm() {
 			// validateOnChange={formSubmitted}
 			onSubmit={(values, { setSubmitting }) => {
 				axios
-					.post('http://localhost:8080/authenticate', values)
+					.post("http://localhost:8080/authenticate", values)
 					.then(response => {
 						console.log(response.data)
 						const token = response.data.jwt
-						localStorage.setItem('token', token)
-						onLoginSuccess(token) // Update login context
-						navigate('/') // Navigate to home or dashboard page
+						localStorage.setItem("token", token)
+						onLoginSuccess(token)
+						navigate("/")
 					})
 					.catch(error => {
-						setLoginError('E-mail lub hasło jest nieprawidłowe')
-						console.error('Błąd podczas logowania:', error)
+						setLoginError("E-mail lub hasło jest nieprawidłowe")
+						console.error("Błąd podczas logowania:", error)
 					})
 					.finally(() => {
 						setSubmitting(false)
@@ -93,8 +78,7 @@ function LoginForm() {
 					{errors.password && touched.password && (
 						<ErrorText>{errors.password}</ErrorText>
 					)}
-					{loginError && <ErrorText>{loginError}</ErrorText>}{' '}
-					{/* Wyświetlanie błędu logowania */}
+					{loginError && <ErrorText>{loginError}</ErrorText>}{" "}
 					<FormButton
 						variant='contained'
 						color='primary'

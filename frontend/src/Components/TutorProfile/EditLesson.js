@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useLogin } from '../../Context/LoginContext'
-import axios from 'axios'
-import { baseSelectOptions } from '../../Assets/Files/optionsData'
+import React, { useState, useEffect } from "react"
+import { useLogin } from "../../Context/LoginContext"
+import axios from "axios"
+import { baseSelectOptions } from "../../Assets/Files/optionsData"
 import {
 	ErrorMsg,
 	EditButton,
@@ -16,19 +16,19 @@ import {
 	EditSelectLast,
 	EditTextarea,
 	EditDays,
-} from '../../Assets/Styles/TutorProfile/EditLesson.styles'
+} from "../../Assets/Styles/TutorProfile/EditLesson.styles"
 
-import { Title } from '../../Assets/Styles/UserProfile/Lessons.styles'
+import { Title } from "../../Assets/Styles/UserProfile/Lessons.styles"
 
 function EditLesson() {
 	const [tutorData, setTutorData] = useState({
 		level: [],
 		mode: [],
-		city: '',
+		city: "",
 		// name: '',
-		desc: '',
-		price: '',
-		subject: '',
+		desc: "",
+		price: "",
+		subject: "",
 		availability: {
 			monday: [],
 			tuesday: [],
@@ -46,10 +46,10 @@ function EditLesson() {
 	const [newTutorData, setNewTutorData] = useState({
 		level: [],
 		mode: [],
-		city: '',
-		desc: '',
-		price: '',
-		subject: '',
+		city: "",
+		desc: "",
+		price: "",
+		subject: "",
 		availability: {
 			monday: [],
 			tuesday: [],
@@ -60,83 +60,56 @@ function EditLesson() {
 			sunday: [],
 		},
 	})
-	const token = localStorage.getItem('token')
+	const token = localStorage.getItem("token")
 	const { user } = useLogin()
-	const [newLevel, setNewLevel] = useState('')
-	const [newMode, setNewMode] = useState('')
-	const [levelError, setLevelError] = useState('')
-	const [modeError, setModeError] = useState('')
+	const [newLevel, setNewLevel] = useState("")
+	const [newMode, setNewMode] = useState("")
+	const [levelError, setLevelError] = useState("")
+	const [modeError, setModeError] = useState("")
 	const [hasTutor, setHasTutor] = useState(false)
 	const initialTimeState = {
-		monday: '',
-		tuesday: '',
-		wednesday: '',
-		thursday: '',
-		friday: '',
-		saturday: '',
-		sunday: '',
+		monday: "",
+		tuesday: "",
+		wednesday: "",
+		thursday: "",
+		friday: "",
+		saturday: "",
+		sunday: "",
 	}
 
 	const initialErrorState = {
-		monday: '',
-		tuesday: '',
-		wednesday: '',
-		thursday: '',
-		friday: '',
-		saturday: '',
-		sunday: '',
+		monday: "",
+		tuesday: "",
+		wednesday: "",
+		thursday: "",
+		friday: "",
+		saturday: "",
+		sunday: "",
 	}
 
 	const daysMapping = {
-		monday: 'Poniedziałek',
-		tuesday: 'Wtorek',
-		wednesday: 'Środa',
-		thursday: 'Czwartek',
-		friday: 'Piątek',
-		saturday: 'Sobota',
-		sunday: 'Niedziela',
+		monday: "Poniedziałek",
+		tuesday: "Wtorek",
+		wednesday: "Środa",
+		thursday: "Czwartek",
+		friday: "Piątek",
+		saturday: "Sobota",
+		sunday: "Niedziela",
 	}
 
 	const [timeErrors, setTimeErrors] = useState(initialErrorState)
 
 	const [newTimes, setNewTimes] = useState(initialTimeState)
 
-	const [timeError, setTimeError] = useState('')
+	const [timeError, setTimeError] = useState("")
 
 	const [isLevelRemovable, setIsLevelRemovable] = useState(false)
 	const [isModeRemovable, setIsModeRemovable] = useState(false)
 	const hoursOptions = []
 	for (let i = 8; i <= 23; i++) {
-		hoursOptions.push(`${String(i).padStart(2, '0')}:00`)
+		hoursOptions.push(`${String(i).padStart(2, "0")}:00`)
 	}
 
-	// useEffect(() => {
-	// 	const fetchLoggedInTutorData = async () => {
-	// 		try {
-	// 			if (user && user.id) {
-	// 				const response = await axios.get(
-	// 					`http://localhost:8080/tutors/user/${user.id}`
-	// 				)
-	// 				if (response.data) {
-	// 					setTutorData(response.data)
-	// 					setHasTutor(true)
-	// 				} else {
-	// 					resetTutorData()
-	// 					setHasTutor(false)
-	// 				}
-	// 			} else {
-	// 				resetTutorData()
-	// 			}
-	// 		} catch (error) {
-	// 			console.error(
-	// 				'Błąd podczas pobierania danych zalogowanego tutora:',
-	// 				error
-	// 			)
-	// 		}
-	// 	}
-
-	// 	fetchLoggedInTutorData()
-	// }, [user])
 	const fetchLoggedInTutorData = async () => {
 		try {
 			if (user && user.id) {
@@ -158,7 +131,7 @@ function EditLesson() {
 			}
 		} catch (error) {
 			console.error(
-				'Błąd podczas pobierania danych zalogowanego tutora:',
+				"Błąd podczas pobierania danych zalogowanego tutora:",
 				error
 			)
 		}
@@ -172,10 +145,10 @@ function EditLesson() {
 		setTutorData({
 			level: [],
 			mode: [],
-			city: '',
-			desc: '',
-			price: '',
-			subject: '',
+			city: "",
+			desc: "",
+			price: "",
+			subject: "",
 			availability: {
 				monday: [],
 				tuesday: [],
@@ -194,10 +167,10 @@ function EditLesson() {
 	}
 
 	const handleChange = (field, value) => {
-		console.log('handleChange:', field, value) // Dodaj tę linię
-		if (field === 'price') {
+		console.log("handleChange:", field, value) // Dodaj tę linię
+		if (field === "price") {
 			// Usuwamy wszystkie znaki oprócz cyfr i kropki
-			const filteredValue = value.replace(/[^0-9.]/g, '')
+			const filteredValue = value.replace(/[^0-9.]/g, "")
 			setTutorData({ ...tutorData, [field]: filteredValue })
 		} else {
 			setTutorData({ ...tutorData, [field]: value })
@@ -207,14 +180,14 @@ function EditLesson() {
 	const addLevel = () => {
 		if (newLevel) {
 			if (tutorData && tutorData.level.includes(newLevel)) {
-				setLevelError('Ten poziom już istnieje.')
+				setLevelError("Ten poziom już istnieje.")
 			} else {
 				setTutorData(prevData => ({
 					...prevData,
 					level: [...prevData.level, newLevel],
 				}))
-				setNewLevel('')
-				setLevelError('')
+				setNewLevel("")
+				setLevelError("")
 				setIsLevelRemovable(true)
 			}
 		}
@@ -223,14 +196,14 @@ function EditLesson() {
 	const addMode = () => {
 		if (newMode) {
 			if (tutorData && tutorData.mode.includes(newMode)) {
-				setModeError('Ten tryb już istnieje.')
+				setModeError("Ten tryb już istnieje.")
 			} else {
 				setTutorData(prevData => ({
 					...prevData,
 					mode: [...prevData.mode, newMode],
 				}))
-				setNewMode('')
-				setModeError('')
+				setNewMode("")
+				setModeError("")
 				setIsModeRemovable(true)
 			}
 		}
@@ -270,7 +243,7 @@ function EditLesson() {
 					<EditChange key={index}>
 						{time}
 						{isAvailabilityEditable && (
-							<EditButton onClick={() => onTimeChange(day, time, 'remove')}>
+							<EditButton onClick={() => onTimeChange(day, time, "remove")}>
 								Usuń
 							</EditButton>
 						)}
@@ -279,7 +252,7 @@ function EditLesson() {
 				{isAvailabilityEditable && (
 					<EditChange>
 						<EditSelect
-							value={newTimes[day] || ''}
+							value={newTimes[day] || ""}
 							onChange={e =>
 								setNewTimes({ ...newTimes, [day]: e.target.value })
 							}>
@@ -290,7 +263,7 @@ function EditLesson() {
 								</option>
 							))}
 						</EditSelect>
-						<EditButton onClick={() => onTimeChange(day, newTimes[day], 'add')}>
+						<EditButton onClick={() => onTimeChange(day, newTimes[day], "add")}>
 							Dodaj
 						</EditButton>
 					</EditChange>
@@ -302,28 +275,28 @@ function EditLesson() {
 
 	const handleTimeChange = (day, time, action) => {
 		// Clear the specific day's error first
-		setTimeErrors({ ...timeErrors, [day]: '' })
+		setTimeErrors({ ...timeErrors, [day]: "" })
 
 		setTutorData(prevData => {
 			let newTimes = [...prevData.availability[day]]
-			if (action === 'add') {
+			if (action === "add") {
 				if (!time) {
 					setTimeErrors(prevErrors => ({
 						...prevErrors,
-						[day]: 'Proszę wybrać godzinę.',
+						[day]: "Proszę wybrać godzinę.",
 					}))
 					return prevData
 				}
 				if (newTimes.includes(time)) {
 					setTimeErrors(prevErrors => ({
 						...prevErrors,
-						[day]: 'Ta godzina już istnieje.',
+						[day]: "Ta godzina już istnieje.",
 					}))
 					return prevData
 				}
 				newTimes.push(time)
 				newTimes.sort()
-			} else if (action === 'remove') {
+			} else if (action === "remove") {
 				const index = newTimes.indexOf(time)
 				if (index > -1) newTimes.splice(index, 1)
 			}
@@ -332,60 +305,21 @@ function EditLesson() {
 				availability: { ...prevData.availability, [day]: newTimes },
 			}
 		})
-		if (action === 'add') {
-			setNewTimes({ ...newTimes, [day]: '' })
+		if (action === "add") {
+			setNewTimes({ ...newTimes, [day]: "" })
 		}
 	}
 
-	// const addNewTutor = async () => {
-	// 	try {
-	// 		const newUser = {
-	// 			id: user.id,
-	// 			firstName: user.firstName,
-	// 			lastName: user.lastName,
-	// 			email: user.email,
-	// 			phoneNumber: user.phoneNumber,
-	// 			password: user.password,
-	// 			role: 'TUTOR',
-	// 			tutor: {
-	// 				img: 'photo.png',
-	// 				level: newTutorData.level,
-	// 				mode: newTutorData.mode,
-	// 				city: newTutorData.city,
-	// 				desc: newTutorData.desc,
-	// 				price: newTutorData.price,
-	// 				subject: newTutorData.subject,
-	// 				availability: newTutorData.availability,
-	// 				userId: user.id,
-	// 			},
-	// 		}
-
-	// 		await axios.post('http://localhost:8080/tutors', newUser)
-	// 		console.log('Nowy tutor został dodany pomyślnie')
-	// 	} catch (error) {
-	// 		if (error.response) {
-	// 			// Błąd generowany przez serwer
-	// 			console.error('Błąd serwera:', error.response.data)
-	// 		} else if (error.request) {
-	// 			// Żądanie zostało wysłane, ale nie otrzymano odpowiedzi
-	// 			console.error('Brak odpowiedzi serwera:', error.request)
-	// 		} else {
-	// 			// Coś poszło nie tak przy tworzeniu żądania
-	// 			console.error('Błąd:', error.message)
-	// 		}
-	// 	}
-	// }
 	useEffect(() => {
-		console.log('Aktualna dostępność:', tutorData.availability)
+		console.log("Aktualna dostępność:", tutorData.availability)
 	}, [tutorData.availability])
 
 	const updateTutor = async () => {
-		console.log('Przed wysłaniem:', tutorData) // Dodaj tę linię
+		console.log("Przed wysłaniem:", tutorData)
 		try {
 			let tutorDataToSend = {
-				// Przygotuj dane do wysłania, na przykład:
 				userId: user.id,
-				// img: 'Obraz do uzupełnienia',
+
 				desc: tutorData.desc,
 				price: tutorData.price,
 				subject: tutorData.subject,
@@ -396,16 +330,15 @@ function EditLesson() {
 			}
 
 			if (!hasTutor) {
-				// Dodaj obraz tylko podczas pierwszego tworzenia profilu tutora
 				tutorDataToSend = {
 					...tutorDataToSend,
-					img: 'Obraz do uzupełnienia',
+					img: "Obraz do uzupełnienia",
 				}
 			}
 
 			let response
 			if (hasTutor) {
-				console.log('Wysyłanie PUT z danymi:', tutorDataToSend) // Dodaj tę linię
+				console.log("Wysyłanie PUT z danymi:", tutorDataToSend)
 				response = await axios.put(
 					`http://localhost:8080/tutors/${tutorData.id}`,
 					tutorDataToSend,
@@ -414,9 +347,9 @@ function EditLesson() {
 					}
 				)
 			} else {
-				console.log('Wysyłanie POST z danymi:', tutorDataToSend)
+				console.log("Wysyłanie POST z danymi:", tutorDataToSend)
 				response = await axios.post(
-					'http://localhost:8080/tutors',
+					"http://localhost:8080/tutors",
 					tutorDataToSend,
 					{
 						headers: { Authorization: `Bearer ${token}` },
@@ -429,21 +362,21 @@ function EditLesson() {
 				setTutorData(response.data)
 				setNewTimes(initialTimeState)
 				setTimeErrors(initialErrorState)
-				console.log('Dane tutora zostały zaktualizowane/dodane pomyślnie')
-				setIsEditable(false) // Tutaj zmieniając stan na false
-				setIsAvailabilityEditable(false) // Jeśli chcesz również wyłączyć edycję dostępności
-				setLevelError('')
-				setModeError('')
+				console.log("Dane tutora zostały zaktualizowane/dodane pomyślnie")
+				setIsEditable(false)
+				setIsAvailabilityEditable(false)
+				setLevelError("")
+				setModeError("")
 			}
 			setIsEditable(false)
-			setLevelError('')
-			setModeError('')
+			setLevelError("")
+			setModeError("")
 
-			console.log('Dane tutora zostały zaktualizowane/dodane pomyślnie')
+			console.log("Dane tutora zostały zaktualizowane/dodane pomyślnie")
 		} catch (error) {
-			console.error('Błąd podczas aktualizacji/dodawania danych tutora:', error)
+			console.error("Błąd podczas aktualizacji/dodawania danych tutora:", error)
 			if (error.response) {
-				console.log('Odpowiedź serwera:', error.response.data) // Dodaj tę linię
+				console.log("Odpowiedź serwera:", error.response.data)
 			}
 		}
 	}
@@ -461,7 +394,7 @@ function EditLesson() {
 					<EditChangeBox>
 						<EditSelectLast
 							value={tutorData.subject}
-							onChange={e => handleChange('subject', e.target.value)}
+							onChange={e => handleChange("subject", e.target.value)}
 							disabled={!isEditable}>
 							<option value=''>Wybierz przedmiot</option>
 							{baseSelectOptions.subject.map(option => (
@@ -542,8 +475,8 @@ function EditLesson() {
 						<EditSelectLast
 							value={tutorData.city}
 							onChange={e => {
-								console.log('EditSelectLast value:', e.target.value) // Dodaj tę linię
-								handleChange('city', e.target.value)
+								console.log("EditSelectLast value:", e.target.value) // Dodaj tę linię
+								handleChange("city", e.target.value)
 							}}
 							disabled={!isEditable}>
 							<option value=''>Wybierz miasto</option>
@@ -561,7 +494,7 @@ function EditLesson() {
 					<EditChangeBox>
 						<EditTextarea
 							value={tutorData.desc}
-							onChange={e => handleChange('desc', e.target.value)}
+							onChange={e => handleChange("desc", e.target.value)}
 							disabled={!isEditable}></EditTextarea>
 					</EditChangeBox>
 				</EditDataInfoBox>
@@ -571,7 +504,7 @@ function EditLesson() {
 					<EditChangeBox>
 						<EditTextarea
 							value={tutorData.price}
-							onChange={e => handleChange('price', e.target.value)}
+							onChange={e => handleChange("price", e.target.value)}
 							disabled={!isEditable}></EditTextarea>
 					</EditChangeBox>
 				</EditDataInfoBox>

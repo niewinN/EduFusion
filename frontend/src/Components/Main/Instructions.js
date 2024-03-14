@@ -1,5 +1,5 @@
-import React from 'react'
-import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
+import React from "react"
+import { Wrapper } from "../../Assets/Styles/GlobalStyles/wrapper"
 import {
 	InstructionBox,
 	InstructionBoxes,
@@ -13,8 +13,9 @@ import {
 	InstructionTitle,
 	Title,
 	InstructionNrBox,
-} from '../../Assets/Styles/Main/Instructions.styles'
-import instructionImg from '../../Assets/Images/Main/instructionImg.png'
+} from "../../Assets/Styles/Main/Instructions.styles"
+import instructionImg from "../../Assets/Images/Main/instructionImg.png"
+import { instructionsData } from "../../constants/instructionsData"
 
 function Instructions(props) {
 	return (
@@ -23,49 +24,17 @@ function Instructions(props) {
 				<Title>Umów zajęcia kilkoma kliknięciami!</Title>
 				<InstructionSection>
 					<InstructionBoxes>
-						<InstructionBox>
-							<InstructionNrBox>
-								<InstructionNr>1</InstructionNr>
-							</InstructionNrBox>
-							<InstructionTextBox>
-								<InstructionTitle>
-									Wypełnij podstawowe kryteria rezerwacji
-								</InstructionTitle>
-								<InstructionText>
-									Skorzystaj z naszej wyszukiwarki uzupełniając, przedmiot,
-									poziom i tryb nauki, dzień korepetycji oraz ewentualnie miasto
-									w przypadku zajęć stacjonarnych.
-								</InstructionText>
-							</InstructionTextBox>
-						</InstructionBox>
-						<InstructionBox>
-							<InstructionNrBox isSecondBox={props.isSecondBox}>
-								<InstructionNr>2</InstructionNr>
-							</InstructionNrBox>
-							<InstructionTextBox>
-								<InstructionTitle>
-									Wybierz swojego korepetytora
-								</InstructionTitle>
-								<InstructionText>
-									Z listy dostępnych korepetytorów wybierz nauczyciela
-									najbardziej pasującego do twoich wymagań.
-								</InstructionText>
-							</InstructionTextBox>
-						</InstructionBox>
-						<InstructionBox>
-							<InstructionNrBox>
-								<InstructionNr>3</InstructionNr>
-							</InstructionNrBox>
-							<InstructionTextBox>
-								<InstructionTitle>Zarezerwuj korepetycje</InstructionTitle>
-								<InstructionText>
-									Po dokonaniu wyboru nauczyciela kliknij przycisk zarezerwuj,
-									żeby potwierdzić korepetycję. Korepetytor skontaktuję się z
-									tobą najszybciej jak będzie mógł i omówi telefonicznie
-									szczegóły spotkania oraz formę rozliczania za zajęcia.
-								</InstructionText>
-							</InstructionTextBox>
-						</InstructionBox>
+						{instructionsData.map((instruction, index) => (
+							<InstructionBox key={index}>
+								<InstructionNrBox isSecondBox={index === 1}>
+									<InstructionNr>{instruction.nr}</InstructionNr>
+								</InstructionNrBox>
+								<InstructionTextBox>
+									<InstructionTitle>{instruction.title}</InstructionTitle>
+									<InstructionText>{instruction.text}</InstructionText>
+								</InstructionTextBox>
+							</InstructionBox>
+						))}
 					</InstructionBoxes>
 					<InstructionImgBox>
 						<InstructionImg src={instructionImg}></InstructionImg>

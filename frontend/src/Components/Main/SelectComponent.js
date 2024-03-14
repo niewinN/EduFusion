@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 import {
 	SearchSelect,
 	SearchOption,
-} from '../../Assets/Styles/Main/SearchPanel.styles'
-import { FilterSelect } from '../../Assets/Styles/Tutors/Tile.styles'
+} from "../../Assets/Styles/Main/SearchPanel.styles"
+import { FilterSelect } from "../../Assets/Styles/Tutors/Tile.styles"
 
 function SelectComponent({
 	label,
@@ -13,11 +13,8 @@ function SelectComponent({
 	styleType,
 	disabled = false,
 }) {
-	const Select = styleType === 'filter' ? FilterSelect : SearchSelect
+	const Select = styleType === "filter" ? FilterSelect : SearchSelect
 
-	// const handleChange = event => {
-	// 	onChange(event.target.value)
-	// }
 	return (
 		<Select onChange={onChange} value={selectedValue} disabled={disabled}>
 			{options.map((option, index) => (

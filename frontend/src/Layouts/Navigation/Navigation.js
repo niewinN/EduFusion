@@ -1,7 +1,5 @@
-import React, { useState } from 'react'
-// import { Link } from 'react-router-dom'
+import React, { useState } from "react"
 import {
-	// NavContainer,
 	Nav,
 	NavTitle,
 	NavList,
@@ -11,27 +9,30 @@ import {
 	NavMainContainer,
 	NavRight,
 	NavLinkLogin,
-} from '../../Assets/Styles/UI/Navigation.styles'
-import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
-import { useLogin } from '../../Context/LoginContext'
+} from "../../Assets/Styles/UI/Navigation.styles"
+import { Wrapper } from "../../Assets/Styles/GlobalStyles/wrapper"
+import { useLogin } from "../../Context/LoginContext"
 
 const Navigation = () => {
 	const { isLoggedIn, user } = useLogin()
 	const [showNav, setShowNav] = useState(false)
-	// console.log('isLoggedIn:', isLoggedIn)
-	// console.log('user:', user)
-
-	// const [isLoggedIn, setIsLoggedIn] = useState(false)
-	// const [userName, setUserName] = useState('')
 
 	const handleShowNav = () => {
 		setShowNav(!showNav)
 	}
-
-	// const handleLoginSuccess = user => {
-	// 	setIsLoggedIn(true)
-	// 	setUserName(user.name) // Załóżmy, że obiekt user zawiera pole name
-	// }
+	const navLinks = [
+		{ path: "/tutors", text: "Korepetytorzy" },
+		{ path: "/aboutus", text: "O nas" },
+		{ path: "/contact", text: "Kontakt" },
+		{
+			path: isLoggedIn
+				? user.role === "TUTOR"
+					? "/tutor"
+					: "/user"
+				: "/login",
+			text: isLoggedIn && user.firstName ? user.firstName : "Zaloguj",
+		},
+	]
 
 	return (
 		<NavMainContainer>
@@ -58,20 +59,20 @@ const Navigation = () => {
 							<NavLinkLogin
 								to={
 									isLoggedIn
-										? user.role === 'TUTOR'
-											? '/tutor'
-											: '/user'
-										: '/login'
+										? user.role === "TUTOR"
+											? "/tutor"
+											: "/user"
+										: "/login"
 								}
 								onClick={handleShowNav}>
-								{isLoggedIn && user.firstName ? user.firstName : 'Zaloguj'}
+								{isLoggedIn && user.firstName ? user.firstName : "Zaloguj"}
 							</NavLinkLogin>
 						</li>
 					</NavList>
 					<NavRight>
 						<BurgerIcon onClick={handleShowNav} $isExpanded={showNav}>
 							{[1, 2, 3].map(num => (
-								<BurgerLine key={num} className={showNav ? 'active' : ''} />
+								<BurgerLine key={num} className={showNav ? "active" : ""} />
 							))}
 						</BurgerIcon>
 					</NavRight>

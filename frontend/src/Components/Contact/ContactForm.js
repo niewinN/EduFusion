@@ -1,7 +1,4 @@
-import React, { useState } from 'react'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { Wrapper } from '../../Assets/Styles/GlobalStyles/wrapper'
+import { Wrapper } from "../../Assets/Styles/GlobalStyles/wrapper"
 import {
 	ContactContainer,
 	ContactBox,
@@ -14,56 +11,14 @@ import {
 	ContactImgBox,
 	FormBtn,
 	FormTextarea,
-	ErrorMessage,
 	StyledToastContainer,
-} from '../../Assets/Styles/Contact/ContactForm.styles'
-import contactPhoto from '../../Assets/Images/Contact/contact_form.png'
-import { toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-
-const validationSchema = Yup.object({
-	imie: Yup.string().required('Imię jest wymagane'),
-	nazwisko: Yup.string().required('Nazwisko jest wymagane'),
-	email: Yup.string()
-		.email('Nieprawidłowy adres e-mail')
-		.required('E-mail jest wymagany'),
-	wiadomosc: Yup.string().required('Wiadomość jest wymagana'),
-})
+} from "../../Assets/Styles/Contact/ContactForm.styles"
+import contactPhoto from "../../Assets/Images/Contact/contact_form.png"
+import "react-toastify/dist/ReactToastify.css"
+import { useContactForm } from "../../hooks/useContactForm"
 
 function ContactForm() {
-	// eslint-disable-next-line
-	const [isSubmitting, setIsSubmitting] = useState(false)
-	const formik = useFormik({
-		initialValues: {
-			imie: '',
-			nazwisko: '',
-			email: '',
-			wiadomosc: '',
-		},
-		validationSchema,
-		onSubmit: values => {
-			console.log(values)
-			toast.success('Formularz wysłany pomyślnie!')
-			setIsSubmitting(false)
-		},
-	})
-
-	const handleFormSubmit = async event => {
-		event.preventDefault()
-		setIsSubmitting(true)
-
-		const errors = await formik.validateForm()
-		if (Object.keys(errors).length > 0) {
-			const errorElements = Object.values(errors).map((error, index) => (
-				<ErrorMessage key={index}>{error}</ErrorMessage>
-			))
-
-			toast.error(<div>{errorElements}</div>)
-			setIsSubmitting(false)
-		} else {
-			formik.handleSubmit()
-		}
-	}
+	const { formik, handleFormSubmit, isSubmitting } = useContactForm()
 
 	return (
 		<ContactContainer>
@@ -111,7 +66,9 @@ function ContactForm() {
 								value={formik.values.wiadomosc}
 							/>
 						</FormBox>
-						<FormBtn type='submit'>Wyślij</FormBtn>
+						<FormBtn type='submit' disabled={isSubmitting}>
+							{isSubmitting ? "Wysyłanie..." : "Wyślij"}
+						</FormBtn>
 					</Form>
 					<ContactImgBox>
 						<ContactImg src={contactPhoto} alt='Contact' />
