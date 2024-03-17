@@ -76,17 +76,17 @@ function Lessons() {
 			<LessonsBtnBox>
 				<LessonsBtn
 					onClick={() => handleFilterChange("All")}
-					isActive={selectedFilter === "All"}>
+					$isActive={selectedFilter === "All"}>
 					Wszystkie
 				</LessonsBtn>
 				<LessonsBtn
 					onClick={() => handleFilterChange("Upcoming")}
-					isActive={selectedFilter === "Upcoming"}>
+					$isActive={selectedFilter === "Upcoming"}>
 					Nadchodzące
 				</LessonsBtn>
 				<LessonsBtn
 					onClick={() => handleFilterChange("Completed")}
-					isActive={selectedFilter === "Completed"}>
+					$isActive={selectedFilter === "Completed"}>
 					Zakończone
 				</LessonsBtn>
 			</LessonsBtnBox>

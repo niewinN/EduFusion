@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components'
-import theme from '../GlobalStyles/theme'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import styled, { css } from "styled-components"
+import theme from "../GlobalStyles/theme"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 export const CardBox = styled.div`
 	border-radius: 8px;

@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import theme from '../GlobalStyles/theme'
+import styled from "styled-components"
+import theme from "../GlobalStyles/theme"
 
 export const LessonsContainer = styled.div`
 	box-shadow: 0 2px 15px #646464;
@@ -36,8 +36,8 @@ export const LessonsBtn = styled.button`
 	background-color: transparent;
 	color: #646464;
 	font-size: 1.5rem;
-	color: ${props => (props.isActive ? theme.colors.primary : '#646464')};
-	font-weight: ${props => (props.isActive ? 'bold' : 'normal')};
+	color: ${props => (props.$isActive ? theme.colors.primary : "#646464")};
+	font-weight: ${props => (props.isActive ? "bold" : "normal")};
 	cursor: pointer;
 `
 

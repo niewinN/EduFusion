@@ -61,7 +61,7 @@ function LoginForm() {
 						name='email'
 						type='email'
 						label='E-mail'
-						fullWidth
+						$fullWidth
 						margin='normal'
 					/>
 					{errors.email && touched.email && (
@@ -72,7 +72,7 @@ function LoginForm() {
 						name='password'
 						type='password'
 						label='Hasło'
-						fullWidth
+						$fullWidth
 						margin='normal'
 					/>
 					{errors.password && touched.password && (
@@ -89,7 +89,7 @@ function LoginForm() {
 								setFieldTouched(field, true, false)
 							})
 						}}
-						fullWidth>
+						$fullWidth>
 						Zaloguj się
 					</FormButton>
 				</StyledForm>

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import TutorReserveCard from './TutorReserveCard/TutorReserveCard'
-import { Wrapper } from '../../../Assets/Styles/GlobalStyles/wrapper'
-import axios from 'axios'
+import React, { useEffect, useState } from "react"
+import TutorReserveCard from "./TutorReserveCard/TutorReserveCard"
+import { Wrapper } from "../../../Assets/Styles/GlobalStyles/wrapper"
+import axios from "axios"
 import {
 	TutorCardsContainer,
 	ErrorFilterMsg,
-} from '../../../Assets/Styles/Tutors/TutorCards.styles'
+} from "../../../Assets/Styles/Tutors/TutorCards.styles"
 
 function TutorCards({ filteredTutors }) {
 	// eslint-disable-next-line
@@ -15,7 +15,6 @@ function TutorCards({ filteredTutors }) {
 		axios
 			.get(`http://localhost:8080/tutors`)
 			.then(response => {
-				console.log(response.data)
 				const tutorsWithLocalImagePath = response.data.map(tutor => {
 					return {
 						...tutor,
@@ -24,11 +23,10 @@ function TutorCards({ filteredTutors }) {
 					}
 				})
 
-				console.log(`jak to wyglada`, tutorsWithLocalImagePath)
 				setTutors(tutorsWithLocalImagePath)
 			})
 			.catch(error => {
-				console.error('Błąd podczas pobierania danych:', error)
+				console.error("Błąd podczas pobierania danych:", error)
 			})
 	}, [])
 

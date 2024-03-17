@@ -92,7 +92,7 @@ function RegisterForm() {
 							name='firstName'
 							type='text'
 							label='Imię'
-							fullWidth
+							$fullWidth
 							margin='normal'
 						/>
 						{errors.firstName && touched.firstName && (
@@ -103,7 +103,7 @@ function RegisterForm() {
 							name='lastName'
 							type='text'
 							label='Nazwisko'
-							fullWidth
+							$fullWidth
 							margin='normal'
 						/>
 						{errors.lastName && touched.lastName && (
@@ -114,7 +114,7 @@ function RegisterForm() {
 							name='email'
 							type='email'
 							label='E-mail'
-							fullWidth
+							$fullWidth
 							margin='normal'
 						/>
 						{errors.email && touched.email && (
@@ -125,7 +125,7 @@ function RegisterForm() {
 							name='phoneNumber'
 							type='tel'
 							label='Nr telefonu'
-							fullWidth
+							$fullWidth
 							margin='normal'
 						/>
 						{errors.phoneNumber && touched.phoneNumber && (
@@ -136,7 +136,7 @@ function RegisterForm() {
 							name='password'
 							type='password'
 							label='Hasło'
-							fullWidth
+							$fullWidth
 							margin='normal'
 						/>
 						{errors.password && touched.password && (
@@ -147,7 +147,7 @@ function RegisterForm() {
 							name='confirmPassword'
 							type='password'
 							label='Powtórz hasło'
-							fullWidth
+							$fullWidth
 							margin='normal'
 						/>
 						{errors.confirmPassword && touched.confirmPassword && (
@@ -162,7 +162,7 @@ function RegisterForm() {
 									setFieldTouched(field, true, false)
 								})
 							}}
-							fullWidth>
+							$fullWidth>
 							Zarejestruj się
 						</FormButton>
 					</StyledForm>

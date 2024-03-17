@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import theme from '../GlobalStyles/theme'
-import { TextField } from 'formik-mui'
-import { Form } from 'formik'
+import styled from "styled-components"
+import theme from "../GlobalStyles/theme"
+import { TextField } from "formik-mui"
+import { Form } from "formik"
 
 export const StyledForm = styled(Form)``
 
@@ -15,8 +15,10 @@ export const FormButton = styled.button`
 	margin-top: 15px;
 	cursor: pointer;
 	font-size: 1.5rem;
+	width: ${props => (props.$fullWidth ? "100%" : "auto")};
 `
 export const StyledTextField = styled(TextField)`
+	width: ${props => (props.$fullWidth ? "100%" : "auto")};
 	& .MuiInputLabel-outlined {
 		font-size: 14px; /* Ustawienie domyślnego rozmiaru etykiety */
 	}

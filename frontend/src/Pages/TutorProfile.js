@@ -17,7 +17,7 @@ function TutorProfile() {
 					<LessonsFlex>
 						<Lessons />
 						<LessonsSecondFlex>
-							<EditData flexStart={false} />
+							<EditData $flexStart={false} />
 							<EditLesson />
 						</LessonsSecondFlex>
 					</LessonsFlex>

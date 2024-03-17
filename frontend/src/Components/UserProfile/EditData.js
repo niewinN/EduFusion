@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react"
 import {
 	EditDataContainer,
 	EditBox,
@@ -8,18 +8,18 @@ import {
 	EditDataInfo,
 	EditBtn,
 	LogoutBtnBox,
-} from '../../Assets/Styles/UserProfile/EditData.styles'
-import { Title } from '../../Assets/Styles/UserProfile/Lessons.styles'
-import { useLogin } from '../../Context/LoginContext'
-import axios from 'axios'
+} from "../../Assets/Styles/UserProfile/EditData.styles"
+import { Title } from "../../Assets/Styles/UserProfile/Lessons.styles"
+import { useLogin } from "../../Context/LoginContext"
+import axios from "axios"
 
 function EditData({ flexStart }) {
 	const { logout, user } = useLogin()
 	const [formData, setFormData] = useState({
-		email: '',
-		firstName: '',
-		lastName: '',
-		phoneNumber: '',
+		email: "",
+		firstName: "",
+		lastName: "",
+		phoneNumber: "",
 	})
 	const [isEditable, setIsEditable] = useState({
 		firstName: false,
@@ -40,21 +40,21 @@ function EditData({ flexStart }) {
 	useEffect(() => {
 		const fetchUserProfile = async () => {
 			try {
-				const token = localStorage.getItem('token')
+				const token = localStorage.getItem("token")
 				const response = await axios.get(
-					'http://localhost:8080/users/profile',
+					"http://localhost:8080/users/profile",
 					{
 						headers: { Authorization: `Bearer ${token}` },
 					}
 				)
 				setFormData({
-					email: response.data.email || '',
-					firstName: response.data.firstName || '',
-					lastName: response.data.lastName || '',
-					phoneNumber: response.data.phoneNumber || '',
+					email: response.data.email || "",
+					firstName: response.data.firstName || "",
+					lastName: response.data.lastName || "",
+					phoneNumber: response.data.phoneNumber || "",
 				})
 			} catch (error) {
-				console.error('Błąd podczas pobierania profilu użytkownika:', error)
+				console.error("Błąd podczas pobierania profilu użytkownika:", error)
 			}
 		}
 
@@ -83,15 +83,15 @@ function EditData({ flexStart }) {
 
 	const updateUser = async () => {
 		try {
-			const token = localStorage.getItem('token')
+			const token = localStorage.getItem("token")
 			const response = await axios.put(
-				'http://localhost:8080/users/profile',
+				"http://localhost:8080/users/profile",
 				formData,
 				{ headers: { Authorization: `Bearer ${token}` } }
 			)
-			console.log('Dane zaktualizowane:', response.data)
+			console.log("Dane zaktualizowane:", response.data)
 		} catch (error) {
-			console.error('Błąd podczas aktualizacji użytkownika:', error)
+			console.error("Błąd podczas aktualizacji użytkownika:", error)
 		}
 	}
 
@@ -126,7 +126,7 @@ function EditData({ flexStart }) {
 	)
 
 	return (
-		<EditDataContainer flexStart={flexStart}>
+		<EditDataContainer $flexStart={flexStart}>
 			<Title>Moje dane</Title>
 			<EditBox>
 				<EditDataInfo>
@@ -134,13 +134,13 @@ function EditData({ flexStart }) {
 					<EditInput
 						disabled={true}
 						value={formData.email}
-						onChange={e => handleChange('email', e.target.value)}
+						onChange={e => handleChange("email", e.target.value)}
 					/>
 				</EditDataInfo>
 			</EditBox>
-			{renderEditBox('firstName', 'Imię')}
-			{renderEditBox('lastName', 'Nazwisko')}
-			{renderEditBox('phoneNumber', 'Numer telefonu')}
+			{renderEditBox("firstName", "Imię")}
+			{renderEditBox("lastName", "Nazwisko")}
+			{renderEditBox("phoneNumber", "Numer telefonu")}
 			<LogoutBtnBox>
 				<LogoutBtn onClick={logout}>Wyloguj</LogoutBtn>
 			</LogoutBtnBox>

@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import theme from '../GlobalStyles/theme'
+import styled from "styled-components"
+import theme from "../GlobalStyles/theme"
 
 export const EditDataContainer = styled.div`
 	box-shadow: 0 2px 15px #646464;
@@ -7,7 +7,7 @@ export const EditDataContainer = styled.div`
 	padding-bottom: 15px;
 	flex-basis: 20%;
 	/* align-self: flex-start; */
-	align-self: ${props => (props.flexStart ? 'flex-start' : 'auto')};
+	align-self: ${props => (props.$flexStart ? "flex-start" : "auto")};
 `
 
 export const EditBox = styled.div`

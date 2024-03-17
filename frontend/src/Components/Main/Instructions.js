@@ -26,7 +26,7 @@ function Instructions(props) {
 					<InstructionBoxes>
 						{instructionsData.map((instruction, index) => (
 							<InstructionBox key={index}>
-								<InstructionNrBox isSecondBox={index === 1}>
+								<InstructionNrBox $isSecondBox={index === 1}>
 									<InstructionNr>{instruction.nr}</InstructionNr>
 								</InstructionNrBox>
 								<InstructionTextBox>
